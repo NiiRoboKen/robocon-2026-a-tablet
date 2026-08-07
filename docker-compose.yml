@@ -1,0 +1,20 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "80:80"
+    user: node
+    volumes:
+      - ./app/:/home/node/app
+    tty: true
+
+  api:
+    image: oven/bun:alpine
+    ports:
+      - 3000:3000
+    working_dir: /home/bun/api
+    user: bun
+    volumes:
+      - ./api/:/home/bun/api
+    tty: true
