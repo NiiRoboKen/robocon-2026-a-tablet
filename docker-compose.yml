@@ -12,9 +12,9 @@ services:
   api:
     image: oven/bun:alpine
     ports:
-      - 3000:3000
+      - "3000:3000"
     working_dir: /home/bun/api
     user: bun
     volumes:
       - ./api/:/home/bun/api
-    tty: true
+    command: ["bun", "run", "src/index.ts"]
