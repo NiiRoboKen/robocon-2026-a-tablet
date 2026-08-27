@@ -1,0 +1,18 @@
+services:
+  nginx:
+    build:
+      context: ..
+      dockerfile: production/Dockerfile.nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ..
+      dockerfile: production/Dockerfile.api
+    expose:
+      - "3000"
+    restart: unless-stopped

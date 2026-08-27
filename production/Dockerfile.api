@@ -1,0 +1,30 @@
+# ============================================
+# Stage 1: Install dependencies
+# ============================================
+FROM oven/bun:alpine AS builder
+
+WORKDIR /build
+
+COPY api/package.json api/bun.lock ./
+RUN bun install --frozen-lockfile --production
+
+COPY api/src ./src
+COPY api/tsconfig.json ./
+
+# ============================================
+# Stage 2: Production (最小ランタイム)
+# ============================================
+FROM oven/bun:alpine AS production
+
+WORKDIR /app
+
+# 依存関係とソースコードのみコピー
+COPY --from=builder /build/node_modules ./node_modules
+COPY --from=builder /build/src ./src
+COPY --from=builder /build/package.json ./
+COPY --from=builder /build/tsconfig.json ./
+
+USER bun
+EXPOSE 3000
+
+CMD ["bun", "run", "src/index.ts"]
