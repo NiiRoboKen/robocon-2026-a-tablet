@@ -1,16 +1,17 @@
 import { create } from "zustand";
-import type { Point2D, Size2D, CanvasObject } from "../types/geometry";
+import type { Point2D, Size2D } from "../types/geometry";
+import type { ColorMode } from "../types/config";
+import { getConfig } from "../config";
+
+const config = getConfig("red");
 
 /**
  * キャンバスストアの状態定義
  */
 interface CanvasState {
-  colorMode: "red" | "blue";
-  realFieldSize: Size2D;
-  pixelFieldSize: Size2D | null;
+  colorMode: ColorMode;
+  pixelFieldSize: Size2D;
   pixelScale: number;
-  /** キャンバス上に描画されるオブジェクトの一覧（WebSocket経由で同期） */
-  objects: CanvasObject[];
   /** ユーザーがクリックで選択した座標点（未選択時はnull） */
   selectedPoint: Point2D | null;
   /** 現在のマウスカーソル位置（キャンバス外ではnull） */
@@ -21,13 +22,6 @@ interface CanvasState {
   setPixelFieldSize: (size: Size2D) => void;
   setPixelScale: (scale: number) => void;
 
-  /** オブジェクト一覧をサーバーから受信したデータで置き換える */
-  setObjects: (objects: CanvasObject[]) => void;
-  /** オブジェクトを1つ追加する */
-  addObject: (obj: CanvasObject) => void;
-  /** 指定IDのオブジェクトを削除する */
-  removeObject: (id: string) => void;
-  /** 選択座標を設定する（解除する場合はnullを渡す） */
   setSelectedPoint: (point: Point2D | null) => void;
   /** カーソル位置を更新する（キャンバス外に出た場合はnullを渡す） */
   setCursorPosition: (point: Point2D | null) => void;
@@ -46,11 +40,9 @@ interface CanvasState {
  */
 export const useCanvasStore = create<CanvasState>((set) => ({
   colorMode: "red",
-  realFieldSize: { width: 6000, height: 10500 },
-  pixelFieldSize: null,
+  pixelFieldSize: config.field.size,
   pixelScale: 1,
 
-  objects: [],
   selectedPoint: null,
   cursorPosition: null,
 
@@ -59,10 +51,6 @@ export const useCanvasStore = create<CanvasState>((set) => ({
   setPixelFieldSize: (size) => set({ pixelFieldSize: size }),
   setPixelScale: (scale) => set({ pixelScale: scale }),
 
-  setObjects: (objects) => set({ objects }),
-  addObject: (obj) => set((s) => ({ objects: [...s.objects, obj] })),
-  removeObject: (id) =>
-    set((s) => ({ objects: s.objects.filter((o) => o.id !== id) })),
   setSelectedPoint: (point) => set({ selectedPoint: point }),
   setCursorPosition: (point) => set({ cursorPosition: point }),
 }));

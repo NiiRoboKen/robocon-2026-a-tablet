@@ -15,7 +15,7 @@ export type {
   Rect,
   CanvasObjectType,
   CanvasObject,
-} from './geometry';
+} from "./geometry";
 
 // --- WebSocket通信の型 ---
 export type {
@@ -25,7 +25,20 @@ export type {
   CommandPayload,
   ObjectSyncPayload,
   StatusPayload,
-} from './websocket';
+} from "./websocket";
 
 // --- ロボット状態の型 ---
-export type { RobotStatus, RobotState } from './robot';
+export type { RobotStatus, RobotState } from "./robot";
+
+// --- 事前設定パラメータの型 ---
+export type {
+  ColorMode,
+  FieldConfig,
+  RobotInitialState,
+  ObstacleShape,
+  RectObstacleConfig,
+  CircleObstacleConfig,
+  ObstacleConfig,
+  ModeConfig,
+  InitialConfig,
+} from "./config";

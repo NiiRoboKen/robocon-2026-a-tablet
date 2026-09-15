@@ -1,8 +1,9 @@
 import { useWebSocket } from "./hooks/useWebSocket";
-import { SendAemOpenButton } from "./components/sendAemOpenButton";
-import { KonvaCanvas } from "./components/Canvas/KonvaCanvas";
+import { SendArmOpenButton } from "./components/sendArmOpenButton";
+import { Konva } from "./components/Konva";
 // import { ControlPanel } from './components/Controls/ControlPanel';
 // import { CoordinateDisplay } from './components/common/CoordinateDisplay';
+import { ToggleColorMode } from "./components/toggleColorButton";
 import "./App.css";
 
 /**
@@ -22,8 +23,9 @@ function App() {
   return (
     <div className="app-container">
       <main>
-        <KonvaCanvas />
-        <SendAemOpenButton wsClient={wsClient} />
+        <ToggleColorMode />
+        <Konva />
+        <SendArmOpenButton wsClient={wsClient} />
       </main>
     </div>
   );

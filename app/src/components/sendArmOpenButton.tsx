@@ -10,7 +10,7 @@ interface SendAemOpenButtonProps {
  * アームを開くコマンドをWebSocket経由で送信するボタンコンポーネント。
  * クリック時に 'arm_open' コマンドをサーバーに送信する。
  */
-export function SendAemOpenButton({ wsClient }: SendAemOpenButtonProps) {
+export function SendArmOpenButton({ wsClient }: SendAemOpenButtonProps) {
   const handleClick = () => {
     const client = wsClient.current;
     if (!client) {

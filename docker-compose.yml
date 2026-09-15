@@ -17,4 +17,9 @@ services:
     user: bun
     volumes:
       - ./api/:/home/bun/api
+    devices:
+      - "/dev/ttyUSB0:/dev/ttyUSB0"
+    environment:
+      SERIAL_PATH: /dev/ttyUSB0
+      SERIAL_BAUD_RATE: "115200"
     command: ["bun", "run", "src/index.ts"]

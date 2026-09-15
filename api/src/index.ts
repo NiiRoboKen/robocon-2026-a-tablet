@@ -1,7 +1,12 @@
 /**
  * Bun WebSocket サーバー
  * /app の WsMessage<T> 形式に対応
+ *
+ * クライアントから受信したメッセージは /dev/ttyUSB0 へ
+ * JSON データとしてシリアル転送される。
  */
+
+import { initSerial, sendToSerial } from "./serial.ts";
 
 interface WsMessage<T = unknown> {
   type: string;
@@ -12,6 +17,9 @@ interface WsMessage<T = unknown> {
 function buildMessage<T>(type: string, payload: T): WsMessage<T> {
   return { type, timestamp: Date.now(), payload };
 }
+
+// サーバー起動時にシリアルポートへ接続する
+initSerial();
 
 const server = Bun.serve({
   port: 3000,
@@ -45,6 +53,13 @@ const server = Bun.serve({
 
       try {
         const msg: WsMessage = JSON.parse(text);
+
+        // 受信したメッセージを /dev/ttyUSB0 へ JSON として転送する
+        void sendToSerial(msg).then((ok) => {
+          if (ok) {
+            console.log(`[Serial] Forwarded message type=${msg.type}`);
+          }
+        });
 
         // メッセージタイプに応じたハンドリング
         switch (msg.type) {

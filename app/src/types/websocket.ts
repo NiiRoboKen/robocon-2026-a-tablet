@@ -33,8 +33,6 @@ export interface WsMessage<T = unknown> {
  * キャンバス上でユーザーが指定した座標をロボットに送信する際に使用する。
  */
 export interface PositionPayload {
-  /** 送信先のロボットまたはターゲット識別名（例: 'robot-1'） */
-  target: string;
   /** 指定された2D座標 */
   position: Point2D;
 }
@@ -66,8 +64,6 @@ export interface ObjectSyncPayload {
  * ロボットの現在状態（位置、動作状態など）をリアルタイムで受信する際に使用する。
  */
 export interface StatusPayload {
-  /** ステータスを送信したロボットのID */
-  robotId: string;
   /** ロボットの動作状態（例: 'idle', 'moving', 'error'） */
   state: string;
   /** ロボットの現在位置（取得可能な場合） */
