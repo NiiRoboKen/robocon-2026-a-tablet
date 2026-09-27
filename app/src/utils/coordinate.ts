@@ -1,4 +1,4 @@
-import type { Point2D } from '../types/geometry';
+import type { Point2D } from "../types/geometry";
 
 // realworld width: 6000, height: 10500
 
@@ -8,23 +8,18 @@ import type { Point2D } from '../types/geometry';
  *
  * @param pixel - キャンバス上のピクセル座標
  * @param scale - スケール係数（1ピクセルあたりの実距離 mm）
- * @param offset - キャンバス原点のオフセット（デフォルト: {x:0, y:0}）
  * @returns 実世界座標（mm単位）
  *
  * @example
  * ```ts
- * const world = pixelToWorld({ x: 150, y: 200 }, 2.5);
+ * const world = pixelToWorld({ x: 150, y: 200 });
  * // => { x: 375, y: 500 }
  * ```
  */
-export function pixelToWorld(
-  pixel: Point2D,
-  scale: number,
-  offset: Point2D = { x: 0, y: 0 },
-): Point2D {
+export function pixelToWorld(pixel: Point2D, scale: number): Point2D {
   return {
-    x: (pixel.x - offset.x) * scale,
-    y: (pixel.y - offset.y) * scale,
+    x: pixel.x / scale,
+    y: pixel.y / scale,
   };
 }
 
@@ -34,23 +29,18 @@ export function pixelToWorld(
  *
  * @param world - 実世界座標（mm単位）
  * @param scale - スケール係数（1ピクセルあたりの実距離 mm）
- * @param offset - キャンバス原点のオフセット（デフォルト: {x:0, y:0}）
  * @returns キャンバス上のピクセル座標
  *
  * @example
  * ```ts
- * const pixel = worldToPixel({ x: 375, y: 500 }, 2.5);
+ * const pixel = worldToPixel({ x: 375, y: 500 });
  * // => { x: 150, y: 200 }
  * ```
  */
-export function worldToPixel(
-  world: Point2D,
-  scale: number,
-  offset: Point2D = { x: 0, y: 0 },
-): Point2D {
+export function worldToPixel(world: Point2D, scale: number): Point2D {
   return {
-    x: world.x / scale + offset.x,
-    y: world.y / scale + offset.y,
+    x: world.x * scale,
+    y: world.y * scale,
   };
 }
 

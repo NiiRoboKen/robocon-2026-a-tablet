@@ -15,6 +15,8 @@ services:
       - "3000:3000"
     working_dir: /home/bun/api
     user: bun
+    group_add:
+      - "984"
     volumes:
       - ./api/:/home/bun/api
     devices:

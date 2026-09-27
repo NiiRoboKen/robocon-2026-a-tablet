@@ -1,8 +1,7 @@
-import { useCallback } from 'react';
-import type { KonvaEventObject } from 'konva/lib/Node';
-import { useCanvasStore } from '../stores/useCanvasStore';
-import { useControlStore } from '../stores/useControlStore';
-import type { Point2D } from '../types/geometry';
+import { useCallback } from "react";
+import type { KonvaEventObject } from "konva/lib/Node";
+import { useCanvasStore } from "../stores/useCanvasStore";
+import type { Point2D } from "../types/geometry";
 
 /**
  * キャンバス上のユーザー操作（クリック・マウス移動・マウス離脱）を処理するカスタムフック。
@@ -17,16 +16,19 @@ import type { Point2D } from '../types/geometry';
  * ```
  */
 export function useCanvasInteraction() {
-  const { setSelectedPoint, setCursorPosition } = useCanvasStore();
-  /** 現在の操作モード（'point'モード時のみクリックで座標を選択する） */
-  const mode = useControlStore((s) => s.mode);
+  const {
+    selectedPosition,
+    setSelectedPosition,
+    setCursorPosition,
+    setSelectedDirection,
+  } = useCanvasStore();
+
 
   /**
    * ステージクリック時のハンドラ。
-   * 'point'モードの場合、クリック位置を選択座標としてストアに保存する。
    */
-  const handleStageClick = useCallback(
-    (e: KonvaEventObject<MouseEvent>) => {
+  const handleTouchStart = useCallback(
+    (e: KonvaEventObject<MouseEvent | TouchEvent>) => {
       const stage = e.target.getStage();
       if (!stage) return;
 
@@ -34,12 +36,29 @@ export function useCanvasInteraction() {
       if (!pointerPos) return;
 
       const point: Point2D = { x: pointerPos.x, y: pointerPos.y };
-
-      if (mode === 'point') {
-        setSelectedPoint(point);
-      }
+      setSelectedPosition(point);
     },
-    [mode, setSelectedPoint],
+    [setSelectedPosition],
+  );
+
+  const handleTouchMove = useCallback(
+    (e: KonvaEventObject<MouseEvent | TouchEvent>) => {
+      const stage = e.target.getStage();
+      if (!stage) return;
+
+      const pointerPos = stage.getPointerPosition();
+      if (!pointerPos) return;
+
+      if (selectedPosition === null) return;
+
+      const dx = pointerPos.x - selectedPosition.x;
+      const dy = pointerPos.y - selectedPosition.y;
+
+      const dir = Math.atan2(dx, -dy);
+
+      setSelectedDirection(dir);
+    },
+    [selectedPosition, setSelectedDirection],
   );
 
   /**
@@ -47,29 +66,36 @@ export function useCanvasInteraction() {
    * カーソル位置をストアに反映し、CoordinateDisplayなどで表示する。
    */
   const handleStageMouseMove = useCallback(
-    (e: KonvaEventObject<MouseEvent>) => {
+    (e: KonvaEventObject<MouseEvent | TouchEvent>) => {
       const stage = e.target.getStage();
       if (!stage) return;
 
       const pointerPos = stage.getPointerPosition();
       if (!pointerPos) return;
 
-      setCursorPosition({ x: pointerPos.x, y: pointerPos.y });
+      setCursorPosition({
+        x: pointerPos.x,
+        y: pointerPos.y,
+      });
     },
     [setCursorPosition],
   );
 
   /**
    * マウスがステージ外に出た時のハンドラ。
-   * カーソル位置をnullにリセットし、座標表示を非表示にする。
+   * カーソル位置をnullにリセットして座標表示を消し、
+   * クリックで固定した選択座標（マーカー）も解除する。
    */
-  const handleStageMouseLeave = useCallback(() => {
+  const resetSelectedPosition = useCallback(() => {
     setCursorPosition(null);
-  }, [setCursorPosition]);
+    setSelectedPosition(null);
+    setSelectedDirection(null);
+  }, [setCursorPosition, setSelectedPosition, setSelectedDirection]);
 
   return {
-    handleStageClick,
+    handleTouchStart,
+    handleTouchMove,
     handleStageMouseMove,
-    handleStageMouseLeave,
+    resetSelectedPosition,
   };
 }

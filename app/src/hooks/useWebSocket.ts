@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
 import { WebSocketClient } from "../services/websocketClient";
 import { useWebSocketStore } from "../stores/useWebSocketStore";
-import { useCanvasStore } from "../stores/useCanvasStore";
 import type {
   WsMessage,
-  ObjectSyncPayload,
   StatusPayload,
+  ErrorPayload
 } from "../types/websocket";
 
 /**
@@ -27,7 +26,6 @@ export function useWebSocket() {
   /** WebSocketClientインスタンスを保持するref。レンダリングを跨いで接続を維持する */
   const clientRef = useRef<WebSocketClient | null>(null);
   const { setConnected, setLastMessage, setRobotStatus } = useWebSocketStore();
-  const { setObjects } = useCanvasStore();
 
   useEffect(() => {
     // 現在のページプロトコルに応じてws:/wss:を選択
@@ -50,17 +48,15 @@ export function useWebSocket() {
           console.log("[WS] Pong received:", msg.timestamp);
           break;
         }
-        case "object_sync": {
-          // フィールド上のオブジェクト一覧を更新
-          const payload = msg.payload as ObjectSyncPayload;
-          setObjects(payload.objects);
-          break;
-        }
         case "status": {
           // ロボットのステータス情報を更新
           const payload = msg.payload as StatusPayload;
           setRobotStatus(payload);
           break;
+        }
+        case "error": {
+          const payload = msg.payload as ErrorPayload;
+          console.error(payload.message);
         }
       }
     });
@@ -72,7 +68,7 @@ export function useWebSocket() {
       unsubscribe();
       client.disconnect();
     };
-  }, [setConnected, setLastMessage, setRobotStatus, setObjects]);
+  }, [setConnected, setLastMessage, setRobotStatus]);
 
   return clientRef;
 }

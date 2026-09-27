@@ -12,19 +12,21 @@ interface CanvasState {
   colorMode: ColorMode;
   pixelFieldSize: Size2D;
   pixelScale: number;
-  /** ユーザーがクリックで選択した座標点（未選択時はnull） */
-  selectedPoint: Point2D | null;
-  /** 現在のマウスカーソル位置（キャンバス外ではnull） */
+  selectedPosition: Point2D | null;
   cursorPosition: Point2D | null;
+  selectedDirection: number | null;
+  cursorDirection: number | null;
 
   // Actions
   toggleColorMode: () => void;
   setPixelFieldSize: (size: Size2D) => void;
   setPixelScale: (scale: number) => void;
 
-  setSelectedPoint: (point: Point2D | null) => void;
+  setSelectedPosition: (point: Point2D | null) => void;
   /** カーソル位置を更新する（キャンバス外に出た場合はnullを渡す） */
   setCursorPosition: (point: Point2D | null) => void;
+  setSelectedDirection: (dir: number | null) => void;
+  setCursorDirection: (dir: number | null) => void;
 }
 
 /**
@@ -43,14 +45,19 @@ export const useCanvasStore = create<CanvasState>((set) => ({
   pixelFieldSize: config.field.size,
   pixelScale: 1,
 
-  selectedPoint: null,
+  selectedPosition: null,
   cursorPosition: null,
+  selectedDirection: 0,
+  cursorDirection: null,
 
   toggleColorMode: () =>
     set((s) => ({ colorMode: s.colorMode === "red" ? "blue" : "red" })),
   setPixelFieldSize: (size) => set({ pixelFieldSize: size }),
   setPixelScale: (scale) => set({ pixelScale: scale }),
 
-  setSelectedPoint: (point) => set({ selectedPoint: point }),
+  setSelectedPosition: (point) => set({ selectedPosition: point }),
   setCursorPosition: (point) => set({ cursorPosition: point }),
+
+  setSelectedDirection: (dir) => set({ selectedDirection: dir }),
+  setCursorDirection: (dir) => set({ cursorDirection: dir }),
 }));

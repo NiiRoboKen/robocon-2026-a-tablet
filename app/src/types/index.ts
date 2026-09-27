@@ -20,10 +20,12 @@ export type {
 // --- WebSocket通信の型 ---
 export type {
   MessageType,
+  MessagePayloadMap,
   WsMessage,
+  EmptyPayload,
   PositionPayload,
   CommandPayload,
-  ObjectSyncPayload,
+  CommandType,
   StatusPayload,
 } from "./websocket";
 

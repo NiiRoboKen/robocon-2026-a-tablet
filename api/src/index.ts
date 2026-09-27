@@ -6,15 +6,19 @@
  * JSON データとしてシリアル転送される。
  */
 
+import { build } from "bun";
 import { initSerial, sendToSerial } from "./serial.ts";
 
+type MessageType =
+  "ping" | "pong" | "position_update" | "command" | "status" | "error";
+
 interface WsMessage<T = unknown> {
-  type: string;
+  type: MessageType;
   timestamp: number;
   payload: T;
 }
 
-function buildMessage<T>(type: string, payload: T): WsMessage<T> {
+function buildMessage<T>(type: MessageType, payload: T): WsMessage<T> {
   return { type, timestamp: Date.now(), payload };
 }
 
@@ -41,10 +45,6 @@ const server = Bun.serve({
   websocket: {
     open(ws) {
       console.log("[WS] Client connected");
-      const msg = buildMessage("status", {
-        state: "connected",
-      });
-      ws.send(JSON.stringify(msg));
     },
     message(ws, raw) {
       const text =
@@ -53,6 +53,11 @@ const server = Bun.serve({
 
       try {
         const msg: WsMessage = JSON.parse(text);
+
+        if (msg.type == "ping") {
+          ws.send(JSON.stringify(buildMessage("pong", {})));
+          return;
+        }
 
         // 受信したメッセージを /dev/ttyUSB0 へ JSON として転送する
         void sendToSerial(msg).then((ok) => {
@@ -63,12 +68,6 @@ const server = Bun.serve({
 
         // メッセージタイプに応じたハンドリング
         switch (msg.type) {
-          case "ping": {
-            console.log("[WS] Ping");
-            const ack = buildMessage("pong", {});
-            ws.send(JSON.stringify(ack));
-            break;
-          }
           case "command": {
             const payload = msg.payload as {
               command: string;
@@ -83,29 +82,16 @@ const server = Bun.serve({
             ws.send(JSON.stringify(ack));
             break;
           }
-          // case "position_update": {
-          //   const payload = msg.payload as {
-          //     target: string;
-          //     position: { x: number; y: number };
-          //   };
-          //   console.log(
-          //     `[WS] Position update for ${payload.target}:`,
-          //     payload.position,
-          //   );
-
-          //   // 受信確認を返す
-          //   const ack = buildMessage("status", {
-          //     state: "moving",
-          //     position: payload.position,
-          //   });
-          //   ws.send(JSON.stringify(ack));
-          //   break;
-          // }
+          case "position_update": {
+            const payload = msg.payload as {
+              position: { x: number; y: number };
+            };
+            console.log("[WS] Position update for:", payload.position);
+            break;
+          }
           default: {
             // 未知のタイプはエコー
             console.log(`[WS] Unknown type: ${msg.type}`);
-            const echo = buildMessage("echo", { original: msg });
-            ws.send(JSON.stringify(echo));
             break;
           }
         }

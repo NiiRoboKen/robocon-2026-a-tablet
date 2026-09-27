@@ -1,6 +1,7 @@
 import { Rect, Circle } from "react-konva";
 import { useCanvasStore } from "../../stores/useCanvasStore";
 import { getConfig } from "../../config";
+import { useWebSocketStore } from "../../stores/useWebSocketStore";
 
 /**
  * WebSocketで受信したロボット状態と、設定ファイルの障害物を描画するレイヤーコンポーネント。
@@ -13,13 +14,14 @@ import { getConfig } from "../../config";
 export function ObjectLayer() {
   const { colorMode, pixelScale } = useCanvasStore();
   const config = getConfig(colorMode);
+  const { robotStatus } = useWebSocketStore();
 
   return (
     <>
       {/* ロボット本体（設定の初期位置・サイズ・中心補正を反映） */}
       <Rect
-        x={(config.robot.position.x - config.robot.offset.x) * pixelScale}
-        y={(config.robot.position.y - config.robot.offset.y) * pixelScale}
+        x={(robotStatus.position.x + config.robot.offset.x) * pixelScale}
+        y={(robotStatus.position.y + config.robot.offset.y) * pixelScale}
         width={config.robot.size.width * pixelScale}
         height={config.robot.size.height * pixelScale}
         fill="green"

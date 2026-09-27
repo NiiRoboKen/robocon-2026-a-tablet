@@ -1,5 +1,6 @@
 import type { RefObject } from "react";
 import type { WebSocketClient } from "../services/websocketClient";
+import { buildCommandMessage } from "../utils/messageBuilder";
 
 interface SendAemOpenButtonProps {
   /** WebSocketClientインスタンスへのref */
@@ -17,7 +18,7 @@ export function SendArmOpenButton({ wsClient }: SendAemOpenButtonProps) {
       console.warn("[SendAemOpenButton] WebSocket未接続");
       return;
     }
-    client.send("command", { command: "arm_open" });
+    client.send(buildCommandMessage("arm_up"));
   };
 
   return (

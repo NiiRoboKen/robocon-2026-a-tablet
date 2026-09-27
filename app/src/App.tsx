@@ -1,10 +1,9 @@
 import { useWebSocket } from "./hooks/useWebSocket";
 import { SendArmOpenButton } from "./components/sendArmOpenButton";
 import { Konva } from "./components/Konva";
-// import { ControlPanel } from './components/Controls/ControlPanel';
-// import { CoordinateDisplay } from './components/common/CoordinateDisplay';
 import { ToggleColorMode } from "./components/toggleColorButton";
 import "./App.css";
+import { SendPositionButton } from "./components/sendPositionButton";
 
 /**
  * アプリケーションのルートコンポーネント。
@@ -19,13 +18,13 @@ function App() {
   /** WebSocket接続を確立し、サーバーとのリアルタイム通信を管理するref */
   const wsClient = useWebSocket();
 
-
   return (
     <div className="app-container">
       <main>
         <ToggleColorMode />
         <Konva />
         <SendArmOpenButton wsClient={wsClient} />
+        <SendPositionButton wsClient={wsClient} />
       </main>
     </div>
   );

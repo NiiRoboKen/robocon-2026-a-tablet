@@ -1,91 +1,93 @@
-import { Circle, Line, Text } from 'react-konva';
-import { useCanvasStore } from '../../stores/useCanvasStore';
+import { Arrow, Line, Text } from "react-konva";
+import { useCanvasStore } from "../../stores/useCanvasStore";
+import type { Point2D } from "../../types";
+import { useWebSocketStore } from "../../stores/useWebSocketStore";
 
-/**
- * ユーザー操作の視覚フィードバックを描画するレイヤーコンポーネント。
- * - 選択座標: 赤いマーカー（円+十字線+座標テキスト）
- * - カーソル位置: 薄いクロスヘア
- *
- * 'point'モードでクリックした地点にマーカーを表示し、
- * ロボットへの座標送信対象を視覚的に示す。
- */
-export function InteractionLayer() {
-  /** ユーザーがクリックで選択した座標（未選択時はnull） */
-  const selectedPoint = useCanvasStore((s) => s.selectedPoint);
-  /** 現在のカーソル位置（キャンバス外ではnull） */
-  const cursorPosition = useCanvasStore((s) => s.cursorPosition);
+/** 座標ラベル（カーソルの現在位置をワールド座標でテキスト表示） */
+function CoordinateLabel({
+  position,
+  direction,
+  pixelScale,
+}: {
+  position: Point2D;
+  direction: number;
+  pixelScale: number;
+}) {
+  const worldX = Math.round(position.x / pixelScale);
+  const worldY = Math.round(position.y / pixelScale);
+
+  return (
+    <Text
+      text={`x:${worldX}, y:${worldY}, rotation:${direction}`}
+      x={0}
+      y={0}
+    />
+  );
+}
+
+/** 選択地点を示す赤い十字マーカー */
+function CrosshairMarker({
+  position,
+  rotation,
+}: {
+  position: Point2D;
+  rotation: number;
+}) {
+  const size = 10;
 
   return (
     <>
-      {/* 選択された座標のマーカー（赤い円+十字線+座標ラベル） */}
-      {selectedPoint && (
-        <>
-          {/* 選択地点を示す赤い円 */}
-          <Circle
-            x={selectedPoint.x}
-            y={selectedPoint.y}
-            radius={6}
-            fill="#e74c3c"
-            stroke="#c0392b"
-            strokeWidth={2}
-          />
-          {/* 水平方向の十字線 */}
-          <Line
-            points={[
-              selectedPoint.x - 12,
-              selectedPoint.y,
-              selectedPoint.x + 12,
-              selectedPoint.y,
-            ]}
-            stroke="#e74c3c"
-            strokeWidth={1}
-          />
-          {/* 垂直方向の十字線 */}
-          <Line
-            points={[
-              selectedPoint.x,
-              selectedPoint.y - 12,
-              selectedPoint.x,
-              selectedPoint.y + 12,
-            ]}
-            stroke="#e74c3c"
-            strokeWidth={1}
-          />
-          {/* 選択座標のテキスト表示 */}
-          <Text
-            x={selectedPoint.x + 10}
-            y={selectedPoint.y - 20}
-            text={`(${Math.round(selectedPoint.x)}, ${Math.round(selectedPoint.y)})`}
-            fontSize={12}
-            fill="#e74c3c"
-          />
-        </>
+      <Line
+        points={[position.x - size, position.y, position.x + size, position.y]}
+        stroke="red"
+        strokeWidth={5}
+      />
+      <Line
+        points={[position.x, position.y - size, position.x, position.y + size]}
+        stroke="red"
+        strokeWidth={5}
+      />
+      <Arrow
+        points={[
+          position.x,
+          position.y,
+          position.x + 20 * Math.cos((rotation * Math.PI) / 180),
+          position.y + 20 * Math.sin((rotation * Math.PI) / 180),
+        ]}
+        stroke="Green"
+      />
+    </>
+  );
+}
+
+/**
+ * ユーザー操作の視覚フィードバックを描画するレイヤー。
+ * - selectedPoint: クリックで固定された地点を示す赤い十字マーカー
+ * - cursorPosition: 現在のカーソル位置を示す座標ラベル
+ *
+ * 状態の更新は Stage 側の useCanvasInteraction が担当し、
+ * このコンポーネントはストアの値を読み取って描画するだけにする。
+ *   - クリック → selectedPoint が固定される（マーカーは動かない）
+ *   - Konva領域外へマウスが出る → cursorPosition が null になり追従表示が消える
+ */
+export function InteractionLayer() {
+  const { selectedPosition, cursorPosition, pixelScale, selectedDirection} = useCanvasStore();
+
+  return (
+    <>
+      {cursorPosition && (
+        <CoordinateLabel
+          position={cursorPosition}
+          direction={useWebSocketStore.getState().robotStatus.direction}
+          pixelScale={pixelScale}
+        />
       )}
 
-      {/* カーソル位置のクロスヘア（半透明、軽量表示） */}
-      {cursorPosition && (
-        <>
-          <Line
-            points={[
-              cursorPosition.x - 8,
-              cursorPosition.y,
-              cursorPosition.x + 8,
-              cursorPosition.y,
-            ]}
-            stroke="rgba(0,0,0,0.3)"
-            strokeWidth={1}
-          />
-          <Line
-            points={[
-              cursorPosition.x,
-              cursorPosition.y - 8,
-              cursorPosition.x,
-              cursorPosition.y + 8,
-            ]}
-            stroke="rgba(0,0,0,0.3)"
-            strokeWidth={1}
-          />
-        </>
+      {selectedPosition && (
+        <CrosshairMarker
+          position={selectedPosition}
+          rotation={selectedDirection ?? 0}
+        />
       )}
     </>
   );

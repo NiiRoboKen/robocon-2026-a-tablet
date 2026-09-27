@@ -1,4 +1,5 @@
-import type { WsMessage, MessageType } from "../types/websocket";
+import type { WsMessage } from "../types/websocket";
+import { buildMessage } from "../utils/messageBuilder";
 
 /**
  * WebSocketメッセージを受信した際のコールバック関数の型。
@@ -36,6 +37,9 @@ export class WebSocketClient {
   /** 切断時に自動再接続を試みるかどうかのフラグ */
   private shouldReconnect = true;
 
+  /** ping送信用インターバルタイマーのID。未起動時はnull */
+  private pingTimer: ReturnType<typeof setInterval> | null = null;
+
   private pingCounter = 0;
 
   /**
@@ -58,15 +62,19 @@ export class WebSocketClient {
     this.ws.onopen = () => {
       console.log("[WS] 接続完了");
       this.onConnectionChange?.(true);
-      setInterval(() => {
+      // 既存のpingタイマーが残っていれば止めてから起動する（再接続時の多重起動を防ぐ）
+      if (this.pingTimer) clearInterval(this.pingTimer);
+      this.pingTimer = setInterval(() => {
+        this.pingCounter++;
         console.log("[WS] Send ping: ", this.pingCounter);
-        this.send("ping", {});
+        this.send(buildMessage("ping"));
       }, 1000);
     };
 
     this.ws.onmessage = (event) => {
       try {
         const msg = JSON.parse(event.data as string) as WsMessage;
+        console.log("[WS]");
         // 登録された全ハンドラにメッセージを配信
         this.handlers.forEach((h) => h(msg));
       } catch (e) {
@@ -77,6 +85,11 @@ export class WebSocketClient {
     this.ws.onclose = () => {
       console.log("[WS] 切断");
       this.onConnectionChange?.(false);
+      // 切断時はpingタイマーを止める（再接続で新たに起動される）
+      if (this.pingTimer) {
+        clearInterval(this.pingTimer);
+        this.pingTimer = null;
+      }
       // 自動再接続が有効な場合、3秒後に再試行
       if (this.shouldReconnect) {
         this.reconnectTimer = setTimeout(() => this.connect(), 3000);
@@ -97,14 +110,10 @@ export class WebSocketClient {
    * @param type - メッセージ種別（例: 'command', 'position_update'）
    * @param payload - 送信するデータ本体
    */
-  send<T>(type: MessageType, payload: T): void {
+  send(msg: WsMessage): void {
     if (this.ws?.readyState === WebSocket.OPEN) {
-      const msg: WsMessage<T> = {
-        type,
-        timestamp: Date.now(),
-        payload,
-      };
       this.ws.send(JSON.stringify(msg));
+      console.log("[WS]送信完了 : " + msg.type);
     } else {
       console.warn("[WS] 未接続のため送信できません");
     }
@@ -139,6 +148,11 @@ export class WebSocketClient {
     if (this.reconnectTimer) {
       clearTimeout(this.reconnectTimer);
       this.reconnectTimer = null;
+    }
+    // pingタイマーを確実に停止する
+    if (this.pingTimer) {
+      clearInterval(this.pingTimer);
+      this.pingTimer = null;
     }
     this.ws?.close();
     this.ws = null;

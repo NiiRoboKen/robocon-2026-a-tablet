@@ -43,8 +43,6 @@ export type CanvasObjectType = 'circle' | 'rect' | 'line' | 'path';
  * WebSocketで受信したオブジェクト情報を格納し、Konvaで描画する。
  */
 export interface CanvasObject {
-  /** オブジェクトの一意識別子 */
-  id: string;
   /** オブジェクトの描画タイプ */
   type: CanvasObjectType;
   /** オブジェクトの描画位置 */

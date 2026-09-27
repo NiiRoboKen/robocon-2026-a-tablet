@@ -1,5 +1,9 @@
-import { create } from 'zustand';
-import type { WsMessage, StatusPayload } from '../types/websocket';
+import { create } from "zustand";
+import type { WsMessage, RobotStatus } from "../types";
+import { getConfig } from "../config";
+import { useCanvasStore } from "./useCanvasStore";
+
+const config = getConfig(useCanvasStore.getState().colorMode);
 
 /**
  * WebSocketストアの状態定義
@@ -10,15 +14,14 @@ interface WebSocketState {
   /** 最後に受信したWebSocketメッセージ（デバッグ・ログ用） */
   lastMessage: WsMessage | null;
   /** ロボットから受信した最新のステータス情報 */
-  robotStatus: StatusPayload | null;
+  robotStatus: RobotStatus;
 
-  // Actions
   /** 接続状態を更新する（接続/切断時にフックから呼ばれる） */
   setConnected: (connected: boolean) => void;
   /** 受信メッセージを記録する */
   setLastMessage: (msg: WsMessage) => void;
   /** ロボットのステータス情報を更新する */
-  setRobotStatus: (status: StatusPayload) => void;
+  setRobotStatus: (status: RobotStatus) => void;
 }
 
 /**
@@ -35,7 +38,11 @@ interface WebSocketState {
 export const useWebSocketStore = create<WebSocketState>((set) => ({
   isConnected: false,
   lastMessage: null,
-  robotStatus: null,
+  robotStatus: {
+    position: config.robot.position,
+    direction: config.robot.direction,
+    status: null,
+  },
 
   setConnected: (connected) => set({ isConnected: connected }),
   setLastMessage: (msg) => set({ lastMessage: msg }),

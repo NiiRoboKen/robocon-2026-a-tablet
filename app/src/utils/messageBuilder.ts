@@ -1,26 +1,36 @@
 import type {
   WsMessage,
   MessageType,
-  PositionPayload,
-  CommandPayload,
-} from '../types/websocket';
-import type { Point2D } from '../types/geometry';
+  MessagePayloadMap,
+  CommandType,
+} from "../types/websocket";
+import type { Point2D } from "../types/geometry";
 
 /**
  * WebSocketメッセージを組み立てる汎用ヘルパー関数。
  * タイムスタンプを自動付与し、型安全なメッセージオブジェクトを生成する。
  *
- * @typeParam T - ペイロードの型
- * @param type - メッセージ種別（例: 'command', 'position_update'）
- * @param payload - メッセージに含めるデータ本体
+ * 型引数 `K`（メッセージ種別）に応じて `payload` の型が
+ * {@link MessagePayloadMap} により自動決定される。
+ * `ping` / `pong` のように payload 不要な種別では第2引数を省略できる。
+ *
+ * @typeParam K - メッセージ種別
+ * @param type - メッセージ種別（例: 'command', 'position_update', 'ping'）
+ * @param payload - メッセージに含めるデータ本体（種別により型が決まる）
  * @returns タイムスタンプ付きのWebSocketメッセージ
  *
  * @example
  * ```ts
- * const msg = buildMessage('command', { command: 'stop' });
+ * buildMessage("ping");                                    // payload 省略可
+ * buildMessage("command", { command: "stop" });            // OK
+ * buildMessage("position_update", { position: { x: 1, y: 2 } }); // OK
+ * // buildMessage("position_update", { command: "stop" }); // 型エラー
  * ```
  */
-export function buildMessage<T>(type: MessageType, payload: T): WsMessage<T> {
+export function buildMessage<K extends MessageType>(
+  type: K,
+  payload?: MessagePayloadMap[K],
+): WsMessage<K> {
   return {
     type,
     timestamp: Date.now(),
@@ -42,10 +52,10 @@ export function buildMessage<T>(type: MessageType, payload: T): WsMessage<T> {
  * ```
  */
 export function buildPositionMessage(
-  target: string,
-  position: Point2D,
-): WsMessage<PositionPayload> {
-  return buildMessage('position_update', { target, position });
+  p: Point2D,
+  d: number,
+): WsMessage<"position_update"> {
+  return buildMessage("position_update", { position: p, direction: d });
 }
 
 /**
@@ -61,9 +71,6 @@ export function buildPositionMessage(
  * const msg = buildCommandMessage('move', { speed: 100, direction: 'forward' });
  * ```
  */
-export function buildCommandMessage(
-  command: string,
-  params?: Record<string, unknown>,
-): WsMessage<CommandPayload> {
-  return buildMessage('command', { command, params });
+export function buildCommandMessage(c: CommandType): WsMessage<"command"> {
+  return buildMessage("command", { command: c });
 }

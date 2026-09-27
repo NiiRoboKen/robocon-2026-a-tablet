@@ -35,7 +35,7 @@ async function connect(): Promise<void> {
     const p = new SerialPort({
       path: SERIAL_PATH,
       baudRate: SERIAL_BAUD_RATE,
-      autoOpen: false,
+      autoOpen: true,
     });
 
     await p.open();
