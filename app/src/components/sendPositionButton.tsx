@@ -2,7 +2,7 @@ import type { RefObject } from "react";
 import type { WebSocketClient } from "../services/websocketClient";
 import { buildPositionMessage } from "../utils/messageBuilder";
 import { useCanvasStore } from "../stores/useCanvasStore";
-import { pixelToWorld } from "../utils/coordinate";
+import { pixelToWorld, roundPoint } from "../utils/coordinate";
 
 interface SendPositionButtonProps {
   /** WebSocketClientインスタンスへのref */
@@ -23,8 +23,8 @@ export function SendPositionButton({ wsClient }: SendPositionButtonProps) {
     }
     client.send(
       buildPositionMessage(
-        pixelToWorld(selectedPosition, pixelScale),
-        selectedDirection
+        roundPoint(pixelToWorld(selectedPosition, pixelScale), 0),
+        selectedDirection,
       ),
     );
   };

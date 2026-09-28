@@ -24,11 +24,11 @@ import type { ColorMode, ModeConfig, InitialConfig } from "../types/config";
  */
 const redConfig: ModeConfig = {
   field: {
-    size: { width: 6000, height: 10500 },
+    size: { width: 5700, height: 10500 },
     imagePath: "/fieldRedImage.png",
   },
   robot: {
-    position: { x: 6000 - 700, y: 10500 - 700 },
+    originPosition: { x: 1800, y: 10500 - 500 },
     offset: { x: 500, y: 500 },
     size: { width: 1000, height: 1000 },
     direction: 0,
@@ -55,11 +55,11 @@ const redConfig: ModeConfig = {
  */
 const blueConfig: ModeConfig = {
   field: {
-    size: { width: 6000, height: 10500 },
+    size: { width: 5700, height: 10500 },
     imagePath: "/fieldBlueImage.png",
   },
   robot: {
-    position: { x: 700, y: 10500 - 700 },
+    originPosition: { x: 3900, y: 10500 - 500 },
     offset: { x: 500, y: 500 },
     size: { width: 1000, height: 1000 },
     direction: 0,

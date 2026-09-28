@@ -18,8 +18,12 @@ import { getConfig } from "../../config/index.ts";
  * useCanvasInteractionフックで処理する。
  */
 export function Konva() {
-  const { handleTouchStart, handleTouchMove, handleStageMouseMove } =
-    useCanvasInteraction();
+  const {
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    handleStageMouseMove,
+  } = useCanvasInteraction();
   const { colorMode, pixelFieldSize, setPixelFieldSize, setPixelScale } =
     useCanvasStore();
   const config = getConfig(colorMode);
@@ -48,10 +52,12 @@ export function Konva() {
     <Stage
       width={pixelFieldSize.width}
       height={pixelFieldSize.height}
-      onClick={handleTouchStart}
+      onMouseDown={handleTouchStart}
+      onMouseMove={handleStageMouseMove}
+
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
-      onMouseMove={handleStageMouseMove}
+      onTouchEnd={handleTouchEnd}
       style={{ border: "1px solid #ccc", cursor: "crosshair" }}
     >
       {/* レイヤー1: グリッド線（静的、再描画頻度低、イベント無視） */}

@@ -1,4 +1,4 @@
-import type { Point2D } from "../types/geometry";
+import type { Point2D, Size2D } from "../types/geometry";
 
 // realworld width: 6000, height: 10500
 
@@ -76,10 +76,60 @@ export function distance(a: Point2D, b: Point2D): number {
  * // => { x: 3.46, y: 7.89 }
  * ```
  */
-export function roundPoint(point: Point2D, decimals = 1): Point2D {
+export function roundPoint(point: Point2D, decimals = 0): Point2D {
   const factor = 10 ** decimals;
   return {
     x: Math.round(point.x * factor) / factor,
     y: Math.round(point.y * factor) / factor,
+  };
+}
+
+/**
+ * 実世界座標をKonva（キャンバス）のピクセル座標へ変換する（等倍・スケール1:1）。
+ *
+ * 実世界は原点から右方向がx正・上方向がy正。
+ * Konvaは左上が原点で右方向がx正・下方向がy正のため、y軸を反転する。
+ *
+ * @param point - 実世界座標（原点基準、x右正・y上正）
+ * @param origin - キャンバス上での実世界原点の位置（ピクセル座標）
+ * @param fieldSize - フィールドのサイズ（未使用だがAPI互換のため保持）
+ * @returns Konvaキャンバス上のピクセル座標
+ *
+ * @example
+ * ```ts
+ * // 原点がキャンバス左下 (0, height) にある場合
+ * coordinatesWorldToPixel({ x: 100, y: 200 }, { x: 0, y: 10500 }, { width: 6000, height: 10500 });
+ * // => { x: 100, y: 10300 }
+ * ```
+ */
+export function coordinatesWorldToPixel(point: Point2D, origin: Point2D, fieldSize: Size2D): Point2D {
+  void fieldSize;
+  return {
+    x: origin.x + point.x,
+    y: origin.y - point.y,
+  };
+}
+
+/**
+ * Konva（キャンバス）のピクセル座標を実世界座標へ変換する（等倍・スケール1:1）。
+ *
+ * {@link coordinatesWorldToPixel} の逆変換。y軸を反転して実世界座標へ戻す。
+ *
+ * @param point - Konvaキャンバス上のピクセル座標
+ * @param origin - キャンバス上での実世界原点の位置（ピクセル座標）
+ * @param fieldSize - フィールドのサイズ（未使用だがAPI互換のため保持）
+ * @returns 実世界座標（原点基準、x右正・y上正）
+ *
+ * @example
+ * ```ts
+ * coordinatesPixelToWorld({ x: 100, y: 10300 }, { x: 0, y: 10500 }, { width: 6000, height: 10500 });
+ * // => { x: 100, y: 200 }
+ * ```
+ */
+export function coordinatesPixelToWorld(point: Point2D, origin: Point2D, fieldSize: Size2D): Point2D {
+  void fieldSize;
+  return {
+    x: point.x - origin.x,
+    y: origin.y - point.y,
   };
 }

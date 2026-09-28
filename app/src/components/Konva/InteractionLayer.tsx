@@ -1,29 +1,6 @@
-import { Arrow, Line, Text } from "react-konva";
+import { Arrow, Line } from "react-konva";
 import { useCanvasStore } from "../../stores/useCanvasStore";
 import type { Point2D } from "../../types";
-import { useWebSocketStore } from "../../stores/useWebSocketStore";
-
-/** 座標ラベル（カーソルの現在位置をワールド座標でテキスト表示） */
-function CoordinateLabel({
-  position,
-  direction,
-  pixelScale,
-}: {
-  position: Point2D;
-  direction: number;
-  pixelScale: number;
-}) {
-  const worldX = Math.round(position.x / pixelScale);
-  const worldY = Math.round(position.y / pixelScale);
-
-  return (
-    <Text
-      text={`x:${worldX}, y:${worldY}, rotation:${direction}`}
-      x={0}
-      y={0}
-    />
-  );
-}
 
 /** 選択地点を示す赤い十字マーカー */
 function CrosshairMarker({
@@ -71,18 +48,10 @@ function CrosshairMarker({
  *   - Konva領域外へマウスが出る → cursorPosition が null になり追従表示が消える
  */
 export function InteractionLayer() {
-  const { selectedPosition, cursorPosition, pixelScale, selectedDirection} = useCanvasStore();
+  const { selectedPosition, selectedDirection } = useCanvasStore();
 
   return (
     <>
-      {cursorPosition && (
-        <CoordinateLabel
-          position={cursorPosition}
-          direction={useWebSocketStore.getState().robotStatus.direction}
-          pixelScale={pixelScale}
-        />
-      )}
-
       {selectedPosition && (
         <CrosshairMarker
           position={selectedPosition}

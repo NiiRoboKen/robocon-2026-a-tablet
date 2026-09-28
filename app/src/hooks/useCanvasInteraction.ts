@@ -19,10 +19,11 @@ export function useCanvasInteraction() {
   const {
     selectedPosition,
     setSelectedPosition,
-    setCursorPosition,
     setSelectedDirection,
+    cursorDirection,
+    setCursorPosition,
+    setCursorDirection,
   } = useCanvasStore();
-
 
   /**
    * ステージクリック時のハンドラ。
@@ -43,30 +44,34 @@ export function useCanvasInteraction() {
 
   const handleTouchMove = useCallback(
     (e: KonvaEventObject<MouseEvent | TouchEvent>) => {
+      if (!selectedPosition) return;
+
       const stage = e.target.getStage();
       if (!stage) return;
 
       const pointerPos = stage.getPointerPosition();
       if (!pointerPos) return;
 
-      if (selectedPosition === null) return;
-
       const dx = pointerPos.x - selectedPosition.x;
       const dy = pointerPos.y - selectedPosition.y;
 
       const dir = Math.atan2(dx, -dy);
 
-      setSelectedDirection(dir);
+      setCursorDirection(dir);
     },
-    [selectedPosition, setSelectedDirection],
+    [selectedPosition, setCursorDirection],
   );
+
+  const handleTouchEnd = useCallback(() => {
+    setSelectedDirection(cursorDirection);
+  }, [setSelectedDirection, cursorDirection]);
 
   /**
    * マウス移動時のハンドラ。
    * カーソル位置をストアに反映し、CoordinateDisplayなどで表示する。
    */
   const handleStageMouseMove = useCallback(
-    (e: KonvaEventObject<MouseEvent | TouchEvent>) => {
+    (e: KonvaEventObject<MouseEvent>) => {
       const stage = e.target.getStage();
       if (!stage) return;
 
@@ -95,6 +100,7 @@ export function useCanvasInteraction() {
   return {
     handleTouchStart,
     handleTouchMove,
+    handleTouchEnd,
     handleStageMouseMove,
     resetSelectedPosition,
   };

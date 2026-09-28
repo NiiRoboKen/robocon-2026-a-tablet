@@ -29,7 +29,7 @@ export interface FieldConfig {
  */
 export interface RobotInitialState {
   /** 初期位置（実世界座標 mm, フィールド原点基準） */
-  position: Point2D;
+  originPosition: Point2D;
   /** 中心補正（実世界座標 mm） */
   offset: Point2D;
   /** 機体のサイズ */

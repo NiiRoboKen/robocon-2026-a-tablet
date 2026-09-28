@@ -4,6 +4,8 @@ import { Konva } from "./components/Konva";
 import { ToggleColorMode } from "./components/toggleColorButton";
 import "./App.css";
 import { SendPositionButton } from "./components/sendPositionButton";
+import { SelectedInfoLabel } from "./components/selectedInfoLabel";
+import { CursorInfoLabel } from "./components/cursorInfoLabel";
 
 /**
  * アプリケーションのルートコンポーネント。
@@ -22,6 +24,8 @@ function App() {
     <div className="app-container">
       <main>
         <ToggleColorMode />
+        <SelectedInfoLabel />
+        <CursorInfoLabel />
         <Konva />
         <SendArmOpenButton wsClient={wsClient} />
         <SendPositionButton wsClient={wsClient} />
