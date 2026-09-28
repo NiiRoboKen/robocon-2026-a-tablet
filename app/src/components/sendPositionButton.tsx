@@ -2,7 +2,13 @@ import type { RefObject } from "react";
 import type { WebSocketClient } from "../services/websocketClient";
 import { buildPositionMessage } from "../utils/messageBuilder";
 import { useCanvasStore } from "../stores/useCanvasStore";
-import { pixelToWorld, roundPoint } from "../utils/coordinate";
+import { getConfig } from "../config";
+import {
+  coordinatesPixelToWorld,
+  directionToDisplayDegrees,
+  pixelToWorld,
+  roundPoint,
+} from "../utils/coordinate";
 
 interface SendPositionButtonProps {
   /** WebSocketClientインスタンスへのref */
@@ -10,7 +16,8 @@ interface SendPositionButtonProps {
 }
 
 export function SendPositionButton({ wsClient }: SendPositionButtonProps) {
-  const { selectedPosition, pixelScale, selectedDirection } = useCanvasStore();
+  const { colorMode, selectedPosition, pixelScale, selectedDirection } =
+    useCanvasStore();
   const handleClick = () => {
     const client = wsClient.current;
     if (!client) {
@@ -21,12 +28,18 @@ export function SendPositionButton({ wsClient }: SendPositionButtonProps) {
       console.warn("[SendPositionButton] 座標が未選択");
       return;
     }
-    client.send(
-      buildPositionMessage(
-        roundPoint(pixelToWorld(selectedPosition, pixelScale), 0),
-        selectedDirection,
-      ),
+
+    // 表示（SelectedInfoLabel）と同じ変換経路で実世界座標・度数へ変換する。
+    const origin = getConfig(colorMode).robot.originPosition;
+    const worldPosition = coordinatesPixelToWorld(
+      roundPoint(pixelToWorld(selectedPosition, pixelScale), 0),
+      origin,
     );
+    const worldDirection = Math.round(
+      directionToDisplayDegrees(selectedDirection),
+    );
+
+    client.send(buildPositionMessage(worldPosition, worldDirection));
   };
 
   return (

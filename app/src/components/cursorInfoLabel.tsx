@@ -2,6 +2,7 @@ import { useCanvasStore } from "../stores/useCanvasStore";
 import { getConfig } from "../config";
 import {
   coordinatesPixelToWorld,
+  directionToDisplayDegrees,
   pixelToWorld,
   roundPoint,
 } from "../utils/coordinate";
@@ -22,7 +23,7 @@ export function CursorInfoLabel() {
     <>
       <label>
         Cursor Position: x={realPosition.x}, y={realPosition.y}, dir=
-        {(cursorDirection * 180) / Math.PI}
+        {Math.round(directionToDisplayDegrees(cursorDirection))}
       </label>
     </>
   );

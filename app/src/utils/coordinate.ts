@@ -137,3 +137,18 @@ export function coordinatesPixelToWorld(
     y: origin.y - point.y,
   };
 }
+
+/** 角度（度）を (-180, 180] に正規化する。JSの % が負を返すため mod を2回取る。 */
+export function normalizeDegrees(deg: number): number {
+  const wrapped = ((((deg + 180) % 360) + 360) % 360) - 180;
+  return wrapped === -180 ? 180 : wrapped;
+}
+
+/**
+ * 内部角（右向き0度・反時計回り正・ラジアン）を
+ * 表示/送信用の角度（上向き0度・反時計回り正・度・(-180,180]）へ変換する。
+ * 上向きが内部の+90度に相当するため90度引き、正規化する。
+ */
+export function directionToDisplayDegrees(rad: number): number {
+  return normalizeDegrees((rad * 180) / Math.PI - 90);
+}
