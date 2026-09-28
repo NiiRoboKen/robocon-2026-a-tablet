@@ -58,7 +58,7 @@ export function ObjectLayer() {
           robotCenter.x + arrowLength * pixelScale * Math.cos(rotationRad),
           robotCenter.y + arrowLength * pixelScale * Math.sin(rotationRad),
         ]}
-        stroke="red"
+        stroke={colorMode}
         strokeWidth={5}
       />
 
