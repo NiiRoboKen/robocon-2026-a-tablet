@@ -1,5 +1,4 @@
 import { useWebSocket } from "./hooks/useWebSocket";
-import { SendArmOpenButton } from "./components/sendArmOpenButton";
 import { Konva } from "./components/Konva";
 import { ToggleColorMode } from "./components/toggleColorButton";
 import "./App.css";
@@ -22,13 +21,16 @@ function App() {
 
   return (
     <div className="app-container">
-      <main>
-        <ToggleColorMode />
-        <SelectedInfoLabel />
-        <CursorInfoLabel />
-        <Konva />
-        <SendArmOpenButton wsClient={wsClient} />
-        <SendPositionButton wsClient={wsClient} />
+      <main className="app-main">
+        <section className="left-pane">
+          <ToggleColorMode />
+          <Konva />
+        </section>
+        <section className="right-pane">
+          <SelectedInfoLabel />
+          <CursorInfoLabel />
+          <SendPositionButton wsClient={wsClient} />
+        </section>
       </main>
     </div>
   );
