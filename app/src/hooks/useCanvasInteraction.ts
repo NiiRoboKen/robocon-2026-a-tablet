@@ -38,8 +38,9 @@ export function useCanvasInteraction() {
 
       const point: Point2D = { x: pointerPos.x, y: pointerPos.y };
       setSelectedPosition(point);
+      setCursorPosition(point);
     },
-    [setSelectedPosition],
+    [setSelectedPosition, setCursorPosition],
   );
 
   const handleTouchMove = useCallback(
