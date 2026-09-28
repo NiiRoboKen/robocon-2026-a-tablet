@@ -23,10 +23,25 @@ import type { ColorMode, ModeConfig, InitialConfig } from "../types/config";
  * red モードの設定。
  */
 const redConfig: ModeConfig = {
+  stage: {
+    size: { width: 5850, height: 10800 },
+    margin: {
+      left: 300,
+      right: 150,
+      top: 150,
+      bottom: 150,
+    },
+  },
   field: {
-    size: { width: 5700, height: 10500 },
+    size: { width: 5400, height: 10500 },
     imagePath: "/fieldRedImage.png",
   },
+  // robot: {
+  //   originPosition: { x: 1800, y: 10500 - 500 },
+  //   offset: { x: 500, y: 500 },
+  //   size: { width: 1000, height: 1000 },
+  //   direction: 0,
+  // },
   robot: {
     originPosition: { x: 1800, y: 10500 - 500 },
     offset: { x: 500, y: 500 },
@@ -54,8 +69,17 @@ const redConfig: ModeConfig = {
  * blue モードの設定。
  */
 const blueConfig: ModeConfig = {
+  stage: {
+    size: { width: 5850, height: 10800 },
+    margin: {
+      left: 150,
+      right: 300,
+      top: 150,
+      bottom: 150,
+    },
+  },
   field: {
-    size: { width: 5700, height: 10500 },
+    size: { width: 5400, height: 10500 },
     imagePath: "/fieldBlueImage.png",
   },
   robot: {

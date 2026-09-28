@@ -12,19 +12,17 @@ export function SelectedInfoLabel() {
 
   if (!selectedPosition) return;
 
-  const fieldSize = getConfig(colorMode).field.size;
   const origin = getConfig(colorMode).robot.originPosition;
   const realPosition = coordinatesPixelToWorld(
     roundPoint(pixelToWorld(selectedPosition, pixelScale)),
     origin,
-    fieldSize,
   );
 
   return (
     <>
       <label>
         Selected Position: x={realPosition.x}, y={realPosition.y}, dir=
-        {selectedDirection}
+        {selectedDirection * 180 / Math.PI}
       </label>
     </>
   );

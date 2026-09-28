@@ -102,8 +102,10 @@ export function roundPoint(point: Point2D, decimals = 0): Point2D {
  * // => { x: 100, y: 10300 }
  * ```
  */
-export function coordinatesWorldToPixel(point: Point2D, origin: Point2D, fieldSize: Size2D): Point2D {
-  void fieldSize;
+export function coordinatesWorldToPixel(
+  point: Point2D,
+  origin: Point2D,
+): Point2D {
   return {
     x: origin.x + point.x,
     y: origin.y - point.y,
@@ -126,8 +128,10 @@ export function coordinatesWorldToPixel(point: Point2D, origin: Point2D, fieldSi
  * // => { x: 100, y: 200 }
  * ```
  */
-export function coordinatesPixelToWorld(point: Point2D, origin: Point2D, fieldSize: Size2D): Point2D {
-  void fieldSize;
+export function coordinatesPixelToWorld(
+  point: Point2D,
+  origin: Point2D,
+): Point2D {
   return {
     x: point.x - origin.x,
     y: origin.y - point.y,

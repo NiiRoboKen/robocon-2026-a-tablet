@@ -12,19 +12,17 @@ export function CursorInfoLabel() {
 
   if (!cursorPosition) return;
 
-  const fieldSize = getConfig(colorMode).field.size;
   const origin = getConfig(colorMode).robot.originPosition;
   const realPosition = coordinatesPixelToWorld(
     roundPoint(pixelToWorld(cursorPosition, pixelScale)),
     origin,
-    fieldSize,
   );
 
   return (
     <>
       <label>
         Cursor Position: x={realPosition.x}, y={realPosition.y}, dir=
-        {cursorDirection}
+        {(cursorDirection * 180) / Math.PI}
       </label>
     </>
   );

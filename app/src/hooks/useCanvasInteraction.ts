@@ -54,9 +54,7 @@ export function useCanvasInteraction() {
 
       const dx = pointerPos.x - selectedPosition.x;
       const dy = pointerPos.y - selectedPosition.y;
-
-      const dir = Math.atan2(dx, -dy);
-
+      const dir = Math.atan2(-dy, dx);
       setCursorDirection(dir);
     },
     [selectedPosition, setCursorDirection],

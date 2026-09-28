@@ -13,6 +13,16 @@ import type { Point2D, Size2D } from "./geometry";
  */
 export type ColorMode = "red" | "blue";
 
+export interface StageConfig {
+  size: Size2D;
+  margin: {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+  };
+}
+
 /**
  * フィールド（競技領域）の設定。
  * すべての座標・寸法は実世界座標（mm）
@@ -88,6 +98,7 @@ export type ObstacleConfig = RectObstacleConfig | CircleObstacleConfig;
  * フィールド・ロボット・障害物の値は red / blue で個別に定義する。
  */
 export interface ModeConfig {
+  stage: StageConfig;
   /** フィールドの設定 */
   field: FieldConfig;
   /** ロボットの設定 */

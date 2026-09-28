@@ -52,6 +52,7 @@ export function Konva() {
     <Stage
       width={pixelFieldSize.width}
       height={pixelFieldSize.height}
+
       onMouseDown={handleTouchStart}
       onMouseMove={handleStageMouseMove}
 

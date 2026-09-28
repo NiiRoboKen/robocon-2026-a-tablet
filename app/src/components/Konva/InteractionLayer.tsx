@@ -1,37 +1,68 @@
 import { Arrow, Line } from "react-konva";
 import { useCanvasStore } from "../../stores/useCanvasStore";
 import type { Point2D } from "../../types";
+import { useWebSocketStore } from "../../stores/useWebSocketStore";
 
 /** 選択地点を示す赤い十字マーカー */
 function CrosshairMarker({
   position,
-  rotation,
+  cursorDir,
+  robotDir,
+  robotColor,
 }: {
   position: Point2D;
-  rotation: number;
+  cursorDir: number;
+  robotDir: number;
+  robotColor: "red" | "blue";
 }) {
-  const size = 10;
+  const crossSize = 10;
+  const arrowLineLength = 100;
 
   return (
     <>
       <Line
-        points={[position.x - size, position.y, position.x + size, position.y]}
-        stroke="red"
+        points={[
+          position.x - crossSize,
+          position.y,
+          position.x + crossSize,
+          position.y,
+        ]}
+        stroke={robotColor}
         strokeWidth={5}
       />
       <Line
-        points={[position.x, position.y - size, position.x, position.y + size]}
-        stroke="red"
+        points={[
+          position.x,
+          position.y - crossSize,
+          position.x,
+          position.y + crossSize,
+        ]}
+        stroke={robotColor}
         strokeWidth={5}
       />
+
+      {/*ロボットの現在角度*/}
       <Arrow
         points={[
           position.x,
           position.y,
-          position.x + 20 * Math.cos((rotation * Math.PI) / 180),
-          position.y + 20 * Math.sin((rotation * Math.PI) / 180),
+          position.x + arrowLineLength * Math.cos(robotDir),
+          position.y - arrowLineLength * Math.sin(robotDir),
+        ]}
+        stroke={robotColor}
+        strokeWidth={5}
+      />
+
+      {/*目標角度*/}
+      <Arrow
+        points={[
+          position.x,
+          position.y,
+          position.x + arrowLineLength * Math.cos(cursorDir),
+          position.y - arrowLineLength * Math.sin(cursorDir),
         ]}
         stroke="Green"
+        strokeWidth={5}
       />
     </>
   );
@@ -48,14 +79,18 @@ function CrosshairMarker({
  *   - Konva領域外へマウスが出る → cursorPosition が null になり追従表示が消える
  */
 export function InteractionLayer() {
-  const { selectedPosition, selectedDirection } = useCanvasStore();
+  const { colorMode, selectedPosition, cursorDirection } = useCanvasStore();
+  const { robotStatus } = useWebSocketStore();
 
+  const RobotDirection = robotStatus.direction;
   return (
     <>
       {selectedPosition && (
         <CrosshairMarker
           position={selectedPosition}
-          rotation={selectedDirection ?? 0}
+          cursorDir={cursorDirection}
+          robotDir={RobotDirection}
+          robotColor={colorMode}
         />
       )}
     </>
