@@ -87,7 +87,7 @@ export function InteractionLayer() {
   const RobotRad = ((robotStatus.direction + 90) * Math.PI) / 180;
   return (
     <>
-      {selectedPosition && (
+      {selectedPosition && cursorDirection !== null && (
         <CrosshairMarker
           position={selectedPosition}
           cursorDir={cursorDirection}

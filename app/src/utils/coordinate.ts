@@ -1,4 +1,4 @@
-import type { Point2D, Size2D } from "../types/geometry";
+import type { Point2D } from "../types/geometry";
 
 // realworld width: 6000, height: 10500
 

@@ -10,7 +10,7 @@ export function CursorInfoLabel() {
   const { colorMode, pixelScale, cursorDirection, cursorPosition } =
     useCanvasStore();
 
-  if (!cursorPosition) return;
+  if (!cursorPosition || cursorDirection === null) return;
 
   const origin = getConfig(colorMode).robot.originPosition;
   const realPosition = coordinatesPixelToWorld(

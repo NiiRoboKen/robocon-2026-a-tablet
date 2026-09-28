@@ -10,7 +10,7 @@ export function SelectedInfoLabel() {
   const { colorMode, pixelScale, selectedPosition, selectedDirection } =
     useCanvasStore();
 
-  if (!selectedPosition) return;
+  if (!selectedPosition || selectedDirection === null) return;
 
   const origin = getConfig(colorMode).robot.originPosition;
   const realPosition = coordinatesPixelToWorld(
