@@ -9,14 +9,16 @@ function CrosshairMarker({
   cursorDir,
   robotDir,
   robotColor,
+  pixelScale
 }: {
   position: Point2D;
   cursorDir: number;
   robotDir: number;
   robotColor: "red" | "blue";
+  pixelScale: number
 }) {
   const crossSize = 10;
-  const arrowLineLength = 100;
+  const arrowLineLength = 1000 * pixelScale;
 
   return (
     <>
@@ -79,18 +81,19 @@ function CrosshairMarker({
  *   - Konva領域外へマウスが出る → cursorPosition が null になり追従表示が消える
  */
 export function InteractionLayer() {
-  const { colorMode, selectedPosition, cursorDirection } = useCanvasStore();
+  const { colorMode, selectedPosition, cursorDirection , pixelScale} = useCanvasStore();
   const { robotStatus } = useWebSocketStore();
 
-  const RobotDirection = ((robotStatus.direction - 90) * 180) / Math.PI;
+  const RobotRad = ((robotStatus.direction + 90) * Math.PI) / 180;
   return (
     <>
       {selectedPosition && (
         <CrosshairMarker
           position={selectedPosition}
           cursorDir={cursorDirection}
-          robotDir={RobotDirection}
+          robotDir={RobotRad}
           robotColor={colorMode}
+          pixelScale={pixelScale}
         />
       )}
     </>

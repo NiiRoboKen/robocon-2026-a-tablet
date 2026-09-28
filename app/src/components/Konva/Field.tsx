@@ -3,16 +3,18 @@ import useImage from "use-image";
 import { useCanvasStore } from "../../stores/useCanvasStore";
 import { getConfig } from "../../config";
 import type { Point2D } from "../../types";
-import { worldToPixel } from "../../utils/coordinate";
 
 function CrosshairMarker({
   position,
   rotation,
+  pixelScale,
 }: {
   position: Point2D;
   rotation: number;
+  pixelScale: number;
 }) {
-  const size = 10;
+  const size = 100 * pixelScale;
+  const ArrrowLength = 1000 * pixelScale;
 
   return (
     <>
@@ -30,10 +32,11 @@ function CrosshairMarker({
         points={[
           position.x,
           position.y,
-          position.x + 20 * Math.cos((rotation * Math.PI) / 180),
-          position.y + 20 * Math.sin((rotation * Math.PI) / 180),
+          position.x + ArrrowLength * Math.cos(rotation),
+          position.y - ArrrowLength * Math.sin(rotation),
         ]}
         stroke="Green"
+        strokeWidth={5}
       />
     </>
   );
@@ -46,16 +49,23 @@ function CrosshairMarker({
 export function FieldLayer() {
   const { colorMode, pixelFieldSize, pixelScale } = useCanvasStore();
 
-  const rotation = getConfig(colorMode).robot.direction;
-  const worldOriginPoint = getConfig(colorMode).robot.originPosition;
-  const pixelOriginPoint = worldToPixel(worldOriginPoint, pixelScale);
+  const config = getConfig(colorMode);
+  const worldOriginPoint = config.robot.originPosition;
+  const pixelOriginPoint = {
+    x: (worldOriginPoint.x + config.stage.margin.left) * pixelScale,
+    y: (worldOriginPoint.y + config.stage.margin.top) * pixelScale,
+  };
 
   const [image] = useImage(getConfig(colorMode).field.imagePath);
 
   return (
     <>
       <Image image={image} x={0} y={0} size={pixelFieldSize} />
-      <CrosshairMarker position={pixelOriginPoint} rotation={rotation} />
+      <CrosshairMarker
+        position={pixelOriginPoint}
+        rotation={((config.robot.direction + 90) * Math.PI) / 180}
+        pixelScale={pixelScale}
+      />
     </>
   );
 }

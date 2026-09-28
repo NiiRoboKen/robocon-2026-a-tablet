@@ -39,7 +39,7 @@ export const useWebSocketStore = create<WebSocketState>((set) => ({
   isConnected: false,
   lastMessage: null,
   robotStatus: {
-    position: config.robot.originPosition,
+    position: { x: 0, y: 0 },
     direction: config.robot.direction,
     status: null,
   },

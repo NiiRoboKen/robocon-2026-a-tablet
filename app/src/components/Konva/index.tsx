@@ -35,7 +35,7 @@ export function Konva() {
       const scale = (window.innerHeight * 0.9) / config.stage.size.height;
       setPixelScale(scale);
       setPixelFieldSize({
-        width:  config.stage.size.width * scale,
+        width: config.stage.size.width * scale,
         height: config.stage.size.height * scale,
       });
     };
