@@ -82,7 +82,7 @@ export function InteractionLayer() {
   const { colorMode, selectedPosition, cursorDirection } = useCanvasStore();
   const { robotStatus } = useWebSocketStore();
 
-  const RobotDirection = robotStatus.direction;
+  const RobotDirection = ((robotStatus.direction - 90) * 180) / Math.PI;
   return (
     <>
       {selectedPosition && (

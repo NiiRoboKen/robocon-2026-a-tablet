@@ -32,11 +32,11 @@ export function Konva() {
   // レンダリング中ではなくマウント時とリサイズ時に実行し、無限再レンダリングを防ぐ。
   useEffect(() => {
     const updateSize = () => {
-      const scale = (window.innerHeight * 0.9) / config.field.size.height;
+      const scale = (window.innerHeight * 0.9) / config.stage.size.height;
       setPixelScale(scale);
       setPixelFieldSize({
-        width: config.field.size.width * scale,
-        height: config.field.size.height * scale,
+        width:  config.stage.size.width * scale,
+        height: config.stage.size.height * scale,
       });
     };
 

@@ -18,26 +18,27 @@ export function ObjectLayer() {
 
   return (
     <>
-      {/* ロボット本体（設定の初期位置・サイズ・中心補正を反映） */}
+      {/* ロボット本体。
+          x,y はロボット中心（robotStatus.position）に合わせ、
+          offsetX/offsetY に幅・高さの半分を指定することで、
+          回転の中心を矩形の中心にする。これにより中心の Circle と常に一致する。 */}
       <Rect
-        x={
-          (robotStatus.position.x -
-            config.robot.offset.x +
-            config.stage.margin.left) *
-          pixelScale
-        }
-        y={
-          (robotStatus.position.y -
-            config.robot.offset.y +
-            config.stage.margin.top) *
-          pixelScale
-        }
+        x={(robotStatus.position.x + config.stage.margin.left) * pixelScale}
+        y={(robotStatus.position.y + config.stage.margin.top) * pixelScale}
         width={config.robot.size.width * pixelScale}
         height={config.robot.size.height * pixelScale}
+        offsetX={(config.robot.offset.x * pixelScale)}
+        offsetY={(config.robot.offset.y * pixelScale)}
         fill="green"
         stroke="black"
         rotation={robotStatus.direction - 90}
         strokeWidth={5}
+      />
+      <Circle
+        x={(robotStatus.position.x + config.stage.margin.left) * pixelScale}
+        y={(robotStatus.position.y + config.stage.margin.top) * pixelScale}
+        radius={10}
+        fill="blue"
       />
 
       {/* 障害物一覧（矩形 / 円を shape で出し分け） */}

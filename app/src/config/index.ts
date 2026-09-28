@@ -43,7 +43,7 @@ const redConfig: ModeConfig = {
   //   direction: 0,
   // },
   robot: {
-    originPosition: { x: 1800, y: 10500 - 500 },
+    originPosition: { x: 1500, y: 10500 - 500 },
     offset: { x: 500, y: 500 },
     size: { width: 1000, height: 1000 },
     direction: 0,
