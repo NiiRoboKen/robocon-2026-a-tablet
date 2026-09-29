@@ -1,13 +1,14 @@
 services:
   app:
-    build:
-      context: .
+    image: node:24-alpine
     ports:
       - "80:80"
     user: node
     volumes:
       - ./app/:/home/node/app
+    working_dir: /home/node/app
     tty: true
+    command: npm run dev
 
   api:
     image: oven/bun:alpine
