@@ -2,19 +2,8 @@ import { useCallback } from "react";
 import type { KonvaEventObject } from "konva/lib/Node";
 import { useCanvasStore } from "../stores/useCanvasStore";
 import type { Point2D } from "../types/geometry";
+import { useWebSocketStore } from "../stores/useWebSocketStore";
 
-/**
- * キャンバス上のユーザー操作（クリック・マウス移動・マウス離脱）を処理するカスタムフック。
- * Konvaステージのイベントハンドラを提供し、操作モードに応じた座標選択やカーソル追跡を行う。
- *
- * @returns ステージに設定するイベントハンドラ群
- *
- * @example
- * ```tsx
- * const { handleStageClick, handleStageMouseMove, handleStageMouseLeave } = useCanvasInteraction();
- * <Stage onClick={handleStageClick} onMouseMove={handleStageMouseMove} onMouseLeave={handleStageMouseLeave} />
- * ```
- */
 export function useCanvasInteraction() {
   const {
     selectedPosition,
@@ -25,9 +14,6 @@ export function useCanvasInteraction() {
     setCursorDirection,
   } = useCanvasStore();
 
-  /**
-   * ステージクリック時のハンドラ。
-   */
   const handleTouchStart = useCallback(
     (e: KonvaEventObject<MouseEvent | TouchEvent>) => {
       const stage = e.target.getStage();
@@ -64,11 +50,7 @@ export function useCanvasInteraction() {
     setSelectedDirection(cursorDirection);
   }, [setSelectedDirection, cursorDirection]);
 
-  /**
-   * マウス移動時のハンドラ。
-   * カーソル位置をストアに反映し、CoordinateDisplayなどで表示する。
-   */
-  const handleStageMouseMove = useCallback(
+  const handleMouseOver = useCallback(
     (e: KonvaEventObject<MouseEvent>) => {
       const stage = e.target.getStage();
       if (!stage) return;
@@ -84,22 +66,22 @@ export function useCanvasInteraction() {
     [setCursorPosition],
   );
 
-  /**
-   * マウスがステージ外に出た時のハンドラ。
-   * カーソル位置をnullにリセットして座標表示を消し、
-   * クリックで固定した選択座標（マーカー）も解除する。
-   */
+  const handleMouseOut = useCallback(() => {
+    setCursorPosition(null);
+  }, [setCursorPosition]);
+
   const resetSelectedPosition = useCallback(() => {
     setCursorPosition(null);
     setSelectedPosition(null);
-    setSelectedDirection(null);
+    setSelectedDirection(useWebSocketStore.getState().robotStatus.direction);
   }, [setCursorPosition, setSelectedPosition, setSelectedDirection]);
 
   return {
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
-    handleStageMouseMove,
+    handleMouseOver,
+    handleMouseOut,
     resetSelectedPosition,
   };
 }

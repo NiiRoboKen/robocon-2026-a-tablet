@@ -5,7 +5,6 @@ import { useCanvasStore } from "../stores/useCanvasStore";
 import { pixelToWorld, roundPoint } from "../utils/coordinate";
 
 interface SendPositionButtonProps {
-  /** WebSocketClientインスタンスへのref */
   wsClient: RefObject<WebSocketClient | null>;
 }
 

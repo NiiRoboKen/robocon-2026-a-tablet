@@ -3,7 +3,6 @@ import { useCanvasStore } from "../../stores/useCanvasStore";
 import type { Point2D } from "../../types";
 import { useWebSocketStore } from "../../stores/useWebSocketStore";
 
-/** 選択地点を示す赤い十字マーカー */
 function CrosshairMarker({
   position,
   cursorDir,
@@ -43,7 +42,7 @@ function CrosshairMarker({
         strokeWidth={5}
       />
 
-      {/*ロボットの現在角度*/}
+      {/* 現在角度 */}
       <Arrow
         points={[
           position.x,
@@ -55,7 +54,7 @@ function CrosshairMarker({
         strokeWidth={5}
       />
 
-      {/*目標角度*/}
+      {/* 目標角度 */}
       <Arrow
         points={[
           position.x,
@@ -70,16 +69,6 @@ function CrosshairMarker({
   );
 }
 
-/**
- * ユーザー操作の視覚フィードバックを描画するレイヤー。
- * - selectedPoint: クリックで固定された地点を示す赤い十字マーカー
- * - cursorPosition: 現在のカーソル位置を示す座標ラベル
- *
- * 状態の更新は Stage 側の useCanvasInteraction が担当し、
- * このコンポーネントはストアの値を読み取って描画するだけにする。
- *   - クリック → selectedPoint が固定される（マーカーは動かない）
- *   - Konva領域外へマウスが出る → cursorPosition が null になり追従表示が消える
- */
 export function InteractionLayer() {
   const { colorMode, selectedPosition, cursorDirection , pixelScale} = useCanvasStore();
   const { robotStatus } = useWebSocketStore();
