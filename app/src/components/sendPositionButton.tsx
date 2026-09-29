@@ -11,7 +11,6 @@ import {
 } from "../utils/coordinate";
 
 interface SendPositionButtonProps {
-  /** WebSocketClientインスタンスへのref */
   wsClient: RefObject<WebSocketClient | null>;
 }
 

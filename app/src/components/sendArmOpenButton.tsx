@@ -3,14 +3,9 @@ import type { WebSocketClient } from "../services/websocketClient";
 import { buildCommandMessage } from "../utils/messageBuilder";
 
 interface SendAemOpenButtonProps {
-  /** WebSocketClientインスタンスへのref */
   wsClient: RefObject<WebSocketClient | null>;
 }
 
-/**
- * アームを開くコマンドをWebSocket経由で送信するボタンコンポーネント。
- * クリック時に 'arm_open' コマンドをサーバーに送信する。
- */
 export function SendArmOpenButton({ wsClient }: SendAemOpenButtonProps) {
   const handleClick = () => {
     const client = wsClient.current;

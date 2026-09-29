@@ -1,11 +1,3 @@
-/**
- * Bun WebSocket サーバー
- * /app の WsMessage<T> 形式に対応
- *
- * クライアントから受信したメッセージは /dev/ttyUSB0 へ
- * JSON データとしてシリアル転送される。
- */
-
 import { build } from "bun";
 import { initSerial, sendToSerial } from "./serial.ts";
 
@@ -22,7 +14,6 @@ function buildMessage<T>(type: MessageType, payload: T): WsMessage<T> {
   return { type, timestamp: Date.now(), payload };
 }
 
-// サーバー起動時にシリアルポートへ接続する
 initSerial();
 
 const server = Bun.serve({
@@ -59,14 +50,12 @@ const server = Bun.serve({
           return;
         }
 
-        // 受信したメッセージを /dev/ttyUSB0 へ JSON として転送する
         void sendToSerial(msg).then((ok) => {
           if (ok) {
             console.log(`[Serial] Forwarded message type=${msg.type}`);
           }
         });
 
-        // メッセージタイプに応じたハンドリング
         switch (msg.type) {
           case "command": {
             const payload = msg.payload as {
@@ -75,7 +64,6 @@ const server = Bun.serve({
             };
             console.log(`[WS] Command: ${payload.command}`, payload.params);
 
-            // コマンドに対するACK応答
             const ack = buildMessage("status", {
               state: `ack:${payload.command}`,
             });
@@ -90,13 +78,11 @@ const server = Bun.serve({
             break;
           }
           default: {
-            // 未知のタイプはエコー
             console.log(`[WS] Unknown type: ${msg.type}`);
             break;
           }
         }
       } catch {
-        // JSON パース失敗時はエラーメッセージを返す
         console.error("[WS] Failed to parse message");
         const err = buildMessage("error", { message: "Invalid JSON" });
         ws.send(JSON.stringify(err));

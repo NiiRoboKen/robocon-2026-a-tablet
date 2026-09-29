@@ -42,10 +42,6 @@ function CrosshairMarker({
   );
 }
 
-/**
- * キャンバス上に背景画像を描画するレイヤーコンポーネント。
- * listening={false}のLayerに配置することでイベント処理を省略し、パフォーマンスを向上させる。
- */
 export function FieldLayer() {
   const { colorMode, pixelFieldSize, pixelScale } = useCanvasStore();
 
