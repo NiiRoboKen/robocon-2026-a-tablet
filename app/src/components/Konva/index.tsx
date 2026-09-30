@@ -15,24 +15,47 @@ export function Konva() {
     handleMouseOver,
     handleMouseOut
   } = useCanvasInteraction();
-  const { colorMode, pixelFieldSize, setPixelFieldSize, setPixelScale } =
+  const { colorMode, pixelFieldSize, pixelRatio, setPixelFieldSize, setPixelScale, setPixelRatio } =
     useCanvasStore();
   const config = getConfig(colorMode);
 
   useEffect(() => {
+    // iOS Safari などの Canvas 面積上限 (約 16.7M px²) に対する安全マージン
+    const MAX_CANVAS_AREA = 16_777_216;
+
     const updateSize = () => {
       const scale = (window.innerHeight * 0.9) / config.stage.size.height;
+      const displayWidth = config.stage.size.width * scale;
+      const displayHeight = config.stage.size.height * scale;
+
       setPixelScale(scale);
       setPixelFieldSize({
-        width: config.stage.size.width * scale,
-        height: config.stage.size.height * scale,
+        width: displayWidth,
+        height: displayHeight,
       });
+
+      // 内部解像度の上限を stage.size (world 解像度) までとする。
+      // 表示解像度に対する world 解像度の比 = 1 / scale。
+      // デバイスの devicePixelRatio がこれを超えても意味がないため min を取る。
+      let ratio = Math.min(window.devicePixelRatio || 1, 1 / scale);
+
+      // さらに Canvas の総面積が端末上限を超えないよう ratio を抑制する。
+      const area = displayWidth * displayHeight * ratio * ratio;
+      if (area > MAX_CANVAS_AREA) {
+        ratio *= Math.sqrt(MAX_CANVAS_AREA / area);
+      }
+
+      setPixelRatio(ratio);
     };
 
     updateSize();
     window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, [window.innerWidth, window.innerHeight]);
+    window.addEventListener("orientationchange", updateSize);
+    return () => {
+      window.removeEventListener("resize", updateSize);
+      window.removeEventListener("orientationchange", updateSize);
+    };
+  }, [config.stage.size.height, config.stage.size.width, setPixelFieldSize, setPixelScale, setPixelRatio]);
 
   if (!pixelFieldSize) return null;
 
@@ -40,6 +63,7 @@ export function Konva() {
     <Stage
       width={pixelFieldSize.width}
       height={pixelFieldSize.height}
+      pixelRatio={pixelRatio}
 
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
