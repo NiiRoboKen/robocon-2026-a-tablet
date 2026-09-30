@@ -8,13 +8,13 @@ function CrosshairMarker({
   cursorDir,
   robotDir,
   robotColor,
-  pixelScale
+  pixelScale,
 }: {
   position: Point2D;
   cursorDir: number;
   robotDir: number;
   robotColor: "red" | "blue";
-  pixelScale: number
+  pixelScale: number;
 }) {
   const crossSize = 10;
   const arrowLineLength = 1000 * pixelScale;
@@ -70,7 +70,8 @@ function CrosshairMarker({
 }
 
 export function InteractionLayer() {
-  const { colorMode, selectedPosition, cursorDirection , pixelScale} = useCanvasStore();
+  const { colorMode, selectedPosition, cursorDirection, pixelScale } =
+    useCanvasStore();
   const { robotStatus } = useWebSocketStore();
 
   const RobotRad = ((robotStatus.direction + 90) * Math.PI) / 180;

@@ -14,6 +14,7 @@ interface CanvasState {
   cursorPosition: Point2D | null;
   selectedDirection: number;
   cursorDirection: number;
+  isMouseDown: boolean;
 
   toggleColorMode: () => void;
   setPixelFieldSize: (size: Size2D | null) => void;
@@ -24,6 +25,8 @@ interface CanvasState {
   setCursorPosition: (point: Point2D | null) => void;
   setSelectedDirection: (dir: number) => void;
   setCursorDirection: (dir: number) => void;
+
+  setIsMouseDown: (m: boolean) => void;
 }
 
 export const useCanvasStore = create<CanvasState>((set) => ({
@@ -37,6 +40,8 @@ export const useCanvasStore = create<CanvasState>((set) => ({
   selectedDirection: config.robot.direction,
   cursorDirection: config.robot.direction,
 
+  isMouseDown: false,
+
   toggleColorMode: () =>
     set((s) => ({ colorMode: s.colorMode === "red" ? "blue" : "red" })),
   setPixelFieldSize: (size) => set({ pixelFieldSize: size }),
@@ -48,4 +53,6 @@ export const useCanvasStore = create<CanvasState>((set) => ({
 
   setSelectedDirection: (dir) => set({ selectedDirection: dir }),
   setCursorDirection: (dir) => set({ cursorDirection: dir }),
+
+  setIsMouseDown: (m) => set({ isMouseDown: m }),
 }));

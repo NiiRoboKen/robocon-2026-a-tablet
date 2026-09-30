@@ -12,6 +12,8 @@ export function useCanvasInteraction() {
     cursorDirection,
     setCursorPosition,
     setCursorDirection,
+    isMouseDown,
+    setIsMouseDown,
   } = useCanvasStore();
 
   const handleTouchStart = useCallback(
@@ -25,6 +27,7 @@ export function useCanvasInteraction() {
       const point: Point2D = { x: pointerPos.x, y: pointerPos.y };
       setSelectedPosition(point);
       setCursorPosition(point);
+      setIsMouseDown(true);
     },
     [setSelectedPosition, setCursorPosition],
   );
@@ -32,6 +35,7 @@ export function useCanvasInteraction() {
   const handleTouchMove = useCallback(
     (e: KonvaEventObject<MouseEvent | TouchEvent>) => {
       if (!selectedPosition) return;
+      if (!isMouseDown) return;
 
       const stage = e.target.getStage();
       if (!stage) return;
@@ -43,6 +47,9 @@ export function useCanvasInteraction() {
       const dy = pointerPos.y - selectedPosition.y;
       const dir = Math.atan2(-dy, dx);
       setCursorDirection(dir);
+
+      const point: Point2D = { x: pointerPos.x, y: pointerPos.y };
+      setCursorPosition(point);
     },
     [selectedPosition, setCursorDirection],
   );
@@ -55,6 +62,7 @@ export function useCanvasInteraction() {
     (e: KonvaEventObject<MouseEvent>) => {
       const stage = e.target.getStage();
       if (!stage) return;
+      if (isMouseDown) return;
 
       const pointerPos = stage.getPointerPosition();
       if (!pointerPos) return;
@@ -71,10 +79,15 @@ export function useCanvasInteraction() {
     setCursorPosition(null);
   }, [setCursorPosition]);
 
+  const handleMouseUp = useCallback(() => {
+    setIsMouseDown(false);
+  }, [setIsMouseDown]);
+
   const resetSelectedPosition = useCallback(() => {
-    setCursorPosition(null);
     setSelectedPosition(null);
     setSelectedDirection(useWebSocketStore.getState().robotStatus.direction);
+    setCursorPosition(null);
+    setCursorDirection(useWebSocketStore.getState().robotStatus.direction);
   }, [setCursorPosition, setSelectedPosition, setSelectedDirection]);
 
   return {
@@ -83,6 +96,7 @@ export function useCanvasInteraction() {
     handleTouchEnd,
     handleMouseOver,
     handleMouseOut,
+    handleMouseUp,
     resetSelectedPosition,
   };
 }

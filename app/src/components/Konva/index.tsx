@@ -13,7 +13,8 @@ export function Konva() {
     handleTouchMove,
     handleTouchEnd,
     handleMouseOver,
-    handleMouseOut
+    handleMouseOut,
+    handleMouseUp
   } = useCanvasInteraction();
   const { colorMode, pixelFieldSize, pixelRatio, setPixelFieldSize, setPixelScale, setPixelRatio } =
     useCanvasStore();
@@ -60,7 +61,7 @@ export function Konva() {
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
       onMouseDown={handleTouchStart}
-      // onMouseMove={handleStageMouseMove}
+      onMouseUp={handleMouseUp}
 
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
