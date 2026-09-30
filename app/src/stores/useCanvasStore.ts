@@ -7,7 +7,7 @@ const config = getConfig("red");
 
 interface CanvasState {
   colorMode: ColorMode;
-  pixelFieldSize: Size2D;
+  pixelFieldSize: Size2D | null;
   pixelScale: number;
   pixelRatio: number;
   selectedPosition: Point2D | null;
@@ -16,7 +16,7 @@ interface CanvasState {
   cursorDirection: number;
 
   toggleColorMode: () => void;
-  setPixelFieldSize: (size: Size2D) => void;
+  setPixelFieldSize: (size: Size2D | null) => void;
   setPixelScale: (scale: number) => void;
   setPixelRatio: (ratio: number) => void;
 
@@ -28,7 +28,7 @@ interface CanvasState {
 
 export const useCanvasStore = create<CanvasState>((set) => ({
   colorMode: "red",
-  pixelFieldSize: config.field.size,
+  pixelFieldSize: null,
   pixelScale: 1,
   pixelRatio: 1,
 
