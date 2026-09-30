@@ -12,9 +12,8 @@ export function useWebSocket() {
   const { setConnected, setLastMessage, setRobotStatus } = useWebSocketStore();
 
   useEffect(() => {
-    // const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    // const url = `${protocol}//${window.location.host}/ws`;
-    const url = `ws://${window.location.host}/ws`;
+    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    const url = `${protocol}//${window.location.host}/ws`;
 
     const client = new WebSocketClient(url);
     clientRef.current = client;

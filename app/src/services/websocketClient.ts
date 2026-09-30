@@ -18,7 +18,20 @@ export class WebSocketClient {
 
   connect(): void {
     this.shouldReconnect = true;
-    this.ws = new WebSocket(this.url);
+
+    try {
+      this.ws = new WebSocket(this.url);
+    } catch (e) {
+      // HTTPS ページから ws:// へ接続しようとした場合など、
+      // コンストラクタが例外を投げてアプリ全体がクラッシュするのを防ぐ
+      console.error("[WS] 接続の初期化に失敗:", e);
+      this.ws = null;
+      this.onConnectionChange?.(false);
+      if (this.shouldReconnect) {
+        this.reconnectTimer = setTimeout(() => this.connect(), 3000);
+      }
+      return;
+    }
 
     this.ws.onopen = () => {
       console.log("[WS] 接続完了");
