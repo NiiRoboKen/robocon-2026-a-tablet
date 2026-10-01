@@ -1,5 +1,8 @@
-import { build } from "bun";
 import { initSerial, sendToSerial } from "./serial.ts";
+
+// 本番ビルド成果物（app の dist）の配置先。
+// 開発時は未設定でよい（静的ファイルは Vite dev server が配信する）。
+const STATIC_DIR = process.env.STATIC_DIR ?? null;
 
 type MessageType =
   "ping" | "pong" | "position_update" | "command" | "status" | "error";
@@ -14,16 +17,30 @@ function buildMessage<T>(type: MessageType, payload: T): WsMessage<T> {
   return { type, timestamp: Date.now(), payload };
 }
 
+/**
+ * STATIC_DIR 配下の静的ファイルを配信する。
+ * - 見つかればその Response を返す
+ * - 見つからなければ null（呼び出し側で SPA フォールバック等を行う）
+ */
+async function serveStatic(pathname: string): Promise<Response | null> {
+  if (!STATIC_DIR) return null;
+
+  const rel = pathname === "/" ? "/index.html" : pathname;
+  const file = Bun.file(`${STATIC_DIR}${rel}`);
+  if (await file.exists()) {
+    return new Response(file);
+  }
+  return null;
+}
+
 initSerial();
 
 const server = Bun.serve({
-  port: 3000,
-  routes: {
-    "/": () => new Response("Robocon 2026 API"),
-    "/health": () => Response.json({ status: "ok" }),
-  },
-  fetch(req, server) {
+  port: Number(process.env.PORT ?? 3000),
+  async fetch(req, server) {
     const url = new URL(req.url);
+
+    // WebSocket アップグレード
     if (url.pathname === "/ws") {
       const upgraded = server.upgrade(req);
       if (!upgraded) {
@@ -31,6 +48,24 @@ const server = Bun.serve({
       }
       return undefined;
     }
+
+    // ヘルスチェック
+    if (url.pathname === "/health") {
+      return Response.json({ status: "ok" });
+    }
+
+    // 静的ファイル配信（STATIC_DIR が設定されている本番のみ）
+    const staticRes = await serveStatic(url.pathname);
+    if (staticRes) return staticRes;
+
+    // SPA フォールバック: 未知のパスは index.html を返す
+    if (STATIC_DIR) {
+      const indexFile = Bun.file(`${STATIC_DIR}/index.html`);
+      if (await indexFile.exists()) {
+        return new Response(indexFile);
+      }
+    }
+
     return new Response("Not Found", { status: 404 });
   },
   websocket: {

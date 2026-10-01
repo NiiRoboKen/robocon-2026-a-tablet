@@ -1,25 +1,17 @@
 services:
-  nginx:
+  app:
     build:
       context: ..
-      dockerfile: production/Dockerfile.nginx
+      dockerfile: production/Dockerfile.app
     ports:
-      - "80:80"
-    depends_on:
-      - api
-    restart: unless-stopped
-
-  api:
-    build:
-      context: ..
-      dockerfile: production/Dockerfile.api
-    expose:
-      - "3000"
-    group_add:
-      - "986"
+      - "80:3000" # 外部80 → Bun の3000（静的配信 + /ws + /api）
+    # root で実行する（USER 指定なし = root）。
+    # シリアルデバイスへのアクセス権限を気にせず扱えるようにするため。
     devices:
       - "/dev/ttyUSB0:/dev/ttyUSB0"
     environment:
+      PORT: "3000"
+      STATIC_DIR: ./public
       SERIAL_PATH: /dev/ttyUSB0
       SERIAL_BAUD_RATE: "115200"
     restart: unless-stopped
