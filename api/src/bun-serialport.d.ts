@@ -1,4 +1,4 @@
-// bun-serialport 型宣言（使用する API のみ手動宣言）
+// bun-serialport: 使用する API のみ手動宣言
 declare module "bun-serialport" {
   import { EventEmitter } from "node:events";
 

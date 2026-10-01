@@ -1,11 +1,35 @@
-import { initSerial, sendToSerial } from "./serial.ts";
+import {
+  initSerial,
+  sendToSerial,
+  onSerialLine,
+  resendLastToSerial,
+} from "./serial.ts";
 
-// 本番ビルド成果物（app の dist）の配置先。
-// 開発時は未設定でよい（静的ファイルは Vite dev server が配信する）。
 const STATIC_DIR = process.env.STATIC_DIR ?? null;
 
+type OutboundMessageType = "position_update" | "command";
+type InboundMessageType = "robot_state" | "log" | "raw" | "resend_request";
+type ControlMessageType = "ping" | "pong" | "status" | "error";
+
 type MessageType =
-  "ping" | "pong" | "position_update" | "command" | "status" | "error";
+  | OutboundMessageType
+  | InboundMessageType
+  | ControlMessageType;
+
+// app → ESP へ中継する種別。これ以外は中継しない。
+const FORWARD_TO_SERIAL: ReadonlySet<string> = new Set<OutboundMessageType>([
+  "position_update",
+  "command",
+]);
+
+const INBOUND_TYPES: ReadonlySet<string> = new Set<InboundMessageType>([
+  "robot_state",
+  "log",
+  "raw",
+  "resend_request",
+]);
+
+const WS_TOPIC = "broadcast";
 
 interface WsMessage<T = unknown> {
   type: MessageType;
@@ -17,11 +41,6 @@ function buildMessage<T>(type: MessageType, payload: T): WsMessage<T> {
   return { type, timestamp: Date.now(), payload };
 }
 
-/**
- * STATIC_DIR 配下の静的ファイルを配信する。
- * - 見つかればその Response を返す
- * - 見つからなければ null（呼び出し側で SPA フォールバック等を行う）
- */
 async function serveStatic(pathname: string): Promise<Response | null> {
   if (!STATIC_DIR) return null;
 
@@ -40,7 +59,6 @@ const server = Bun.serve({
   async fetch(req, server) {
     const url = new URL(req.url);
 
-    // WebSocket アップグレード
     if (url.pathname === "/ws") {
       const upgraded = server.upgrade(req);
       if (!upgraded) {
@@ -49,16 +67,14 @@ const server = Bun.serve({
       return undefined;
     }
 
-    // ヘルスチェック
     if (url.pathname === "/health") {
       return Response.json({ status: "ok" });
     }
 
-    // 静的ファイル配信（STATIC_DIR が設定されている本番のみ）
     const staticRes = await serveStatic(url.pathname);
     if (staticRes) return staticRes;
 
-    // SPA フォールバック: 未知のパスは index.html を返す
+    // SPA フォールバック
     if (STATIC_DIR) {
       const indexFile = Bun.file(`${STATIC_DIR}/index.html`);
       if (await indexFile.exists()) {
@@ -71,6 +87,7 @@ const server = Bun.serve({
   websocket: {
     open(ws) {
       console.log("[WS] Client connected");
+      ws.subscribe(WS_TOPIC);
     },
     message(ws, raw) {
       const text =
@@ -85,11 +102,13 @@ const server = Bun.serve({
           return;
         }
 
-        void sendToSerial(msg).then((ok) => {
-          if (ok) {
-            console.log(`[Serial] Forwarded message type=${msg.type}`);
-          }
-        });
+        if (FORWARD_TO_SERIAL.has(msg.type)) {
+          void sendToSerial(msg).then((ok) => {
+            if (ok) {
+              console.log(`[Serial] Forwarded message type=${msg.type}`);
+            }
+          });
+        }
 
         switch (msg.type) {
           case "command": {
@@ -125,8 +144,47 @@ const server = Bun.serve({
     },
     close(ws) {
       console.log("[WS] Client disconnected");
+      ws.unsubscribe(WS_TOPIC);
     },
   },
 });
 
 console.log(`API server listening on ${server.url}`);
+
+// シリアルから届いた 1 行(JSON)を WS クライアントへ配信する。
+onSerialLine((line) => {
+  let parsed: (Partial<WsMessage> & { type?: string }) | null = null;
+  try {
+    parsed = JSON.parse(line) as Partial<WsMessage> & { type?: string };
+  } catch {
+    console.warn(`[Serial] Failed to parse line as JSON: ${line}`);
+    return;
+  }
+
+  if (typeof parsed.type !== "string") {
+    console.warn(`[Serial] Ignoring line without type: ${line}`);
+    return;
+  }
+  if (!INBOUND_TYPES.has(parsed.type)) {
+    console.warn(`[Serial] Unknown inbound type "${parsed.type}": ${line}`);
+    return;
+  }
+
+  if (parsed.type === "resend_request") {
+    const reason =
+      typeof (parsed as { reason?: unknown }).reason === "string"
+        ? (parsed as { reason: string }).reason
+        : undefined;
+    void resendLastToSerial(reason);
+  }
+
+  // timestamp が無ければ付与して正規化する。
+  const normalized = {
+    ...parsed,
+    type: parsed.type,
+    timestamp:
+      typeof parsed.timestamp === "number" ? parsed.timestamp : Date.now(),
+  };
+  server.publish(WS_TOPIC, JSON.stringify(normalized));
+  console.log(`[Serial -> WS] type=${parsed.type}`);
+});

@@ -2,14 +2,20 @@ import { useEffect } from "react";
 import { WebSocketClient } from "../services/websocketClient";
 import { useWebSocketStore } from "../stores/useWebSocketStore";
 import type {
-  WsMessage,
+  InboundMessage,
   StatusPayload,
-  ErrorPayload
+  ErrorPayload,
+  RobotStatePayload,
 } from "../types/websocket";
 
 export function useWebSocket() {
-  const { setClient, setConnected, setLastMessage, setRobotStatus } =
-    useWebSocketStore();
+  const {
+    setClient,
+    setConnected,
+    setLastMessage,
+    setRobotStatus,
+    setRobotState,
+  } = useWebSocketStore();
 
   useEffect(() => {
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
@@ -20,7 +26,7 @@ export function useWebSocket() {
 
     client.onConnectionChange = setConnected;
 
-    const unsubscribe = client.subscribe((msg: WsMessage) => {
+    const unsubscribe = client.subscribe((msg: InboundMessage) => {
       setLastMessage(msg);
 
       switch (msg.type) {
@@ -36,6 +42,27 @@ export function useWebSocket() {
         case "error": {
           const payload = msg.payload as ErrorPayload;
           console.error(payload.message);
+          break;
+        }
+        // ESP → tablet 方向
+        case "robot_state": {
+          const payload = msg.payload as RobotStatePayload;
+          setRobotState(payload);
+          break;
+        }
+        case "log": {
+          // ESP からのログ。level に応じてコンソールへ出力する。
+          const level = msg.level;
+          const text = `[ESP] ${msg.msg}`;
+          if (level === "error") console.error(text);
+          else if (level === "warn") console.warn(text);
+          else console.log(text);
+          break;
+        }
+        case "raw": {
+          // デコード未対応/サイズ不一致の受信データ。
+          console.log(`[ESP][raw] msg_type=${msg.msg_type}`, msg.data);
+          break;
         }
       }
     });
@@ -47,5 +74,11 @@ export function useWebSocket() {
       client.disconnect();
       setClient(null);
     };
-  }, [setClient, setConnected, setLastMessage, setRobotStatus]);
+  }, [
+    setClient,
+    setConnected,
+    setLastMessage,
+    setRobotStatus,
+    setRobotState,
+  ]);
 }

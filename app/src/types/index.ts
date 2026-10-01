@@ -15,6 +15,11 @@ export type {
   CommandPayload,
   CommandType,
   StatusPayload,
+  RobotStatePayload,
+  LogMessage,
+  RawMessage,
+  ResendRequestMessage,
+  InboundMessage,
 } from "./websocket";
 
 export type { RobotStatus, RobotState } from "./robot";
