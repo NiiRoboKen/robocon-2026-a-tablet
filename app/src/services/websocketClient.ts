@@ -37,11 +37,11 @@ export class WebSocketClient {
       console.log("[WS] 接続完了");
       this.onConnectionChange?.(true);
       if (this.pingTimer) clearInterval(this.pingTimer);
-      this.pingTimer = setInterval(() => {
-        this.pingCounter++;
-        console.log("[WS] Send ping: ", this.pingCounter);
-        this.send(buildMessage("ping"));
-      }, 1000);
+      // this.pingTimer = setInterval(() => {
+      //   this.pingCounter++;
+      //   console.log("[WS] Send ping: ", this.pingCounter);
+      //   this.send(buildMessage("ping"));
+      // }, 1000);
     };
 
     this.ws.onmessage = (event) => {

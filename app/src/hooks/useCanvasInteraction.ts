@@ -29,7 +29,7 @@ export function useCanvasInteraction() {
       setCursorPosition(point);
       setIsMouseDown(true);
     },
-    [setSelectedPosition, setCursorPosition],
+    [setSelectedPosition, setCursorPosition, setIsMouseDown],
   );
 
   const handleTouchMove = useCallback(
@@ -47,56 +47,81 @@ export function useCanvasInteraction() {
       const dy = pointerPos.y - selectedPosition.y;
       const dir = Math.atan2(-dy, dx);
       setCursorDirection(dir);
-
-      const point: Point2D = { x: pointerPos.x, y: pointerPos.y };
-      setCursorPosition(point);
     },
-    [selectedPosition, setCursorDirection],
+    [selectedPosition, isMouseDown, setCursorDirection],
   );
 
   const handleTouchEnd = useCallback(() => {
     setSelectedDirection(cursorDirection);
   }, [setSelectedDirection, cursorDirection]);
 
-  const handleMouseOver = useCallback(
-    (e: KonvaEventObject<MouseEvent>) => {
+  const handleMouseDown = useCallback(
+    (e: KonvaEventObject<MouseEvent | TouchEvent>) => {
       const stage = e.target.getStage();
-      if (!stage) return;
-      if (isMouseDown) return;
 
       const pointerPos = stage.getPointerPosition();
       if (!pointerPos) return;
 
-      setCursorPosition({
-        x: pointerPos.x,
-        y: pointerPos.y,
-      });
+      const point: Point2D = { x: pointerPos.x, y: pointerPos.y };
+      setSelectedPosition(point);
+      setIsMouseDown(true);
     },
-    [setCursorPosition],
+    [setSelectedPosition, setIsMouseDown],
   );
+
+  const handleMouseMove = useCallback(
+    (e: KonvaEventObject<MouseEvent>) => {
+      const stage = e.target.getStage();
+      if (!stage) return;
+
+      const pointerPos = stage.getPointerPosition();
+      if (!pointerPos) return;
+
+      if (!isMouseDown) {
+        const point: Point2D = { x: pointerPos.x, y: pointerPos.y };
+        setCursorPosition(point);
+        return;
+      } else {
+        const dx = pointerPos.x - selectedPosition.x;
+        const dy = pointerPos.y - selectedPosition.y;
+        const dir = Math.atan2(-dy, dx);
+        setCursorDirection(dir);
+      }
+    },
+    [isMouseDown, setCursorPosition, selectedPosition, setCursorDirection],
+  );
+
+  const handleMouseUp = useCallback(() => {
+    setSelectedDirection(cursorDirection);
+    setIsMouseDown(false);
+    console.log("mouse move");
+  }, [setSelectedDirection, cursorDirection, setIsMouseDown]);
 
   const handleMouseOut = useCallback(() => {
     setCursorPosition(null);
+    console.log("mouse out");
   }, [setCursorPosition]);
-
-  const handleMouseUp = useCallback(() => {
-    setIsMouseDown(false);
-  }, [setIsMouseDown]);
 
   const resetSelectedPosition = useCallback(() => {
     setSelectedPosition(null);
     setSelectedDirection(useWebSocketStore.getState().robotStatus.direction);
     setCursorPosition(null);
     setCursorDirection(useWebSocketStore.getState().robotStatus.direction);
-  }, [setCursorPosition, setSelectedPosition, setSelectedDirection]);
+  }, [
+    setSelectedPosition,
+    setSelectedDirection,
+    setCursorPosition,
+    setCursorDirection,
+  ]);
 
   return {
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
-    handleMouseOver,
-    handleMouseOut,
+    handleMouseDown,
+    handleMouseMove,
     handleMouseUp,
+    handleMouseOut,
     resetSelectedPosition,
   };
 }

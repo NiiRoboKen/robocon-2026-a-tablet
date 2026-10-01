@@ -12,12 +12,19 @@ export function Konva() {
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
-    handleMouseOver,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
     handleMouseOut,
-    handleMouseUp
   } = useCanvasInteraction();
-  const { colorMode, pixelFieldSize, pixelRatio, setPixelFieldSize, setPixelScale, setPixelRatio } =
-    useCanvasStore();
+  const {
+    colorMode,
+    pixelFieldSize,
+    pixelRatio,
+    setPixelFieldSize,
+    setPixelScale,
+    setPixelRatio,
+  } = useCanvasStore();
   const config = getConfig(colorMode);
 
   useLayoutEffect(() => {
@@ -58,9 +65,9 @@ export function Konva() {
       height={pixelFieldSize.height}
       pixelRatio={pixelRatio}
 
-      onMouseOver={handleMouseOver}
+      onMouseMove={handleMouseMove}
       onMouseOut={handleMouseOut}
-      onMouseDown={handleTouchStart}
+      onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
 
       onTouchStart={handleTouchStart}
