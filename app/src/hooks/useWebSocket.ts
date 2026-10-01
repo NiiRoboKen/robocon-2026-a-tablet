@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { WebSocketClient } from "../services/websocketClient";
 import { useWebSocketStore } from "../stores/useWebSocketStore";
 import type {
@@ -8,15 +8,15 @@ import type {
 } from "../types/websocket";
 
 export function useWebSocket() {
-  const clientRef = useRef<WebSocketClient | null>(null);
-  const { setConnected, setLastMessage, setRobotStatus } = useWebSocketStore();
+  const { setClient, setConnected, setLastMessage, setRobotStatus } =
+    useWebSocketStore();
 
   useEffect(() => {
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
     const url = `${protocol}//${window.location.host}/ws`;
 
     const client = new WebSocketClient(url);
-    clientRef.current = client;
+    setClient(client);
 
     client.onConnectionChange = setConnected;
 
@@ -45,8 +45,7 @@ export function useWebSocket() {
     return () => {
       unsubscribe();
       client.disconnect();
+      setClient(null);
     };
-  }, [setConnected, setLastMessage, setRobotStatus]);
-
-  return clientRef;
+  }, [setClient, setConnected, setLastMessage, setRobotStatus]);
 }

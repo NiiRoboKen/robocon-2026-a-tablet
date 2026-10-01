@@ -1,7 +1,6 @@
-import type { RefObject } from "react";
-import type { WebSocketClient } from "../services/websocketClient";
 import { buildPositionMessage } from "../utils/messageBuilder";
 import { useCanvasStore } from "../stores/useCanvasStore";
+import { useWebSocketStore } from "../stores/useWebSocketStore";
 import { getConfig } from "../config";
 import {
   coordinatesPixelToWorld,
@@ -10,19 +9,12 @@ import {
   roundPoint,
 } from "../utils/coordinate";
 
-interface SendPositionButtonProps {
-  wsClient: RefObject<WebSocketClient | null>;
-}
-
-export function SendPositionButton({ wsClient }: SendPositionButtonProps) {
+export function SendPositionButton() {
   const { colorMode, selectedPosition, pixelScale, selectedDirection } =
     useCanvasStore();
+  const send = useWebSocketStore((s) => s.send);
+
   const handleClick = () => {
-    const client = wsClient.current;
-    if (!client) {
-      console.warn("[SendAemOpenButton] WebSocket未接続");
-      return;
-    }
     if (selectedPosition === null || selectedDirection === null) {
       console.warn("[SendPositionButton] 座標が未選択");
       return;
@@ -38,7 +30,7 @@ export function SendPositionButton({ wsClient }: SendPositionButtonProps) {
       directionToDisplayDegrees(selectedDirection),
     );
 
-    client.send(buildPositionMessage(worldPosition, worldDirection));
+    send(buildPositionMessage(worldPosition, worldDirection));
   };
 
   return (

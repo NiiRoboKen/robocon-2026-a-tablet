@@ -7,7 +7,7 @@ import { SelectedInfoLabel } from "./components/selectedInfoLabel";
 import { CursorInfoLabel } from "./components/cursorInfoLabel";
 
 function App() {
-  const wsClient = useWebSocket();
+  useWebSocket();
 
   return (
     <div className="app-container">
@@ -19,7 +19,7 @@ function App() {
         <section className="right-pane">
           <SelectedInfoLabel />
           <CursorInfoLabel />
-          <SendPositionButton wsClient={wsClient} />
+          <SendPositionButton />
         </section>
       </main>
     </div>
