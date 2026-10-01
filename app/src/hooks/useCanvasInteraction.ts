@@ -58,6 +58,7 @@ export function useCanvasInteraction() {
   const handleMouseDown = useCallback(
     (e: KonvaEventObject<MouseEvent | TouchEvent>) => {
       const stage = e.target.getStage();
+      if (!stage) return;
 
       const pointerPos = stage.getPointerPosition();
       if (!pointerPos) return;
@@ -82,6 +83,7 @@ export function useCanvasInteraction() {
         setCursorPosition(point);
         return;
       } else {
+        if (!selectedPosition) return;
         const dx = pointerPos.x - selectedPosition.x;
         const dy = pointerPos.y - selectedPosition.y;
         const dir = Math.atan2(-dy, dx);
@@ -94,12 +96,10 @@ export function useCanvasInteraction() {
   const handleMouseUp = useCallback(() => {
     setSelectedDirection(cursorDirection);
     setIsMouseDown(false);
-    console.log("mouse move");
   }, [setSelectedDirection, cursorDirection, setIsMouseDown]);
 
   const handleMouseOut = useCallback(() => {
     setCursorPosition(null);
-    console.log("mouse out");
   }, [setCursorPosition]);
 
   const resetSelectedPosition = useCallback(() => {

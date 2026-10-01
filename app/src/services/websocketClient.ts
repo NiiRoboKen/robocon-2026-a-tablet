@@ -1,5 +1,5 @@
 import type { WsMessage } from "../types/websocket";
-import { buildMessage } from "../utils/messageBuilder";
+// import { buildMessage } from "../utils/messageBuilder";
 
 type MessageHandler = (msg: WsMessage) => void;
 
@@ -10,7 +10,7 @@ export class WebSocketClient {
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private shouldReconnect = true;
   private pingTimer: ReturnType<typeof setInterval> | null = null;
-  private pingCounter = 0;
+  // private pingCounter = 0;
 
   constructor(url: string) {
     this.url = url;
