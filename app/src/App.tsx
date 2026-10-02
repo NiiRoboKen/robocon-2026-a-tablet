@@ -3,26 +3,38 @@ import { Konva } from "./components/Konva";
 import { ToggleColorMode } from "./components/toggleColorButton";
 import "./App.css";
 import { SendPositionButton } from "./components/sendPositionButton";
-import { SelectedInfoLabel } from "./components/selectedInfoLabel";
-import { CursorInfoLabel } from "./components/cursorInfoLabel";
 import { Box, Flex } from "@chakra-ui/react";
 import { ReloadButtons } from "./components/reloadButtons";
+import { BeltButtons } from "./components/beltButtons";
+import { RollerButtons } from "./components/rollerButtons";
+import { FlagButton } from "./components/flagButton";
+import { BucketButtons } from "./components/bucketButtons";
 
 function App() {
-  useWebSocket();
+    useWebSocket();
 
-  return (
-    <Flex>
-      <Konva />
-      <Box display="absolute" width="70%" height="100%" bg="white">
-        <ReloadButtons />
-        <SendPositionButton left="50%" />
-      </Box>
-      <Box width="30%" height="100%" bg="green">
-        <ToggleColorMode />
-      </Box>
-    </Flex>
-  );
+    return (
+        <Flex w="100vw" h="100vh" overflow="hidden">
+            <Konva />
+
+            <Box
+                flex="1"
+                h="100%"
+                pos="relative"
+                overflow="hidden"
+                bg="white"
+                m="5px"
+            >
+                <ReloadButtons left="20%" width="40%" height="8%" />
+                {/*<SendPositionButton top="20%" left="5%" borderColor="orange" />*/}
+                <ToggleColorMode left="90%" w="30%" h="10%" />
+                <BeltButtons top="10%" width="50%" height="10%" />
+                <FlagButton top="23%" width="20%" height="10%" />
+                <RollerButtons top="35%" width="40%" height="10%" />
+                <BucketButtons top="70%" width="50%" height="10%" />
+            </Box>
+        </Flex>
+    );
 }
 
 export default App;

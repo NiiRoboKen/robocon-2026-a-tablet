@@ -1,16 +1,19 @@
 import { buildCommandMessage } from "../utils/messageBuilder";
 import { useWebSocketStore } from "../stores/useWebSocketStore";
+import { Box, type BoxProps } from "@chakra-ui/react";
 
-export function SendArmOpenButton() {
-  const send = useWebSocketStore((s) => s.send);
+export function SendArmOpenButton(props: BoxProps) {
+    const send = useWebSocketStore((s) => s.send);
 
-  const handleClick = () => {
-    send(buildCommandMessage("arm_up"));
-  };
+    const handleClick = () => {
+        send(buildCommandMessage("arm_up"));
+    };
 
-  return (
-    <button type="button" onClick={handleClick}>
-      アームを開く
-    </button>
-  );
+    return (
+        <Box position="absolute" {...props}>
+            <button type="button" onClick={handleClick}>
+                アームを開く
+            </button>
+        </Box>
+    );
 }

@@ -1,11 +1,32 @@
-import { Button, Box, Flex } from "@chakra-ui/react";
+import { Button, Box, type BoxProps } from "@chakra-ui/react";
 
-export function ReloadButtons(ref) {
-  return (
-    <Box display="flex" position="absolute" ref={ref}>
-      <Button>Button1</Button>
-      <Button>Button2</Button>
-      <Button>Button3</Button>
-    </Box>
-  );
+function handleLoadStartButton() {
+    return;
+}
+function handleReloadButton() {
+    return;
+}
+function handleReloadFinish() {
+    return;
+}
+export function ReloadButtons(props: BoxProps) {
+    return (
+        <Box
+            position="absolute"
+            display="flex"
+            gap="5px"
+            borderWidth="5px"
+            {...props}
+        >
+            <Button height="100%" flex="1" onClick={handleLoadStartButton}>
+                装填開始
+            </Button>
+            <Button height="100%" flex="1" onClick={handleReloadButton}>
+                リロード
+            </Button>
+            <Button height="100%" flex="1" onClick={handleReloadFinish}>
+                リロード完了
+            </Button>
+        </Box>
+    );
 }
