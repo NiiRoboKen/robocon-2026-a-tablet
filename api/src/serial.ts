@@ -46,10 +46,29 @@ async function connect(): Promise<void> {
       path: SERIAL_PATH,
       baudRate: SERIAL_BAUD_RATE,
       autoOpen: true,
+      // ESP32 の自動リセット回路対策:
+      // RTS→EN(リセット), DTR→GPIO0(ブートモード) に接続されているため、
+      // クローズ時に DTR/RTS をドロップ(HUPCL)すると ESP がリセットされる。
+      // 再接続のたびに ESP がリブートしないよう HUPCL を無効化する。
+      hupcl: false,
     });
 
     await p.open();
     port = p;
+
+    // オープン直後に DTR/RTS を明示的に非アサートにする。
+    // 特に RTS=アサートのままだと EN が LOW に固定され ESP がリセット状態で
+    // 止まり、UART を一切受け付けなくなる(通信不能の主因)。
+    try {
+      await p.set({ dtr: false, rts: false });
+    } catch (err) {
+      console.warn(
+        `[Serial] Failed to clear DTR/RTS: ${
+          err instanceof Error ? err.message : String(err)
+        }`,
+      );
+    }
+
     console.log(
       `[Serial] Connected to ${SERIAL_PATH} @ ${SERIAL_BAUD_RATE} baud`,
     );

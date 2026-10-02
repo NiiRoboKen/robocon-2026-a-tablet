@@ -9,6 +9,19 @@ declare module "bun-serialport" {
     dataBits?: number;
     stopBits?: number;
     parity?: "none" | "even" | "odd";
+    /**
+     * クローズ時に DTR/RTS をドロップするか(termios HUPCL)。
+     * ESP/Arduino 系は DTR/RTS のエッジでリセットするため false 推奨。
+     */
+    hupcl?: boolean;
+    /** ハードウェアフロー制御(RTS/CTS)。既定 false。 */
+    rtscts?: boolean;
+  }
+
+  /** モデム制御線(DTR/RTS)の状態。true=アサート, false=非アサート。 */
+  export interface ModemFlags {
+    dtr?: boolean;
+    rts?: boolean;
   }
 
   export class SerialPort extends EventEmitter {
@@ -19,6 +32,10 @@ declare module "bun-serialport" {
     write(data: string | Uint8Array): Promise<number>;
     flush(): Promise<void>;
     drain(): Promise<void>;
+    /** DTR/RTS モデム制御線を設定する。 */
+    set(flags: ModemFlags): Promise<void>;
+    /** 現在の DTR/RTS/CTS/DSR 等の状態を取得する。 */
+    get(): Promise<Record<string, boolean>>;
     pipe<T>(parser: T): T;
     unpipe(parser: unknown): void;
   }

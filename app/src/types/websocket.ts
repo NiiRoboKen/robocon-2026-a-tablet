@@ -1,4 +1,3 @@
-import type { Point2D } from "./index";
 import type { RobotStatus } from "./index";
 
 export interface MessagePayloadMap {
@@ -23,7 +22,8 @@ export interface WsMessage<K extends MessageType = MessageType> {
 export type EmptyPayload = Record<string, never>;
 
 export interface PositionPayload {
-  position: Point2D;
+  x: number;
+  y: number;
   direction: number;
 }
 

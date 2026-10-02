@@ -126,9 +126,13 @@ const server = Bun.serve({
           }
           case "position_update": {
             const payload = msg.payload as {
-              position: { x: number; y: number };
+              x: number;
+              y: number;
+              direction: number;
             };
-            console.log("[WS] Position update for:", payload.position);
+            console.log(
+              `[WS] Position update: x=${payload.x}, y=${payload.y}, direction=${payload.direction}`,
+            );
             break;
           }
           default: {
