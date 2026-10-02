@@ -8,6 +8,7 @@ import {
   pixelToWorld,
   roundPoint,
 } from "../utils/coordinate";
+import { Button } from "@chakra-ui/react";
 
 export function SendPositionButton() {
   const { colorMode, selectedPosition, pixelScale, selectedDirection } =
@@ -34,8 +35,14 @@ export function SendPositionButton() {
   };
 
   return (
-    <button type="button" onClick={handleClick}>
+    <Button
+      type="button"
+      onClick={handleClick}
+      bg="orange"
+      width="10%"
+      height="100%"
+    >
       目標座標送信
-    </button>
+    </Button>
   );
 }

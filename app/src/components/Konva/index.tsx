@@ -31,7 +31,7 @@ export function Konva() {
     // iOS Safari などの Canvas 面積上限 (約 16.7M px²) に対する安全マージン
     const MAX_CANVAS_AREA = 16_777_216;
 
-    const scale = (window.innerHeight * 0.9) / config.stage.size.height;
+    const scale = window.innerHeight / config.stage.size.height;
     const displayWidth = config.stage.size.width * scale;
     const displayHeight = config.stage.size.height * scale;
 
