@@ -4,17 +4,15 @@ import {
   onSerialLine,
   resendLastToSerial,
 } from "./serial.ts";
+import type {
+  MessageType,
+  OutboundMessageType,
+  InboundMessageType,
+  ControlMessageType,
+  WebSocketCommands,
+} from "./types.ts";
 
 const STATIC_DIR = process.env.STATIC_DIR ?? null;
-
-type OutboundMessageType = "position_update" | "command";
-type InboundMessageType = "robot_state" | "log" | "raw" | "resend_request";
-type ControlMessageType = "ping" | "pong" | "status" | "error";
-
-type MessageType =
-  | OutboundMessageType
-  | InboundMessageType
-  | ControlMessageType;
 
 // app → ESP へ中継する種別。これ以外は中継しない。
 const FORWARD_TO_SERIAL: ReadonlySet<string> = new Set<OutboundMessageType>([
@@ -113,10 +111,9 @@ const server = Bun.serve({
         switch (msg.type) {
           case "command": {
             const payload = msg.payload as {
-              command: string;
-              params?: Record<string, unknown>;
+              command: WebSocketCommands;
             };
-            console.log(`[WS] Command: ${payload.command}`, payload.params);
+            console.log(`[WS] Command: ${payload.command}`);
 
             const ack = buildMessage("status", {
               state: `ack:${payload.command}`,
