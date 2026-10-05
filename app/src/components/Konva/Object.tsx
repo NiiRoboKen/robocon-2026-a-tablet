@@ -1,13 +1,13 @@
 import { Rect, Circle, Arrow } from "react-konva";
 import { useCanvasStore } from "../../stores/useCanvasStore";
 import { getConfig } from "../../config";
-import { useWebSocketStore } from "../../stores/useWebSocketStore";
+import { useRobotStore } from "../../stores/useRobotStore";
 import { coordinatesWorldToPixel } from "../../utils/coordinate";
 
 export function ObjectLayer() {
   const { colorMode, pixelScale } = useCanvasStore();
   const config = getConfig(colorMode);
-  const { robotStatus } = useWebSocketStore();
+  const { robotStatus } = useRobotStore();
 
   const robotPositionPixel = coordinatesWorldToPixel(
     robotStatus.position,

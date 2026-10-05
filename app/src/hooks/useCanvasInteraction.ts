@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import type { KonvaEventObject } from "konva/lib/Node";
 import { useCanvasStore } from "../stores/useCanvasStore";
 import type { Point2D } from "../types/geometry";
-import { useWebSocketStore } from "../stores/useWebSocketStore";
+import { useRobotStore } from "../stores/useRobotStore";
 
 export function useCanvasInteraction() {
   const {
@@ -104,9 +104,9 @@ export function useCanvasInteraction() {
 
   const resetSelectedPosition = useCallback(() => {
     setSelectedPosition(null);
-    setSelectedDirection(useWebSocketStore.getState().robotStatus.direction);
+    setSelectedDirection(useRobotStore.getState().robotStatus.direction);
     setCursorPosition(null);
-    setCursorDirection(useWebSocketStore.getState().robotStatus.direction);
+    setCursorDirection(useRobotStore.getState().robotStatus.direction);
   }, [
     setSelectedPosition,
     setSelectedDirection,

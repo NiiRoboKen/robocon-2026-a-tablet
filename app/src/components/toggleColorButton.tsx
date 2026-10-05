@@ -1,11 +1,11 @@
 import { Box, type BoxProps, Button } from "@chakra-ui/react";
 import { getConfig } from "../config";
 import { useCanvasStore } from "../stores/useCanvasStore";
-import { useWebSocketStore } from "../stores/useWebSocketStore";
+import { useRobotStore } from "../stores/useRobotStore";
 
 export function ToggleColorMode(props: BoxProps) {
     const { toggleColorMode, colorMode } = useCanvasStore();
-    const { setRobotStatus } = useWebSocketStore();
+    const { setRobotStatus } = useRobotStore();
     function handleClick() {
         toggleColorMode();
         setRobotStatus({

@@ -1,7 +1,7 @@
 import { Arrow, Line } from "react-konva";
 import { useCanvasStore } from "../../stores/useCanvasStore";
 import type { Point2D } from "../../types";
-import { useWebSocketStore } from "../../stores/useWebSocketStore";
+import { useRobotStore } from "../../stores/useRobotStore";
 
 function CrosshairMarker({
   position,
@@ -72,7 +72,7 @@ function CrosshairMarker({
 export function InteractionLayer() {
   const { colorMode, selectedPosition, cursorDirection, pixelScale } =
     useCanvasStore();
-  const { robotStatus } = useWebSocketStore();
+  const { robotStatus } = useRobotStore();
 
   const RobotRad = ((robotStatus.direction + 90) * Math.PI) / 180;
   return (

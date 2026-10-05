@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { WebSocketClient } from "../services/websocketClient";
 import { useWebSocketStore } from "../stores/useWebSocketStore";
+import { useRobotStore } from "../stores/useRobotStore";
 import type {
   InboundMessage,
   StatusPayload,
@@ -9,13 +10,8 @@ import type {
 } from "../types/websocket";
 
 export function useWebSocket() {
-  const {
-    setClient,
-    setConnected,
-    setLastMessage,
-    setRobotStatus,
-    setRobotState,
-  } = useWebSocketStore();
+  const { setClient, setConnected, setLastMessage } = useWebSocketStore();
+  const { setRobotStatus, setRobotState } = useRobotStore();
 
   useEffect(() => {
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
