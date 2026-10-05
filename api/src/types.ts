@@ -1,6 +1,6 @@
-export type OutboundMessageType = "position_update" | "command";
+export type OutboundMessageType = "target_position" | "command" | "belt_launch";
 export type InboundMessageType =
-  "robot_state" | "log" | "raw" | "resend_request";
+  "robot_state" | "log" | "raw" | "resend_request" | "position_update";
 export type ControlMessageType = "ping" | "pong" | "status" | "error";
 
 export type MessageType =

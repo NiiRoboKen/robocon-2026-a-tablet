@@ -4,28 +4,9 @@ import {
   onSerialLine,
   resendLastToSerial,
 } from "./serial.ts";
-import type {
-  MessageType,
-  OutboundMessageType,
-  InboundMessageType,
-  ControlMessageType,
-  WebSocketCommands,
-} from "./types.ts";
+import type { MessageType, WebSocketCommands } from "./types.ts";
 
 const STATIC_DIR = process.env.STATIC_DIR ?? null;
-
-// app → ESP へ中継する種別。これ以外は中継しない。
-const FORWARD_TO_SERIAL: ReadonlySet<string> = new Set<OutboundMessageType>([
-  "position_update",
-  "command",
-]);
-
-const INBOUND_TYPES: ReadonlySet<string> = new Set<InboundMessageType>([
-  "robot_state",
-  "log",
-  "raw",
-  "resend_request",
-]);
 
 const WS_TOPIC = "broadcast";
 
@@ -100,13 +81,11 @@ const server = Bun.serve({
           return;
         }
 
-        if (FORWARD_TO_SERIAL.has(msg.type)) {
-          void sendToSerial(msg).then((ok) => {
-            if (ok) {
-              console.log(`[Serial] Forwarded message type=${msg.type}`);
-            }
-          });
-        }
+        void sendToSerial(msg).then((ok) => {
+          if (ok) {
+            console.log(`[Serial] Forwarded message type=${msg.type}`);
+          }
+        });
 
         switch (msg.type) {
           case "command": {
@@ -121,7 +100,7 @@ const server = Bun.serve({
             ws.send(JSON.stringify(ack));
             break;
           }
-          case "position_update": {
+          case "target_position": {
             const payload = msg.payload as {
               x: number;
               y: number;
@@ -130,6 +109,13 @@ const server = Bun.serve({
             console.log(
               `[WS] Position update: x=${payload.x}, y=${payload.y}, direction=${payload.direction}`,
             );
+            break;
+          }
+          case "belt_launch": {
+            const payload = msg.payload as {
+              acceleration: number;
+            };
+            console.log(`[WS] Launch Belt: x=${payload.acceleration}`);
             break;
           }
           default: {
@@ -166,8 +152,8 @@ onSerialLine((line) => {
     console.warn(`[Serial] Ignoring line without type: ${line}`);
     return;
   }
-  if (!INBOUND_TYPES.has(parsed.type)) {
-    console.warn(`[Serial] Unknown inbound type "${parsed.type}": ${line}`);
+
+  if (parsed.type === "log" || "raw") {
     return;
   }
 
