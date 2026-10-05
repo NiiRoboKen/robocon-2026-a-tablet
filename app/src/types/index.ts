@@ -13,16 +13,9 @@ export type {
   EmptyPayload,
   PositionPayload,
   CommandPayload,
-  CommandType,
-  StatusPayload,
+  Commands,
   RobotStatePayload,
-  LogMessage,
-  RawMessage,
-  ResendRequestMessage,
-  InboundMessage,
 } from "./websocket";
-
-export type { RobotStatus } from "./robot";
 
 export type {
   ColorMode,

@@ -1,19 +1,18 @@
 import { create } from "zustand";
-import type { RobotStatus } from "../types";
-import type { RobotStatePayload } from "../types/websocket";
+import type { RobotStatePayload, PositionPayload } from "../types/websocket";
 import { getConfig } from "../config";
 import { useCanvasStore } from "./useCanvasStore";
 
 const config = getConfig(useCanvasStore.getState().colorMode);
 
 interface RobotState {
-  robotStatus: RobotStatus;
+  position: PositionPayload;
   robotState: RobotStatePayload | null;
 
   isControllerMode: boolean;
   isFloorHarvest: boolean;
 
-  setRobotStatus: (status: RobotStatus) => void;
+  setPosition: (position: PositionPayload) => void;
   setRobotState: (state: RobotStatePayload) => void;
 
   setIsControllerMode: (c: boolean) => void;
@@ -21,16 +20,13 @@ interface RobotState {
 }
 
 export const useRobotStore = create<RobotState>((set) => ({
-  robotStatus: {
-    position: { x: 0, y: 0 },
-    direction: config.robot.direction,
-  },
+  position: { x: 0, y: 0, direction: 0 },
   robotState: null,
 
   isControllerMode: false,
   isFloorHarvest: false,
 
-  setRobotStatus: (status) => set({ robotStatus: status }),
+  setPosition: (position) => set({ position: position }),
   setRobotState: (state) => set({ robotState: state }),
 
   setIsControllerMode: (c) => set({ isControllerMode: c }),

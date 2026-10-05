@@ -7,17 +7,17 @@ import { coordinatesWorldToPixel } from "../../utils/coordinate";
 export function ObjectLayer() {
   const { colorMode, pixelScale } = useCanvasStore();
   const config = getConfig(colorMode);
-  const { robotStatus } = useRobotStore();
+  const { position } = useRobotStore();
 
   const robotPositionPixel = coordinatesWorldToPixel(
-    robotStatus.position,
+    position,
     config.robot.originPosition,
   );
   const robotCenter = {
     x: (robotPositionPixel.x + config.stage.margin.left) * pixelScale,
     y: (robotPositionPixel.y + config.stage.margin.top) * pixelScale,
   };
-  const rotationDeg = -(robotStatus.direction + 90);
+  const rotationDeg = -(position.direction + 90);
   const rotationRad = (rotationDeg * Math.PI) / 180;
   const arrowLength = 1000; // 実世界mm
 

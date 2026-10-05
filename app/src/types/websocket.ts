@@ -1,13 +1,10 @@
-import type { RobotStatus } from "./index";
-
 export interface MessagePayloadMap {
   ping: EmptyPayload;
   pong: EmptyPayload;
   position_update: PositionPayload;
   command: CommandPayload;
-  status: StatusPayload;
   error: ErrorPayload;
-  // ESP → tablet 方向（ESP がシリアルへ出力し api が中継する種別）
+  // ESP -> tablet
   robot_state: RobotStatePayload;
 }
 
@@ -27,23 +24,37 @@ export interface PositionPayload {
   direction: number;
 }
 
-export type CommandType = "arm_up" | "arm_down" | "stop";
+export type Commands =
+  | "gamepad_use"
+  | "tablet_use"
+  | "reboot"
+  | "belt_load"
+  | "belt_reload"
+  | "belt_reload_finish"
+  | "belt_desk"
+  | "belt_bucket_low"
+  | "belt_bucket_middle"
+  | "belt_bucket_high"
+  | "belt_flag"
+  | "belt_elevation"
+  | "belt_launch"
+  | "roller_start"
+  | "roller_launch"
+  | "bucket_low"
+  | "bucket_middle"
+  | "bucket_high"
+  | "bucket_release"
+  | "floor_on"
+  | "floor_off";
 
 export interface CommandPayload {
-  command: CommandType;
-  params?: Record<string, unknown>;
+  command: Commands;
 }
-
-export type StatusPayload = RobotStatus;
 
 export interface ErrorPayload {
   message: string;
 }
 
-/**
- * ESP → tablet 方向のロボット状態。
- * ESP の `StateData`(message.h) / `emitStateData`(serial_emit.h) に対応する。
- */
 export interface RobotStatePayload {
   gamepad_used: boolean;
   load_belt: boolean;
@@ -53,47 +64,3 @@ export interface RobotStatePayload {
   launch_pos_belt: number;
   acc_pos_belt: number;
 }
-
-/**
- * ESP → tablet 方向のログ。
- * ESP の `emitLog`(serial_emit.h) に対応し、payload ではなく top-level に情報を持つ。
- */
-export interface LogMessage {
-  type: "log";
-  timestamp: number;
-  level: "info" | "warn" | "error";
-  msg: string;
-}
-
-/**
- * ESP → tablet 方向の生データ。
- * ESP の `emitRaw`(serial_emit.h) に対応し、デコード未対応/サイズ不一致の受信を表す。
- */
-export interface RawMessage {
-  type: "raw";
-  timestamp: number;
-  msg_type: number;
-  data: number[];
-}
-
-/**
- * ESP → tablet 方向の再送要求。
- * ESP が tablet → ESP のJSONパースに失敗したときに送られる。
- * 実際の再送は api 側で完結する（直前にシリアルへ送った行を api が再送する）。
- * app はこのメッセージを受信・表示するのみで、再送処理は行わない。
- */
-export interface ResendRequestMessage {
-  type: "resend_request";
-  timestamp: number;
-  reason?: string;
-}
-
-/**
- * WebSocket で受信しうる全メッセージ。
- * payload ベースの通常メッセージに加え、ESP 由来の log/raw/resend_request(top-level フィールド)を含む。
- */
-export type InboundMessage =
-  | WsMessage
-  | LogMessage
-  | RawMessage
-  | ResendRequestMessage;

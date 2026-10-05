@@ -3,15 +3,14 @@ import { WebSocketClient } from "../services/websocketClient";
 import { useWebSocketStore } from "../stores/useWebSocketStore";
 import { useRobotStore } from "../stores/useRobotStore";
 import type {
-  InboundMessage,
-  StatusPayload,
   ErrorPayload,
   RobotStatePayload,
+  WsMessage,
 } from "../types/websocket";
 
 export function useWebSocket() {
-  const { setClient, setConnected, setLastMessage } = useWebSocketStore();
-  const { setRobotStatus, setRobotState } = useRobotStore();
+  const { setClient, setConnected } = useWebSocketStore();
+  const { setRobotState, setPosition } = useRobotStore();
 
   useEffect(() => {
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
@@ -22,17 +21,10 @@ export function useWebSocket() {
 
     client.onConnectionChange = setConnected;
 
-    const unsubscribe = client.subscribe((msg: InboundMessage) => {
-      setLastMessage(msg);
-
+    const unsubscribe = client.subscribe((msg: WsMessage) => {
       switch (msg.type) {
         case "pong": {
           console.log("[WS] Pong received:", msg.timestamp);
-          break;
-        }
-        case "status": {
-          const payload = msg.payload as StatusPayload;
-          setRobotStatus(payload);
           break;
         }
         case "error": {
@@ -44,20 +36,19 @@ export function useWebSocket() {
         case "robot_state": {
           const payload = msg.payload as RobotStatePayload;
           setRobotState(payload);
+          console.log(`[ESP] robot status`);
           break;
         }
-        case "log": {
-          // ESP からのログ。level に応じてコンソールへ出力する。
-          const level = msg.level;
-          const text = `[ESP] ${msg.msg}`;
-          if (level === "error") console.error(text);
-          else if (level === "warn") console.warn(text);
-          else console.log(text);
-          break;
-        }
-        case "raw": {
-          // デコード未対応/サイズ不一致の受信データ。
-          console.log(`[ESP][raw] msg_type=${msg.msg_type}`, msg.data);
+        case "position_update": {
+          const position = msg.payload as {
+            x: number;
+            y: number;
+            direction: number;
+          };
+          setPosition(position);
+          console.log(
+            `[ESP] position update, x=${position.x}, y=${position.y}, dir=${position.direction}`,
+          );
           break;
         }
       }
@@ -70,11 +61,5 @@ export function useWebSocket() {
       client.disconnect();
       setClient(null);
     };
-  }, [
-    setClient,
-    setConnected,
-    setLastMessage,
-    setRobotStatus,
-    setRobotState,
-  ]);
+  }, [setClient, setConnected, setRobotState]);
 }

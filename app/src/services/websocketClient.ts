@@ -1,7 +1,7 @@
-import type { WsMessage, InboundMessage } from "../types/websocket";
+import type { WsMessage} from "../types/websocket";
 // import { buildMessage } from "../utils/messageBuilder";
 
-type MessageHandler = (msg: InboundMessage) => void;
+type MessageHandler = (msg: WsMessage) => void;
 
 export class WebSocketClient {
   private ws: WebSocket | null = null;
@@ -46,7 +46,7 @@ export class WebSocketClient {
 
     this.ws.onmessage = (event) => {
       try {
-        const msg = JSON.parse(event.data as string) as InboundMessage;
+        const msg = JSON.parse(event.data as string) as WsMessage;
         console.log("[WS]");
         this.handlers.forEach((h) => h(msg));
       } catch (e) {

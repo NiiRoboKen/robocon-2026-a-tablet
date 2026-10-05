@@ -72,9 +72,9 @@ function CrosshairMarker({
 export function InteractionLayer() {
   const { colorMode, selectedPosition, cursorDirection, pixelScale } =
     useCanvasStore();
-  const { robotStatus } = useRobotStore();
+  const { position } = useRobotStore();
 
-  const RobotRad = ((robotStatus.direction + 90) * Math.PI) / 180;
+  const RobotRad = ((position.direction + 90) * Math.PI) / 180;
   return (
     <>
       {selectedPosition && cursorDirection !== null && (
