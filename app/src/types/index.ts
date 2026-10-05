@@ -22,7 +22,7 @@ export type {
   InboundMessage,
 } from "./websocket";
 
-export type { RobotStatus, RobotState } from "./robot";
+export type { RobotStatus } from "./robot";
 
 export type {
   ColorMode,

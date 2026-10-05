@@ -11,7 +11,6 @@ export function ToggleColorMode(props: BoxProps) {
         setRobotStatus({
             position: { x: 0, y: 0 },
             direction: getConfig(colorMode).robot.direction,
-            status: "idle",
         });
     }
     return (

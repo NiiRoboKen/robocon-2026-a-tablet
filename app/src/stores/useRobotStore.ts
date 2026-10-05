@@ -7,9 +7,7 @@ import { useCanvasStore } from "./useCanvasStore";
 const config = getConfig(useCanvasStore.getState().colorMode);
 
 interface RobotState {
-  /** tablet 側で保持するロボットの状態（status メッセージ由来）。 */
   robotStatus: RobotStatus;
-  /** ESP → tablet の robot_state 受信ペイロード。未受信時は null。 */
   robotState: RobotStatePayload | null;
 
   setRobotStatus: (status: RobotStatus) => void;
