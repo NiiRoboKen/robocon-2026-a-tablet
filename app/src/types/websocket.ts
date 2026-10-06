@@ -2,6 +2,7 @@ export interface MessagePayloadMap {
   ping: EmptyPayload;
   pong: EmptyPayload;
   target_position: PositionPayload;
+  belt_launch: BeltLaunchPayload;
   command: CommandPayload;
   error: ErrorPayload;
   // ESP -> tablet
@@ -25,6 +26,10 @@ export interface PositionPayload {
   direction: number;
 }
 
+export interface BeltLaunchPayload {
+  acceleration: number;
+}
+
 export type Commands =
   | "gamepad_use"
   | "tablet_use"
@@ -38,7 +43,6 @@ export type Commands =
   | "belt_bucket_high"
   | "belt_flag"
   | "belt_elevation"
-  | "belt_launch"
   | "roller_start"
   | "roller_launch"
   | "bucket_low"

@@ -27,3 +27,7 @@ export function buildPositionMessage(
 export function buildCommandMessage(c: Commands): WsMessage<"command"> {
   return buildMessage("command", { command: c });
 }
+
+export function buildBeltLaunchMessage(a: number): WsMessage<"belt_launch"> {
+  return buildMessage("belt_launch", { acceleration: a });
+}
