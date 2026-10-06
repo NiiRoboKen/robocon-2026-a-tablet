@@ -54,3 +54,10 @@ export type InitialConfig = {
   red: ModeConfig;
   blue: ModeConfig;
 };
+
+export type BeltAcceleration = {
+  fix1: number;
+  fix2: number;
+  fix3: number;
+  table: number;
+};

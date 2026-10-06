@@ -1,4 +1,16 @@
-import type { ColorMode, ModeConfig, InitialConfig } from "../types/config";
+import type {
+  ColorMode,
+  ModeConfig,
+  InitialConfig,
+  BeltAcceleration,
+} from "../types/config";
+
+export const defaultBeltAcceleration: BeltAcceleration = {
+  fix1: 1,
+  fix2: 2,
+  fix3: 3,
+  table: 4,
+};
 
 const redConfig: ModeConfig = {
   stage: {
@@ -14,12 +26,6 @@ const redConfig: ModeConfig = {
     size: { width: 5400, height: 10500 },
     imagePath: "/fieldRedImage.png",
   },
-  // robot: {
-  //   originPosition: { x: 1800, y: 10500 - 500 },
-  //   offset: { x: 500, y: 500 },
-  //   size: { width: 1000, height: 1000 },
-  //   direction: 0,
-  // },
   robot: {
     originPosition: { x: 1500, y: 10500 - 500 },
     offset: { x: 500, y: 500 },
