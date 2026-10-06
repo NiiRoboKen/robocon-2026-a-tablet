@@ -1,5 +1,5 @@
 import { useControlStore } from "@/stores/useControleStore";
-import { Button, Box, type BoxProps, Card, Text } from "@chakra-ui/react";
+import { Button, Box, type BoxProps, Text } from "@chakra-ui/react";
 
 export function AdjustAcceleration(props: BoxProps) {
     const { selectedBeltAcceleration, adjustSelectedBeltAcceleration } =

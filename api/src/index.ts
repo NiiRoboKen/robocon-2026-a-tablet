@@ -153,7 +153,7 @@ onSerialLine((line) => {
     return;
   }
 
-  if (parsed.type === "log" || "raw") {
+  if (parsed.type === "log" || parsed.type === "raw") {
     return;
   }
 
