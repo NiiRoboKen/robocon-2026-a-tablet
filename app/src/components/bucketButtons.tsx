@@ -1,18 +1,13 @@
+import { useWebSocketStore } from "@/stores/useWebSocketStore";
 import { Button, Box, type BoxProps } from "@chakra-ui/react";
+import type { Commands } from "@/types";
+import { buildCommandMessage } from "@/utils/messageBuilder";
 
-const handleBucketLowButton = () => {
-    return;
-};
-const handleBucketMiddleButton = () => {
-    return;
-};
-const handleBucketHightButton = () => {
-    return;
-};
-const handleReleaseButton = () => {
-    return;
-};
 export function BucketButtons(props: BoxProps) {
+    const { send } = useWebSocketStore();
+    function sendCommand(command: Commands) {
+        send(buildCommandMessage(command));
+    }
     return (
         <Box
             p="1"
@@ -27,31 +22,31 @@ export function BucketButtons(props: BoxProps) {
                 height="100%"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleBucketLowButton}
+                onClick={() => sendCommand("bucket_low")}
             >
-                ブレーキ
+                低
             </Button>
             <Button
                 height="100%"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleBucketMiddleButton}
+                onClick={() => sendCommand("bucket_middle")}
             >
-                加速開始
+                中
             </Button>
             <Button
                 height="100%"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleBucketHightButton}
+                onClick={() => sendCommand("bucket_high")}
             >
-                発射
+                高
             </Button>
             <Button
                 height="100%"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleReleaseButton}
+                onClick={() => sendCommand("bucket_release")}
             >
                 リリース
             </Button>
