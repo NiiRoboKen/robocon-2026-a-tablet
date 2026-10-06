@@ -1,7 +1,6 @@
 import { useWebSocket } from "./hooks/useWebSocket";
 import { Konva } from "./components/Konva";
 import { ToggleColorMode } from "./components/toggleColorButton";
-import "./App.css";
 import { SendPositionButton } from "./components/sendPositionButton";
 import { Box, Flex } from "@chakra-ui/react";
 import { ReloadButtons } from "./components/reloadButtons";

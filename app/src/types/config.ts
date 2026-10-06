@@ -43,11 +43,19 @@ export interface CircleObstacleConfig {
 
 export type ObstacleConfig = RectObstacleConfig | CircleObstacleConfig;
 
+export interface TargetPositionConfig {
+  x: number;
+  y: number;
+  direction: number;
+  label?: string;
+}
+
 export interface ModeConfig {
   stage: StageConfig;
   field: FieldConfig;
   robot: RobotInitialState;
   obstacles: ObstacleConfig[];
+  targetPositions: TargetPositionConfig[];
 }
 
 export type InitialConfig = {

@@ -83,7 +83,7 @@ export function Konva() {
         <ObjectLayer />
       </Layer>
 
-      <Layer listening={false}>
+      <Layer>
         <InteractionLayer />
       </Layer>
     </Stage>

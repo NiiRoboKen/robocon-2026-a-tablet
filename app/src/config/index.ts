@@ -47,6 +47,13 @@ const redConfig: ModeConfig = {
       label: "カラーコーン",
     },
   ],
+  targetPositions: [
+    { x: -1000, y: 2500, direction: 0, label: "赤スタート左前" },
+    { x: 500, y: 3000, direction: 0, label: "赤スタート右前" },
+    { x: -100, y: 5000, direction: 90, label: "赤中央" },
+    { x: 500, y: 7000, direction: 90, label: "赤奥" },
+    { x: -1000, y: 9000, direction: 90, label: "赤左奥" },
+  ],
 };
 
 const blueConfig: ModeConfig = {
@@ -83,6 +90,13 @@ const blueConfig: ModeConfig = {
       radius: 300,
       label: "カラーコーン",
     },
+  ],
+  targetPositions: [
+    { x: 1000, y: 2500, direction: 0, label: "青スタート左前" },
+    { x: -500, y: 3000, direction: 0, label: "青スタート右前" },
+    { x: 100, y: 5000, direction: -90, label: "青中央" },
+    { x: -500, y: 7000, direction: -90, label: "青奥" },
+    { x: 1000, y: 9000, direction: -90, label: "青左奥" },
   ],
 };
 
