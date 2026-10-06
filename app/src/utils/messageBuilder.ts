@@ -2,7 +2,7 @@ import type {
   WsMessage,
   MessageType,
   MessagePayloadMap,
-  CommandType,
+  Commands,
 } from "../types/websocket";
 import type { Point2D } from "../types/geometry";
 
@@ -24,6 +24,6 @@ export function buildPositionMessage(
   return buildMessage("position_update", { x: p.x, y: p.y, direction: d });
 }
 
-export function buildCommandMessage(c: CommandType): WsMessage<"command"> {
+export function buildCommandMessage(c: Commands): WsMessage<"command"> {
   return buildMessage("command", { command: c });
 }

@@ -1,10 +1,5 @@
 import { create } from "zustand";
 import type { RobotStatePayload, PositionPayload } from "../types/websocket";
-import { getConfig } from "../config";
-import { useCanvasStore } from "./useCanvasStore";
-
-const config = getConfig(useCanvasStore.getState().colorMode);
-
 interface RobotState {
   position: PositionPayload;
   robotState: RobotStatePayload | null;

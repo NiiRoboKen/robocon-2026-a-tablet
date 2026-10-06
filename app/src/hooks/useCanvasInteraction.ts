@@ -104,9 +104,9 @@ export function useCanvasInteraction() {
 
   const resetSelectedPosition = useCallback(() => {
     setSelectedPosition(null);
-    setSelectedDirection(useRobotStore.getState().robotStatus.direction);
+    setSelectedDirection(useRobotStore.getState().position.direction);
     setCursorPosition(null);
-    setCursorDirection(useRobotStore.getState().robotStatus.direction);
+    setCursorDirection(useRobotStore.getState().position.direction);
   }, [
     setSelectedPosition,
     setSelectedDirection,
