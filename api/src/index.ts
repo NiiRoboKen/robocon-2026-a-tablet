@@ -81,9 +81,16 @@ const server = Bun.serve({
           return;
         }
 
-        void sendToSerial(msg).then((ok) => {
+        const serialMsg =
+          msg.type === "command" &&
+          msg.payload &&
+          typeof (msg.payload as { command?: unknown }).command === "string"
+            ? { type: (msg.payload as { command: string }).command, timestamp: msg.timestamp }
+            : msg;
+
+        void sendToSerial(serialMsg).then((ok) => {
           if (ok) {
-            console.log(`[Serial] Forwarded message type=${msg.type}`);
+            console.log(`[Serial] Forwarded message type=${serialMsg.type}`);
           }
         });
 
