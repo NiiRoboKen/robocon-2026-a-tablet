@@ -1,18 +1,8 @@
 import { Button, Box, type BoxProps } from "@chakra-ui/react";
+import { useControlStore } from "@/stores/useControleStore";
 
-const handleFix1Button = () => {
-    return;
-};
-const handleFix2Button = () => {
-    return;
-};
-const handleFix3Button = () => {
-    return;
-};
-const handleTableButton = () => {
-    return;
-};
 export function BeltButtons(props: BoxProps) {
+    const { setTargetBeltObject } = useControlStore();
     return (
         <Box
             position="absolute"
@@ -27,7 +17,7 @@ export function BeltButtons(props: BoxProps) {
                 flexGrow="1"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleFix1Button}
+                onClick={() => setTargetBeltObject("fix1")}
             >
                 固定1
             </Button>
@@ -36,7 +26,7 @@ export function BeltButtons(props: BoxProps) {
                 flexGrow="1"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleFix2Button}
+                onClick={() => setTargetBeltObject("fix2")}
             >
                 固定2
             </Button>
@@ -45,7 +35,7 @@ export function BeltButtons(props: BoxProps) {
                 flexGrow="1"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleFix3Button}
+                onClick={() => setTargetBeltObject("fix3")}
             >
                 固定3
             </Button>
@@ -54,7 +44,7 @@ export function BeltButtons(props: BoxProps) {
                 flexGrow="1"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleTableButton}
+                onClick={() => setTargetBeltObject("table")}
             >
                 机
             </Button>

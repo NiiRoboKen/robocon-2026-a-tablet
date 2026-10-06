@@ -46,7 +46,7 @@ function App() {
                 <AdjustAcceleration
                     top="23%"
                     left="30%"
-                    width="20%"
+                    width="30%"
                     height="7%"
                 />
                 <RollerButtons top="35%" width="40%" height="10%" />

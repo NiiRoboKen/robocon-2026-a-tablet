@@ -14,11 +14,7 @@ interface ControlState {
   setIsSending: (sending: boolean) => void;
 
   setTargetBeltObject: (target: TargetBeltObject) => void;
-
-  setSelectedBeltAcceleration: (a: number) => void;
   adjustSelectedBeltAcceleration: (delta: number) => void;
-
-  setBeltAcceleration: (key: TargetBeltObject, a: number) => void;
 }
 
 export const useControlStore = create<ControlState>((set) => ({
@@ -38,19 +34,10 @@ export const useControlStore = create<ControlState>((set) => ({
       };
       return {
         beltAccelerations: updated,
-        targetBeltAcceleration: target,
+        targetBeltObject: target,
         selectedBeltAcceleration: updated[target],
       };
     }),
-
-  setSelectedBeltAcceleration: (a) =>
-    set((state) => ({
-      selectedBeltAcceleration: a,
-      beltAccelerations: {
-        ...state.beltAccelerations,
-        [state.targetBeltObject]: a,
-      },
-    })),
 
   adjustSelectedBeltAcceleration: (delta) =>
     set((state) => {
@@ -63,16 +50,4 @@ export const useControlStore = create<ControlState>((set) => ({
         },
       };
     }),
-
-  setBeltAcceleration: (key, a) =>
-    set((state) => ({
-      beltAccelerations: {
-        ...state.beltAccelerations,
-        [key]: a,
-      },
-      selectedBeltAcceleration:
-        key === state.targetBeltObject
-          ? a
-          : state.selectedBeltAcceleration,
-    })),
 }));

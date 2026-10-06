@@ -1,18 +1,15 @@
-import { Button, Box, type BoxProps } from "@chakra-ui/react";
+import { useControlStore } from "@/stores/useControleStore";
+import { Button, Box, type BoxProps, Card, Text } from "@chakra-ui/react";
 
-const handleMinusButton = () => {
-    return;
-};
-const handlePlusButton = () => {
-    return;
-};
 export function AdjustAcceleration(props: BoxProps) {
+    const { selectedBeltAcceleration, adjustSelectedBeltAcceleration } =
+        useControlStore();
     return (
         <Box
             position="absolute"
             display="flex"
             borderWidth="5px"
-            gap="20%"
+            gap="5%"
             justifyContent="space-between"
             {...props}
         >
@@ -21,16 +18,19 @@ export function AdjustAcceleration(props: BoxProps) {
                 flexGrow="1"
                 flex="1"
                 fontSize="6xl"
-                onClick={handleMinusButton}
+                onClick={() => adjustSelectedBeltAcceleration(-1)}
             >
                 -
             </Button>
+            <Box flex="1">
+                <Text textStyle="4xl">{selectedBeltAcceleration}</Text>
+            </Box>
             <Button
                 height="100%"
                 flexGrow="1"
                 flex="1"
                 fontSize="6xl"
-                onClick={handlePlusButton}
+                onClick={() => adjustSelectedBeltAcceleration(1)}
             >
                 +
             </Button>

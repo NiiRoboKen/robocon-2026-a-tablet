@@ -6,10 +6,10 @@ import type {
 } from "../types/config";
 
 export const defaultBeltAcceleration: BeltAcceleration = {
-  fix1: 1,
-  fix2: 2,
-  fix3: 3,
-  table: 4,
+  fix1: 10,
+  fix2: 20,
+  fix3: 30,
+  table: 40,
 };
 
 const redConfig: ModeConfig = {
