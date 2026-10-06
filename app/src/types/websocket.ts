@@ -1,10 +1,11 @@
 export interface MessagePayloadMap {
   ping: EmptyPayload;
   pong: EmptyPayload;
-  position_update: PositionPayload;
+  target_position: PositionPayload;
   command: CommandPayload;
   error: ErrorPayload;
   // ESP -> tablet
+  position_update: PositionPayload;
   robot_state: RobotStatePayload;
 }
 

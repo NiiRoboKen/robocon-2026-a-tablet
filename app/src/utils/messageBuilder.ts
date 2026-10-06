@@ -20,8 +20,8 @@ export function buildMessage<K extends MessageType>(
 export function buildPositionMessage(
   p: Point2D,
   d: number,
-): WsMessage<"position_update"> {
-  return buildMessage("position_update", { x: p.x, y: p.y, direction: d });
+): WsMessage<"target_position"> {
+  return buildMessage("target_position", { x: p.x, y: p.y, direction: d });
 }
 
 export function buildCommandMessage(c: Commands): WsMessage<"command"> {
