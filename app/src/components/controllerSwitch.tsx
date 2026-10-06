@@ -18,7 +18,7 @@ export const ControllerSwitch = (props: BoxProps) => {
                 <Text>Game Pad</Text>
                 <Switch.Root
                     size="lg"
-                    checked={robotState.gamepad_used}
+                    checked={robotState?.gamepad_used ?? false}
                     onCheckedChange={(e) => handleChanged(e.checked)}
                 >
                     <Switch.HiddenInput />
