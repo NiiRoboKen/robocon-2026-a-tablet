@@ -1,15 +1,13 @@
+import { useWebSocketStore } from "@/stores/useWebSocketStore";
 import { Button, Box, type BoxProps } from "@chakra-ui/react";
+import { buildCommandMessage } from "@/utils/messageBuilder";
+import type { Commands } from "@/types";
 
-const handleBrakeButton = () => {
-    return;
-};
-const handleStartAccelerationButton = () => {
-    return;
-};
-const handleLaunchButton = () => {
-    return;
-};
 export function RollerButtons(props: BoxProps) {
+    const { send } = useWebSocketStore();
+    function sendCommand(command: Commands) {
+        send(buildCommandMessage(command));
+    }
     return (
         <Box
             p="1"
@@ -20,19 +18,14 @@ export function RollerButtons(props: BoxProps) {
             justifyContent="space-between"
             {...props}
         >
-            <Button
-                height="100%"
-                flex="1"
-                fontSize="2xl"
-                onClick={handleBrakeButton}
-            >
+            <Button height="100%" flex="1" fontSize="2xl">
                 ブレーキ
             </Button>
             <Button
                 height="100%"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleStartAccelerationButton}
+                onClick={() => sendCommand("roller_start")}
             >
                 加速開始
             </Button>
@@ -40,7 +33,7 @@ export function RollerButtons(props: BoxProps) {
                 height="100%"
                 flex="1"
                 fontSize="2xl"
-                onClick={handleLaunchButton}
+                onClick={() => sendCommand("roller_launch")}
             >
                 発射
             </Button>
