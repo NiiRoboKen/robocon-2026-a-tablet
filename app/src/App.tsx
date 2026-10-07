@@ -32,19 +32,19 @@ function App() {
         <ToggleColorMode left="90%" w="30%" h="10%" />
         <BeltButtons top="10%" width="50%" height="10%" />
         <CurrentPositionInfo top="10%" left="70%" width="30%" />
-        <FlagButton top="23%" width="15%" height="10%" />
-        <AdjustAcceleration top="23%" left="18%" width="30%" height="10%" />
+        <FlagButton top="23%" width="13%" height="10%" />
+        <AdjustAcceleration top="23%" left="14%" width="30%" height="10%" />
         <BeltLaunchButton
           top="23%"
-          left="50%"
+          left="45%"
           width="10%"
           height="10%"
           borderColor="orange"
         />
         <AdjustPositionDirectionDelta
           top="30%"
-          left="70%"
-          width="30%"
+          left="60%"
+          width="40%"
           height="15%"
           borderColor="yellow"
         />
