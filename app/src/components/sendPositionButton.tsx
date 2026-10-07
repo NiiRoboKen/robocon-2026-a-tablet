@@ -38,7 +38,14 @@ export function SendPositionButton(props: BoxProps) {
 
   return (
     <Box pos="absolute" borderWidth="5px" {...props}>
-      <Button w="100%" h="100%" onClick={handleClick} disabled={isDisabled}>
+      <Button
+        w="100%"
+        h="100%"
+        onClick={handleClick}
+        disabled={isDisabled}
+        bg="purple"
+        color="white"
+      >
         目標座標送信
       </Button>
     </Box>

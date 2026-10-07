@@ -50,7 +50,8 @@ export type Commands =
   | "bucket_high"
   | "bucket_release"
   | "floor_on"
-  | "floor_off";
+  | "floor_off"
+  | "stop";
 
 export interface CommandPayload {
   command: Commands;
@@ -62,10 +63,4 @@ export interface ErrorPayload {
 
 export interface RobotStatePayload {
   gamepad_used: boolean;
-  load_belt: boolean;
-  reload_belt: boolean;
-  reload_finish_belt: boolean;
-  launch_belt: boolean;
-  launch_pos_belt: number;
-  acc_pos_belt: number;
 }
