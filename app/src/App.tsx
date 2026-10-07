@@ -15,6 +15,7 @@ import { ControllerSwitch } from "./components/controllerSwitch";
 import { FloorHarvest } from "./components/floorHarvest";
 import { AdjustAcceleration } from "./components/adjustAcceleration";
 import { BeltLaunchButton } from "./components/beltLaunchButton";
+import { AdjustPositionDirectionDelta } from "./components/adjustPositionDirectionDelta";
 
 function App() {
   useWebSocket();
@@ -37,6 +38,12 @@ function App() {
         <CurrentPositionInfo top="10%" left="70%" width="30%" />
         <FlagButton top="23%" width="15%" height="10%" />
         <AdjustAcceleration top="23%" left="20%" width="30%" height="10%" />
+        <AdjustPositionDirectionDelta
+          top="30%"
+          left="70%"
+          width="30%"
+          height="15%"
+        />
         <BeltLaunchButton top="23%" left="55%" width="10%" height="10%" />
         <RollerButtons top="50%" width="40%" height="10%" />
         <BucketButtons top="70%" width="50%" height="10%" />

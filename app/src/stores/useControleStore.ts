@@ -11,10 +11,16 @@ interface ControlState {
   selectedBeltAcceleration: number;
   beltAccelerations: BeltAcceleration;
 
+  positionDelta: number;
+  directionDelta: number;
+
   setIsSending: (sending: boolean) => void;
 
   setTargetBeltObject: (target: TargetBeltObject) => void;
   adjustSelectedBeltAcceleration: (delta: number) => void;
+
+  adjustPositionDelta: (delta: number) => void;
+  adjustDirectionDelta: (delta: number) => void;
 }
 
 export const useControlStore = create<ControlState>((set) => ({
@@ -23,6 +29,9 @@ export const useControlStore = create<ControlState>((set) => ({
   targetBeltObject: "fix1",
   selectedBeltAcceleration: defaultBeltAcceleration.fix1,
   beltAccelerations: { ...defaultBeltAcceleration },
+
+  positionDelta: 5,
+  directionDelta: 10,
 
   setIsSending: (sending) => set({ isSending: sending }),
 
@@ -50,4 +59,9 @@ export const useControlStore = create<ControlState>((set) => ({
         },
       };
     }),
+
+  adjustPositionDelta: (delta) =>
+    set((state) => ({ positionDelta: state.positionDelta + delta })),
+  adjustDirectionDelta: (delta) =>
+    set((state) => ({ directionDelta: state.directionDelta + delta })),
 }));
