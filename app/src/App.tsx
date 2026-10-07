@@ -5,7 +5,6 @@ import { SendPositionButton } from "./components/sendPositionButton";
 import { Box, Flex } from "@chakra-ui/react";
 import { ReloadButtons } from "./components/reloadButtons";
 import { BeltButtons } from "./components/beltButtons";
-import { RollerButtons } from "./components/rollerButtons";
 import { FlagButton } from "./components/flagButton";
 import { BucketButtons } from "./components/bucketButtons";
 import { CurrentPositionInfo } from "./components/currentPositionInfo";
@@ -53,9 +52,6 @@ function App() {
                     height="15%"
                     borderColor="yellow"
                 />
-
-                <Label top="43%">ローラー</Label>
-                <RollerButtons top="50%" width="40%" height="10%" />
 
                 <Label top="63%">バケツ回収</Label>
                 <BucketButtons top="70%" width="50%" height="10%" />
