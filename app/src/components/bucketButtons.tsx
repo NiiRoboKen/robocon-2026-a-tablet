@@ -23,6 +23,7 @@ export function BucketButtons(props: BoxProps) {
                 flex="1"
                 fontSize="2xl"
                 onClick={() => sendCommand("bucket_low")}
+                bg="skyblue"
             >
                 低
             </Button>
@@ -31,6 +32,7 @@ export function BucketButtons(props: BoxProps) {
                 flex="1"
                 fontSize="2xl"
                 onClick={() => sendCommand("bucket_middle")}
+                bg="blue"
             >
                 中
             </Button>
@@ -39,6 +41,7 @@ export function BucketButtons(props: BoxProps) {
                 flex="1"
                 fontSize="2xl"
                 onClick={() => sendCommand("bucket_high")}
+                bg="teal"
             >
                 高
             </Button>
@@ -47,6 +50,7 @@ export function BucketButtons(props: BoxProps) {
                 flex="1"
                 fontSize="2xl"
                 onClick={() => sendCommand("bucket_release")}
+                bg="green"
             >
                 リリース
             </Button>

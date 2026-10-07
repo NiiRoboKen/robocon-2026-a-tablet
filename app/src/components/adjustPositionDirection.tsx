@@ -55,6 +55,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     flex="1"
                     size="2xl"
                     onClick={() => handleClick(0, 0, directionDelta)}
+                    colorPalette="orange"
                 >
                     <PiArrowArcLeftBold />
                 </IconButton>
@@ -77,6 +78,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     flex="1"
                     size="2xl"
                     onClick={() => handleClick(0, 0, -directionDelta)}
+                    colorPalette="orange"
                 >
                     <PiArrowArcRightBold />
                 </IconButton>
@@ -100,6 +102,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     flex="1"
                     size="2xl"
                     onClick={handleStop}
+                    colorPalette="red"
                 >
                     <PiStopCircleBold />
                 </IconButton>

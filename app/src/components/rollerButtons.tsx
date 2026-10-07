@@ -34,6 +34,8 @@ export function RollerButtons(props: BoxProps) {
         flex="1"
         fontSize="2xl"
         onClick={() => sendCommand("roller_launch")}
+        borderWidth="5px"
+        borderColor="orange"
       >
         発射
       </Button>
