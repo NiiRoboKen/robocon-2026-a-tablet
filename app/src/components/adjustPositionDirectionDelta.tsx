@@ -4,6 +4,22 @@ import { Flex, Button, Box, type BoxProps, Text } from "@chakra-ui/react";
 
 import { HStack, Slider } from "@chakra-ui/react";
 
+const positionMarks = [
+  { value: 0, label: "0" },
+  { value: 100, label: "100" },
+  { value: 200, label: "200" },
+  { value: 300, label: "300" },
+  { value: 400, label: "400" },
+  { value: 500, label: "500" },
+];
+const directionMarks = [
+  { value: 0, label: "0" },
+  { value: 45, label: "45" },
+  { value: 90, label: "90" },
+  { value: 135, label: "135" },
+  { value: 180, label: "180" },
+];
+
 const PositionDletaSlider = ({ value }: { value: number }) => {
   return (
     <Slider.Root
@@ -18,6 +34,7 @@ const PositionDletaSlider = ({ value }: { value: number }) => {
     >
       <HStack justify="space-between">
         <Slider.Label>Posotion</Slider.Label>
+        mm
       </HStack>
       <Slider.Control>
         <Slider.Track>
@@ -26,6 +43,7 @@ const PositionDletaSlider = ({ value }: { value: number }) => {
         <Slider.Thumb index={0} rounded="none">
           <Box as={Slider.ValueText} />
         </Slider.Thumb>
+        <Slider.Marks marks={positionMarks} />
       </Slider.Control>
     </Slider.Root>
   );
@@ -44,7 +62,7 @@ const DirectionDletaSlider = ({ value }: { value: number }) => {
     >
       <HStack justify="space-between">
         <Slider.Label>Direction</Slider.Label>
-        {value}
+        deg
       </HStack>
       <Slider.Control>
         <Slider.Track>
@@ -53,6 +71,7 @@ const DirectionDletaSlider = ({ value }: { value: number }) => {
         <Slider.Thumb index={0} rounded="none">
           <Box as={Slider.ValueText} />
         </Slider.Thumb>
+        <Slider.Marks marks={directionMarks} />
       </Slider.Control>
     </Slider.Root>
   );

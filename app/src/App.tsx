@@ -39,18 +39,18 @@ function App() {
           borderColor="orange"
         />
 
-        <CurrentPositionInfo top="10%" left="70%" width="30%" />
+        <CurrentPositionInfo top="10%" left="70%" width="30%" borderColor="green" />
         <FlagButton top="23%" width="13%" height="10%" />
         <AdjustAcceleration top="23%" left="14%" width="30%" height="10%" />
         <AdjustPositionDirectionDelta
           top="30%"
           left="60%"
           width="40%"
-          height="15%"
+          height="20%"
           borderColor="yellow"
         />
         <AdjustPositionDirection
-          top="50%"
+          top="55%"
           left="60%"
           width="40%"
           height="40%"
