@@ -180,5 +180,5 @@ onSerialLine((line) => {
       typeof parsed.timestamp === "number" ? parsed.timestamp : Date.now(),
   };
   server.publish(WS_TOPIC, JSON.stringify(normalized));
-  console.log(`[Serial -> WS] type=${parsed.type}`);
+  console.log(`[Serial -> WS] type=${parsed.type}, time=${normalized.timestamp}`);
 });
