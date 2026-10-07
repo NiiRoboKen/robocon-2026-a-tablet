@@ -21,7 +21,9 @@ export function RollerButtons(props: BoxProps) {
       justifyContent="space-between"
       {...props}
     >
-      <Button height="100%" flex="1" fontSize="2xl">
+      <Button height="100%" flex="1" fontSize="2xl"
+        onClick={() => sendCommand("roller_stop")}
+      >
         ブレーキ
       </Button>
       <Button

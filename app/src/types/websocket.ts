@@ -45,6 +45,7 @@ export type Commands =
   | "belt_elevation"
   | "roller_start"
   | "roller_launch"
+  | "roller_stop"
   | "bucket_low"
   | "bucket_middle"
   | "bucket_high"
