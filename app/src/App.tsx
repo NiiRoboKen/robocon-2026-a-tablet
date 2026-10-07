@@ -9,13 +9,13 @@ import { FlagButton } from "./components/flagButton";
 import { BucketButtons } from "./components/bucketButtons";
 import { CurrentPositionInfo } from "./components/currentPositionInfo";
 import { ControllerSwitch } from "./components/controllerSwitch";
-import { FloorHarvest } from "./components/floorHarvest";
 import { AdjustAcceleration } from "./components/adjustAcceleration";
 import { BeltLaunchButton } from "./components/beltLaunchButton";
 import { AdjustPositionDirectionDelta } from "./components/adjustPositionDirectionDelta";
 import { AdjustPositionDirection } from "./components/adjustPositionDirection";
 import { Label } from "./components/label";
 import { StopButton } from "./components/stopButton";
+import { RollerButtons } from "./components/rollerButtons";
 
 function App() {
   useWebSocket();
@@ -48,10 +48,6 @@ function App() {
           height="15%"
           borderColor="yellow"
         />
-
-        <Label top="40%">バケツ回収</Label>
-        <BucketButtons top="50%" width="50%" height="10%" />
-        <StopButton top="74%" width="10%" height="10%" borderColor="yellow" />
         <AdjustPositionDirection
           top="50%"
           left="60%"
@@ -59,9 +55,17 @@ function App() {
           height="40%"
           borderColor="red"
         />
-        <ControllerSwitch top="74%" left="20%" />
+
+        <Label top="40%">バケツ回収</Label>
+        <RollerButtons top="48%" width="50%" height="10%" />
+
+        <Label top="65%">バケツ回収</Label>
+        <BucketButtons top="73%" width="50%" height="10%" />
+
+        <StopButton top="85%" width="10%" height="10%" borderColor="yellow" />
+        <ControllerSwitch top="87%" left="20%" />
         <SendPositionButton
-          top="74%"
+          top="85%"
           left="40%"
           width="15%"
           height="10%"
