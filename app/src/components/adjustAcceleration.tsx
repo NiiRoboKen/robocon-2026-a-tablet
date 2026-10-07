@@ -1,9 +1,12 @@
 import { useControlStore } from "@/stores/useControleStore";
+import { useRobotStore } from "@/stores/useRobotStore";
 import { Button, Box, type BoxProps, Text } from "@chakra-ui/react";
 
 export function AdjustAcceleration(props: BoxProps) {
   const { selectedBeltAcceleration, adjustSelectedBeltAcceleration } =
     useControlStore();
+  const { robotState } = useRobotStore();
+  const isDisabled = robotState?.gamepad_used ?? false;
   return (
     <Box
       position="absolute"
@@ -19,6 +22,7 @@ export function AdjustAcceleration(props: BoxProps) {
         flex="1"
         fontSize="6xl"
         onClick={() => adjustSelectedBeltAcceleration(-1)}
+        disabled={isDisabled}
       >
         -
       </Button>
@@ -36,6 +40,7 @@ export function AdjustAcceleration(props: BoxProps) {
         flex="1"
         fontSize="6xl"
         onClick={() => adjustSelectedBeltAcceleration(1)}
+        disabled={isDisabled}
       >
         +
       </Button>

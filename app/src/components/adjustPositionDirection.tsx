@@ -15,8 +15,9 @@ import {
 
 export function AdjustPositionDirection(props: BoxProps) {
     const { positionDelta, directionDelta } = useControlStore();
-    const { position } = useRobotStore();
+    const { position, robotState } = useRobotStore();
     const { send } = useWebSocketStore();
+    const isDisabled = robotState?.gamepad_used ?? false;
 
     const handleClick = (
         xDelta: number,
@@ -56,6 +57,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     size="2xl"
                     onClick={() => handleClick(0, 0, directionDelta)}
                     colorPalette="orange"
+                    disabled={isDisabled}
                 >
                     <PiArrowArcLeftBold />
                 </IconButton>
@@ -67,6 +69,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     flex="1"
                     size="2xl"
                     onClick={() => handleClick(0, positionDelta, 0)}
+                    disabled={isDisabled}
                 >
                     <PiArrowUpBold />
                 </IconButton>
@@ -79,6 +82,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     size="2xl"
                     onClick={() => handleClick(0, 0, -directionDelta)}
                     colorPalette="orange"
+                    disabled={isDisabled}
                 >
                     <PiArrowArcRightBold />
                 </IconButton>
@@ -91,6 +95,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     flex="1"
                     size="2xl"
                     onClick={() => handleClick(-positionDelta, 0, 0)}
+                    disabled={isDisabled}
                 >
                     <PiArrowLeftBold />
                 </IconButton>
@@ -103,6 +108,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     size="2xl"
                     onClick={handleStop}
                     colorPalette="red"
+                    disabled={isDisabled}
                 >
                     <PiStopCircleBold />
                 </IconButton>
@@ -114,6 +120,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     flex="1"
                     size="2xl"
                     onClick={() => handleClick(positionDelta, 0, 0)}
+                    disabled={isDisabled}
                 >
                     <PiArrowRightBold />
                 </IconButton>
@@ -125,6 +132,7 @@ export function AdjustPositionDirection(props: BoxProps) {
                     height="100%"
                     size="2xl"
                     onClick={() => handleClick(0, -positionDelta, 0)}
+                    disabled={isDisabled}
                 >
                     <PiArrowDownBold />
                 </IconButton>

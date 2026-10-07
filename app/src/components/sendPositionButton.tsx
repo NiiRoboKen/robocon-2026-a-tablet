@@ -1,6 +1,7 @@
 import { buildPositionMessage } from "../utils/messageBuilder";
 import { useCanvasStore } from "../stores/useCanvasStore";
 import { useWebSocketStore } from "../stores/useWebSocketStore";
+import { useRobotStore } from "../stores/useRobotStore";
 import { getConfig } from "../config";
 import {
   coordinatesPixelToWorld,
@@ -14,6 +15,8 @@ export function SendPositionButton(props: BoxProps) {
   const { colorMode, selectedPosition, pixelScale, selectedDirection } =
     useCanvasStore();
   const send = useWebSocketStore((s) => s.send);
+  const robotState = useRobotStore((s) => s.robotState);
+  const isDisabled = robotState?.gamepad_used ?? false;
 
   const handleClick = () => {
     if (selectedPosition === null || selectedDirection === null) {
@@ -35,7 +38,7 @@ export function SendPositionButton(props: BoxProps) {
 
   return (
     <Box pos="absolute" borderWidth="5px" {...props}>
-      <Button w="100%" h="100%" onClick={handleClick}>
+      <Button w="100%" h="100%" onClick={handleClick} disabled={isDisabled}>
         目標座標送信
       </Button>
     </Box>

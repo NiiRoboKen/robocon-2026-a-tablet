@@ -1,4 +1,5 @@
 import { useControlStore } from "@/stores/useControleStore";
+import { useRobotStore } from "@/stores/useRobotStore";
 import {
     Flex,
     Button,
@@ -14,6 +15,8 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
         adjustPositionDelta,
         adjustDirectionDelta,
     } = useControlStore();
+    const { robotState } = useRobotStore();
+    const isDisabled = robotState?.gamepad_used ?? false;
     return (
         <Box
             position="absolute"
@@ -39,6 +42,7 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
                     flex="1"
                     fontSize="4xl"
                     onClick={() => adjustPositionDelta(-1)}
+                    disabled={isDisabled}
                 >
                     -
                 </Button>
@@ -48,6 +52,7 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
                     flex="1"
                     fontSize="4xl"
                     onClick={() => adjustPositionDelta(1)}
+                    disabled={isDisabled}
                 >
                     +
                 </Button>
@@ -68,6 +73,7 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
                     flex="1"
                     fontSize="4xl"
                     onClick={() => adjustDirectionDelta(-1)}
+                    disabled={isDisabled}
                 >
                     -
                 </Button>
@@ -77,6 +83,7 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
                     flex="1"
                     fontSize="4xl"
                     onClick={() => adjustDirectionDelta(1)}
+                    disabled={isDisabled}
                 >
                     +
                 </Button>
