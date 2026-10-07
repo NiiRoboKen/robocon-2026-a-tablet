@@ -31,16 +31,17 @@ function App() {
         <ReloadButtons left="15%" width="40%" height="8%" />
         <ToggleColorMode left="90%" w="30%" h="10%" />
         <BeltButtons top="10%" width="50%" height="10%" />
-        <CurrentPositionInfo top="10%" left="70%" width="30%" />
-        <FlagButton top="23%" width="13%" height="10%" />
-        <AdjustAcceleration top="23%" left="14%" width="30%" height="10%" />
         <BeltLaunchButton
-          top="23%"
-          left="45%"
+          top="10%"
+          left="55%"
           width="10%"
           height="10%"
           borderColor="orange"
         />
+
+        <CurrentPositionInfo top="10%" left="70%" width="30%" />
+        <FlagButton top="23%" width="13%" height="10%" />
+        <AdjustAcceleration top="23%" left="14%" width="30%" height="10%" />
         <AdjustPositionDirectionDelta
           top="30%"
           left="60%"
@@ -66,7 +67,7 @@ function App() {
         <ControllerSwitch top="87%" left="20%" />
         <SendPositionButton
           top="85%"
-          left="40%"
+          left="35%"
           width="15%"
           height="10%"
           borderColor="green"

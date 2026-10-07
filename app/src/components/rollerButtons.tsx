@@ -1,8 +1,9 @@
 import { useWebSocketStore } from "@/stores/useWebSocketStore";
-import { Button, Box, type BoxProps } from "@chakra-ui/react";
+import { Button, Box, type BoxProps, Icon } from "@chakra-ui/react";
 import { buildCommandMessage } from "@/utils/messageBuilder";
 import type { Commands } from "@/types";
 import { useRobotStore } from "@/stores/useRobotStore";
+import { MdRocketLaunch } from "react-icons/md";
 
 export function RollerButtons(props: BoxProps) {
   const { send } = useWebSocketStore();
@@ -21,7 +22,10 @@ export function RollerButtons(props: BoxProps) {
       justifyContent="space-between"
       {...props}
     >
-      <Button height="100%" flex="1" fontSize="2xl"
+      <Button
+        height="100%"
+        flex="1"
+        fontSize="2xl"
         onClick={() => sendCommand("roller_stop")}
       >
         ブレーキ
@@ -45,6 +49,9 @@ export function RollerButtons(props: BoxProps) {
         disabled={isDisabled}
       >
         発射
+        <Icon size="2xl">
+          <MdRocketLaunch />
+        </Icon>
       </Button>
     </Box>
   );

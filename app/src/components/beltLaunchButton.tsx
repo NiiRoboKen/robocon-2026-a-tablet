@@ -1,8 +1,9 @@
-import { Button, Box, type BoxProps } from "@chakra-ui/react";
+import { Button, Box, type BoxProps, Icon } from "@chakra-ui/react";
 import { useWebSocketStore } from "@/stores/useWebSocketStore";
 import { useRobotStore } from "@/stores/useRobotStore";
 import { buildBeltLaunchMessage } from "@/utils/messageBuilder";
 import { useControlStore } from "@/stores/useControleStore";
+import { MdRocketLaunch } from "react-icons/md";
 
 export function BeltLaunchButton(props: BoxProps) {
   const { robotState } = useRobotStore();
@@ -21,6 +22,9 @@ export function BeltLaunchButton(props: BoxProps) {
         disabled={isDisabled}
       >
         発射
+        <Icon size="2xl">
+          <MdRocketLaunch />
+        </Icon>
       </Button>
     </Box>
   );

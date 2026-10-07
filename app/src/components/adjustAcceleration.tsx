@@ -26,13 +26,8 @@ export function AdjustAcceleration(props: BoxProps) {
       >
         -
       </Button>
-      <Box
-        flex="1"
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Text textStyle="3xl">{selectedBeltAcceleration} mm</Text>
+      <Box flex="1" display="flex" justifyContent="center" alignItems="center">
+        <Text textStyle="3xl">{selectedBeltAcceleration}</Text>
       </Box>
       <Button
         height="100%"
