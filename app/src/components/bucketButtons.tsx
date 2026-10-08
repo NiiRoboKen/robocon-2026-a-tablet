@@ -3,6 +3,7 @@ import { Button, Box, type BoxProps } from "@chakra-ui/react";
 import type { Commands } from "@/types";
 import { buildCommandMessage } from "@/utils/messageBuilder";
 import { useRobotStore } from "@/stores/useRobotStore";
+import { MdRocketLaunch } from "react-icons/md";
 
 export function BucketButtons(props: BoxProps) {
   const { send } = useWebSocketStore();

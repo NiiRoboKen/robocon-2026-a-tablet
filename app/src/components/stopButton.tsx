@@ -1,7 +1,9 @@
-import { Button, Box, type BoxProps } from "@chakra-ui/react";
+import { Button, Box, type BoxProps, Popover, Portal } from "@chakra-ui/react";
 import { useWebSocketStore } from "@/stores/useWebSocketStore";
 import { useRobotStore } from "@/stores/useRobotStore";
 import { buildCommandMessage } from "@/utils/messageBuilder";
+import { ConfirmPopover } from "./confirmPopover";
+
 
 export function StopButton(props: BoxProps) {
   const { robotState } = useRobotStore();
@@ -11,17 +13,18 @@ export function StopButton(props: BoxProps) {
   };
   return (
     <Box position="absolute" borderWidth="5px" {...props}>
-      <Button
-        w="100%"
-        h="100%"
-        fontSize="3xl"
-        onClick={handleClick}
-        disabled={isDisabled}
-        bg="red"
-        color="black"
-      >
-        停止
-      </Button>
+      <ConfirmPopover title="OK?" handleClick={handleClick}>
+        <Button
+          w="100%"
+          h="100%"
+          fontSize="3xl"
+          disabled={isDisabled}
+          bg="red"
+          color="black"
+        >
+          停止
+        </Button>
+      </ConfirmPopover>
     </Box>
   );
 }
