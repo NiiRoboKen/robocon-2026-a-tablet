@@ -1,5 +1,4 @@
 import { useControlStore } from "@/stores/useControleStore";
-import { useRobotStore } from "@/stores/useRobotStore";
 import { Flex, Button, Box, type BoxProps, Text } from "@chakra-ui/react";
 
 import { HStack, Slider } from "@chakra-ui/react";
@@ -88,7 +87,6 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
     adjustPositionDelta,
     adjustDirectionDelta,
   } = useControlStore();
-  const { robotState } = useRobotStore();
   return (
     <Box
       position="absolute"
