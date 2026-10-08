@@ -16,6 +16,7 @@ import { AdjustPositionDirection } from "./components/adjustPositionDirection";
 import { Label } from "./components/label";
 import { StopButton } from "./components/stopButton";
 import { RollerButtons } from "./components/rollerButtons";
+import { RebootButton } from "./components/rebootButton";
 
 function App() {
   useWebSocket();
@@ -29,7 +30,10 @@ function App() {
           ベルト
         </Label>
         <ReloadButtons left="15%" width="40%" height="8%" />
+
         <ToggleColorMode left="90%" w="30%" h="10%" />
+        <ControllerSwitch left="70%" />
+
         <BeltButtons top="10%" width="50%" height="10%" />
         <BeltLaunchButton
           top="10%"
@@ -39,7 +43,12 @@ function App() {
           borderColor="orange"
         />
 
-        <CurrentPositionInfo top="10%" left="70%" width="30%" borderColor="green" />
+        <CurrentPositionInfo
+          top="10%"
+          left="70%"
+          width="30%"
+          borderColor="green"
+        />
         <FlagButton top="23%" width="13%" height="10%" />
         <AdjustAcceleration top="23%" left="14%" width="30%" height="10%" />
         <AdjustPositionDirectionDelta
@@ -64,7 +73,13 @@ function App() {
         <BucketButtons top="73%" width="50%" height="10%" />
 
         <StopButton top="85%" width="10%" height="10%" borderColor="yellow" />
-        <ControllerSwitch top="87%" left="20%" />
+        <RebootButton
+          top="85%"
+          left="15%"
+          width="10%"
+          height="10%"
+          borderColor="blue"
+        />
         <SendPositionButton
           top="85%"
           left="35%"
