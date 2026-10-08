@@ -34,7 +34,9 @@ const PositionDletaSlider = ({ value }: { value: number }) => {
     >
       <HStack justify="space-between">
         <Slider.Label>Posotion</Slider.Label>
-        mm
+        <Text>
+          <Slider.ValueText /> mm
+        </Text>
       </HStack>
       <Slider.Control>
         <Slider.Track>
@@ -62,7 +64,9 @@ const DirectionDletaSlider = ({ value }: { value: number }) => {
     >
       <HStack justify="space-between">
         <Slider.Label>Direction</Slider.Label>
-        deg
+        <Text>
+          <Slider.ValueText /> deg
+        </Text>
       </HStack>
       <Slider.Control>
         <Slider.Track>
@@ -85,7 +89,6 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
     adjustDirectionDelta,
   } = useControlStore();
   const { robotState } = useRobotStore();
-  const isDisabled = robotState?.gamepad_used ?? false;
   return (
     <Box
       position="absolute"
@@ -101,7 +104,6 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
           flex="1"
           fontSize="4xl"
           onClick={() => adjustPositionDelta(-1)}
-          disabled={isDisabled}
         >
           -
         </Button>
@@ -111,7 +113,6 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
           flex="1"
           fontSize="4xl"
           onClick={() => adjustPositionDelta(1)}
-          disabled={isDisabled}
         >
           +
         </Button>
@@ -122,7 +123,6 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
           flex="1"
           fontSize="4xl"
           onClick={() => adjustDirectionDelta(-1)}
-          disabled={isDisabled}
         >
           -
         </Button>
@@ -132,7 +132,6 @@ export function AdjustPositionDirectionDelta(props: BoxProps) {
           flex="1"
           fontSize="4xl"
           onClick={() => adjustDirectionDelta(1)}
-          disabled={isDisabled}
         >
           +
         </Button>
