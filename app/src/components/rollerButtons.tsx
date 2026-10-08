@@ -27,6 +27,7 @@ export function RollerButtons(props: BoxProps) {
         flex="1"
         fontSize="2xl"
         onClick={() => sendCommand("roller_stop")}
+        disabled={isDisabled}
       >
         ブレーキ
       </Button>
