@@ -49,11 +49,21 @@ const redConfig: ModeConfig = {
   ],
   targetPositions: [
     { x: 0, y: 0, direction: 0, label: "赤スタート" },
-    { x: -1000, y: 2500, direction: 0, label: "赤スタート左前" },
-    { x: 500, y: 3000, direction: 0, label: "赤スタート右前" },
-    { x: -100, y: 5000, direction: 90, label: "赤中央" },
-    { x: 500, y: 7000, direction: 90, label: "赤奥" },
-    { x: -1000, y: 9000, direction: 90, label: "赤左奥" },
+
+    // { x: 0, y: 1500, direction: 0, label: "Pos1経由" },
+    { x: 900, y: 2721, direction: 90, label: "Pos1" },
+
+    // { x: 900, y: 4266, direction: 90, label: "Pos2経由" },
+    { x: 900, y: 3766, direction: 90, label: "Pos2" },
+
+    // { x: 900, y: 4266, direction: 90, label: "Pos3経由" },
+    { x: 0, y: 5586, direction: 90, label: "Pos3" },
+
+    // { x: 900, y: 4266, direction: 90, label: "Pos4経由" },
+    { x: 900, y: 7406, direction: 90, label: "Pos4" },
+
+    // { x: 900, y: 4266, direction: 90, label: "Pos5経由" },
+    { x: 900, y: 8431, direction: 90, label: "Pos5" },
   ],
 };
 
@@ -94,11 +104,21 @@ const blueConfig: ModeConfig = {
   ],
   targetPositions: [
     { x: 0, y: 0, direction: 0, label: "青スタート" },
-    { x: 1000, y: 2500, direction: 0, label: "青スタート左前" },
-    { x: -500, y: 3000, direction: 0, label: "青スタート右前" },
-    { x: 100, y: 5000, direction: -90, label: "青中央" },
-    { x: -500, y: 7000, direction: -90, label: "青奥" },
-    { x: 1000, y: 9000, direction: -90, label: "青左奥" },
+
+    // { x: 0, y: 1500, direction: 0, label: "Pos1経由" },
+    { x: -900, y: 2721, direction: 90, label: "Pos1" },
+
+    // { x: 900, y: 4266, direction: 90, label: "Pos2経由" },
+    { x: -900, y: 3766, direction: 90, label: "Pos2" },
+
+    // { x: 900, y: 4266, direction: 90, label: "Pos3経由" },
+    { x: 0, y: 5586, direction: 90, label: "Pos3" },
+
+    // { x: 900, y: 4266, direction: 90, label: "Pos4経由" },
+    { x: -900, y: 7406, direction: 90, label: "Pos4" },
+
+    // { x: 900, y: 4266, direction: 90, label: "Pos5経由" },
+    { x: -900, y: 8431, direction: 90, label: "Pos5" },
   ],
 };
 
