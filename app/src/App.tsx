@@ -27,10 +27,15 @@ function App() {
             <Konva />
 
             <Box flex="1" h="100%" pos="relative" bg="white" m="5px">
-                <Label top="2%" left="2%">
+                <Label top="2%" left="2%" borderColor="lightsalmon">
                     ベルト
                 </Label>
-                <ReloadButtons left="15%" width="40%" height="8%" />
+                <ReloadButtons
+                    left="15%"
+                    width="40%"
+                    height="8%"
+                    borderColor={"yellowgreen"}
+                />
 
                 <ToggleColorMode left="90%" w="30%" h="10%" />
                 <ControllerSwitch left="70%" />
@@ -73,10 +78,14 @@ function App() {
                     borderColor="red"
                 />
 
-                <Label top="45%">ローラー</Label>
+                <Label top="45%" borderColor={"lightsalmon"}>
+                    ローラー
+                </Label>
                 <RollerButtons top="53%" width="50%" height="10%" />
 
-                <Label top="65%">バケツ回収</Label>
+                <Label top="65%" borderColor="lightsalmon">
+                    バケツ回収
+                </Label>
                 <BucketButtons top="73%" width="50%" height="10%" />
 
                 <StopButton

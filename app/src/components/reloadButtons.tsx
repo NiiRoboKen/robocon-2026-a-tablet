@@ -24,6 +24,7 @@ export function ReloadButtons(props: BoxProps) {
         flex="1"
         onClick={() => sendCommand("belt_load")}
         disabled={isDisabled}
+        bg={"steelblue"}
       >
         装填開始
       </Button>
@@ -32,6 +33,8 @@ export function ReloadButtons(props: BoxProps) {
         flex="1"
         onClick={() => sendCommand("belt_reload")}
         disabled={isDisabled}
+        bg="sandybrown"
+        color="black"
       >
         リロード
       </Button>
@@ -40,6 +43,8 @@ export function ReloadButtons(props: BoxProps) {
         flex="1"
         onClick={() => sendCommand("belt_reload_finish")}
         disabled={isDisabled}
+        bg="plum"
+        color="black"
       >
         リロード完了
       </Button>

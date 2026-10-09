@@ -1,4 +1,4 @@
-import { Flex, Button, Box, type BoxProps, Text } from "@chakra-ui/react";
+import { Flex, Button, Box, type BoxProps } from "@chakra-ui/react";
 import { useControlStore } from "@/stores/useControleStore";
 import { useWebSocketStore } from "@/stores/useWebSocketStore";
 import { useRobotStore } from "@/stores/useRobotStore";
@@ -60,7 +60,7 @@ export function BeltButtons(props: BoxProps) {
           onClick={() => {
             sendCommand("load_mag");
           }}
-          bg="yellow"
+          bg="gold"
           disabled={isDisabled}
           whiteSpace={"pre-line"}
           color="black"

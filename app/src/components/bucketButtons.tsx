@@ -67,7 +67,7 @@ export function BucketButtons(props: BoxProps) {
                 flex="1"
                 fontSize="2xl"
                 // onClick={() => sendCommand("")}
-                bg="yellow"
+                bg="plum"
                 disabled={isDisabled}
                 color="black"
             >
