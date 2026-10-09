@@ -127,20 +127,6 @@ export function BeltButtons(props: BoxProps) {
         >
           高
         </Button>
-        <Button
-          height="100%"
-          flexGrow="1"
-          flex="1"
-          fontSize="2xl"
-          onClick={() => {
-            setTargetBeltObject("table");
-            sendCommand("belt_desk");
-          }}
-          bg="green"
-          disabled={isDisabled}
-        >
-          机
-        </Button>
       </Flex>
     </Box>
   );

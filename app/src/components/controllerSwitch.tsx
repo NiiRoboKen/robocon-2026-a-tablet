@@ -1,8 +1,17 @@
-import { Switch, Box, VStack, Text, type BoxProps } from "@chakra-ui/react";
+import {
+    Switch,
+    Box,
+    VStack,
+    Text,
+    type BoxProps,
+    Flex,
+    Icon,
+} from "@chakra-ui/react";
 import { HiCheck, HiX } from "react-icons/hi";
 import { useRobotStore } from "@/stores/useRobotStore";
 import { useWebSocketStore } from "@/stores/useWebSocketStore";
 import { buildCommandMessage } from "@/utils/messageBuilder";
+import { IoGameController } from "react-icons/io5";
 
 const handleChanged = (e: boolean) => {
     useWebSocketStore
@@ -15,7 +24,12 @@ export const ControllerSwitch = (props: BoxProps) => {
     return (
         <Box pos="absolute" {...props}>
             <VStack gap="2" align="center">
-                <Text>Game Pad</Text>
+                <Flex gap="5px">
+                    <Text fontSize="xl">Game Pad</Text>
+                    <Icon size="2xl">
+                        <IoGameController />
+                    </Icon>
+                </Flex>
                 <Switch.Root
                     size="lg"
                     checked={robotState?.gamepad_used ?? false}
