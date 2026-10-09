@@ -50,6 +50,9 @@ const redConfig: ModeConfig = {
   targetPositions: [
     { x: 0, y: 0, direction: 0, label: "赤スタート" },
 
+    { x: 1200, y: 300, direction: 0, label: "赤スタート前1" },
+    { x: -900, y: 2000, direction: 90, label: "赤スタート前2" },
+
     // { x: 0, y: 1500, direction: 0, label: "Pos1経由" },
     { x: 900, y: 2721, direction: 90, label: "Pos1" },
 
@@ -110,6 +113,9 @@ const blueConfig: ModeConfig = {
   ],
   targetPositions: [
     { x: 0, y: 0, direction: 0, label: "青スタート" },
+
+    { x: -1200, y: 300, direction: 0, label: "赤スタート前1" },
+    { x: 900, y: 2000, direction: -90, label: "赤スタート前2" },
 
     // { x: 0, y: 1500, direction: 0, label: "Pos1経由" },
     { x: -900, y: 2721, direction: -90, label: "Pos1" },
