@@ -68,4 +68,5 @@ export interface ErrorPayload {
 
 export interface RobotStatePayload {
   gamepad_used: boolean;
+  roller_reach: boolean;
 }
