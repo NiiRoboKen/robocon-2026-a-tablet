@@ -29,11 +29,12 @@ export function BeltButtons(props: BoxProps) {
           flex="1"
           fontSize="lg"
           onClick={() => {
-            // sendCommand("belt_bucket_low");
+            sendCommand("load_chanber");
           }}
-          // bg="skyblue"
+          bg="lightpink"
           disabled={isDisabled}
           whiteSpace={"pre-line"}
+          color="black"
         >
           {"ロード\nチャンバー"}
         </Button>
@@ -43,10 +44,9 @@ export function BeltButtons(props: BoxProps) {
           flex="1"
           fontSize="lg"
           onClick={() => {
-            setTargetBeltObject("fix2");
-            sendCommand("belt_bucket_middle");
+            sendCommand("unload_chanber");
           }}
-          // bg="blue"
+          bg="red"
           disabled={isDisabled}
           whiteSpace={"pre-line"}
         >
@@ -58,12 +58,12 @@ export function BeltButtons(props: BoxProps) {
           flex="1"
           fontSize="lg"
           onClick={() => {
-            setTargetBeltObject("fix3");
-            sendCommand("belt_bucket_high");
+            sendCommand("load_mag");
           }}
-          // bg="teal"
+          bg="yellow"
           disabled={isDisabled}
           whiteSpace={"pre-line"}
+          color="black"
         >
           {"ロード\nマガジン"}
         </Button>
@@ -73,10 +73,9 @@ export function BeltButtons(props: BoxProps) {
           flex="1"
           fontSize="lg"
           onClick={() => {
-            setTargetBeltObject("table");
-            sendCommand("belt_desk");
+            sendCommand("unload_mag");
           }}
-          // bg="green"
+          bg="green"
           disabled={isDisabled}
           whiteSpace={"pre-line"}
         >
