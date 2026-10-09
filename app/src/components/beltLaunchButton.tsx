@@ -6,26 +6,32 @@ import { useControlStore } from "@/stores/useControleStore";
 import { MdRocketLaunch } from "react-icons/md";
 
 export function BeltLaunchButton(props: BoxProps) {
-  const { robotState } = useRobotStore();
-  const isDisabled = robotState?.gamepad_used ?? false;
-  const handleFlagButton = () => {
-    const acceleration = useControlStore.getState().selectedBeltAcceleration;
-    useWebSocketStore.getState().send(buildBeltLaunchMessage(acceleration));
-  };
-  return (
-    <Box position="absolute" borderWidth="5px" {...props}>
-      <Button
-        w="100%"
-        h="100%"
-        fontSize="3xl"
-        onClick={handleFlagButton}
-        disabled={isDisabled}
-      >
-        発射
-        <Icon size="2xl">
-          <MdRocketLaunch />
-        </Icon>
-      </Button>
-    </Box>
-  );
+    const { robotState } = useRobotStore();
+    const isDisabled = robotState?.gamepad_used ?? false;
+    const handleFlagButton = () => {
+        const acceleration =
+            useControlStore.getState().selectedBeltAcceleration;
+        useWebSocketStore.getState().send(buildBeltLaunchMessage(acceleration));
+    };
+    return (
+        <Box position="absolute" borderWidth="5px" {...props}>
+            <Button
+                w="100%"
+                h="100%"
+                fontSize="2xl"
+                onClick={handleFlagButton}
+                disabled={isDisabled}
+
+                bgGradient="to-tr"
+                gradientFrom="yellow"
+                gradientTo="red"
+                color="black"
+            >
+                発射
+                <Icon size="2xl">
+                    <MdRocketLaunch />
+                </Icon>
+            </Button>
+        </Box>
+    );
 }

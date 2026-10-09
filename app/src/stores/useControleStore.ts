@@ -19,6 +19,7 @@ interface ControlState {
   setIsSending: (sending: boolean) => void;
 
   setTargetBeltObject: (target: TargetBeltObject) => void;
+  setSelectedBeltAcceleration: (a: number) => void;
   adjustSelectedBeltAcceleration: (delta: number) => void;
 
   setPositionDelta: (delta: number) => void;
@@ -56,6 +57,7 @@ export const useControlStore = create<ControlState>((set) => ({
       };
     }),
 
+  setSelectedBeltAcceleration: (a) => set({ selectedBeltAcceleration: a }),
   adjustSelectedBeltAcceleration: (delta) =>
     set((state) => {
       const next = state.selectedBeltAcceleration + delta;
