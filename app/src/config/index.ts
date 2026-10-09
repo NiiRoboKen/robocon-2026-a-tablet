@@ -65,6 +65,12 @@ const redConfig: ModeConfig = {
     // { x: 900, y: 4266, direction: 90, label: "Pos5経由" },
     { x: 900, y: 8431, direction: 90, label: "Pos5" },
   ],
+
+  firstActionPosition: {
+    x: 1000,
+    y: 1000,
+    direction: 0,
+  },
 };
 
 const blueConfig: ModeConfig = {
@@ -106,20 +112,26 @@ const blueConfig: ModeConfig = {
     { x: 0, y: 0, direction: 0, label: "青スタート" },
 
     // { x: 0, y: 1500, direction: 0, label: "Pos1経由" },
-    { x: -900, y: 2721, direction: 90, label: "Pos1" },
+    { x: -900, y: 2721, direction: -90, label: "Pos1" },
 
     // { x: 900, y: 4266, direction: 90, label: "Pos2経由" },
-    { x: -900, y: 3766, direction: 90, label: "Pos2" },
+    { x: -900, y: 3766, direction: -90, label: "Pos2" },
 
     // { x: 900, y: 4266, direction: 90, label: "Pos3経由" },
-    { x: 0, y: 5586, direction: 90, label: "Pos3" },
+    { x: 0, y: 5586, direction: -90, label: "Pos3" },
 
     // { x: 900, y: 4266, direction: 90, label: "Pos4経由" },
-    { x: -900, y: 7406, direction: 90, label: "Pos4" },
+    { x: -900, y: 7406, direction: -90, label: "Pos4" },
 
     // { x: 900, y: 4266, direction: 90, label: "Pos5経由" },
-    { x: -900, y: 8431, direction: 90, label: "Pos5" },
+    { x: -900, y: 8431, direction: -90, label: "Pos5" },
   ],
+
+  firstActionPosition: {
+    x: 1000,
+    y: -1000,
+    direction: 0,
+  },
 };
 
 export const Config: InitialConfig = {

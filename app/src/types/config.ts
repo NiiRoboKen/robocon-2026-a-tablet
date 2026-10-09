@@ -1,4 +1,5 @@
 import type { Point2D, Size2D } from "./geometry";
+import type { PositionPayload } from "./websocket";
 
 export type ColorMode = "red" | "blue";
 
@@ -56,6 +57,7 @@ export interface ModeConfig {
   robot: RobotInitialState;
   obstacles: ObstacleConfig[];
   targetPositions: TargetPositionConfig[];
+  firstActionPosition: PositionPayload;
 }
 
 export type InitialConfig = {

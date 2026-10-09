@@ -14,6 +14,8 @@ interface ControlState {
   positionDelta: number;
   directionDelta: number;
 
+  firstActionUsed: boolean;
+
   setIsSending: (sending: boolean) => void;
 
   setTargetBeltObject: (target: TargetBeltObject) => void;
@@ -23,6 +25,8 @@ interface ControlState {
   setDirectionDelta: (delta: number) => void;
   adjustPositionDelta: (delta: number) => void;
   adjustDirectionDelta: (delta: number) => void;
+
+  setFirstActionUsed: () => void;
 }
 
 export const useControlStore = create<ControlState>((set) => ({
@@ -34,6 +38,8 @@ export const useControlStore = create<ControlState>((set) => ({
 
   positionDelta: 5,
   directionDelta: 10,
+
+  firstActionUsed: false,
 
   setIsSending: (sending) => set({ isSending: sending }),
 
@@ -68,4 +74,6 @@ export const useControlStore = create<ControlState>((set) => ({
     set((state) => ({ positionDelta: state.positionDelta + delta })),
   adjustDirectionDelta: (delta) =>
     set((state) => ({ directionDelta: state.directionDelta + delta })),
+
+  setFirstActionUsed: () => set({ firstActionUsed: true }),
 }));

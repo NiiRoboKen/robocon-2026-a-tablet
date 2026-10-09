@@ -1,6 +1,9 @@
 import { useControlStore } from "@/stores/useControleStore";
 import { Flex, Button, Box, type BoxProps, Text } from "@chakra-ui/react";
-
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { GiAnticlockwiseRotation } from "react-icons/gi";
+import { GiClockwiseRotation } from "react-icons/gi";
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import { HStack, Slider } from "@chakra-ui/react";
 
 const positionMarks = [
@@ -32,7 +35,13 @@ const PositionDletaSlider = ({ value }: { value: number }) => {
       }
     >
       <HStack justify="space-between">
-        <Slider.Label>Posotion</Slider.Label>
+        <Slider.Label>
+          <Flex gap="2px">
+            <FaArrowRightArrowLeft />
+            {"Posotion"}
+            <FaMapMarkerAlt />
+          </Flex>
+        </Slider.Label>
         <Text>
           <Slider.ValueText /> mm
         </Text>
@@ -62,7 +71,13 @@ const DirectionDletaSlider = ({ value }: { value: number }) => {
       }
     >
       <HStack justify="space-between">
-        <Slider.Label>Direction</Slider.Label>
+        <Slider.Label>
+          <Flex>
+            <GiAnticlockwiseRotation />
+            {"Direction"}
+            <GiClockwiseRotation />
+          </Flex>
+        </Slider.Label>
         <Text>
           <Slider.ValueText /> deg
         </Text>

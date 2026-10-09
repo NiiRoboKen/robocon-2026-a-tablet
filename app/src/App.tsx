@@ -17,6 +17,7 @@ import { Label } from "./components/label";
 import { StopButton } from "./components/stopButton";
 import { RollerButtons } from "./components/rollerButtons";
 import { RebootButton } from "./components/rebootButton";
+import { FirstActionButton } from "./components/firstActionButton";
 
 function App() {
   useWebSocket();
@@ -34,7 +35,7 @@ function App() {
         <ToggleColorMode left="90%" w="30%" h="10%" />
         <ControllerSwitch left="70%" />
 
-        <BeltButtons top="10%" width="50%" height="10%" />
+        <BeltButtons top="10%" width="50%" height="20%" />
         <BeltLaunchButton
           top="10%"
           left="55%"
@@ -49,8 +50,8 @@ function App() {
           width="30%"
           borderColor="green"
         />
-        <FlagButton top="23%" width="13%" height="10%" />
-        <AdjustAcceleration top="23%" left="14%" width="30%" height="10%" />
+        <FlagButton top="31%" width="13%" height="10%" />
+        <AdjustAcceleration top="31%" left="14%" width="30%" height="10%" />
         <AdjustPositionDirectionDelta
           top="30%"
           left="60%"
@@ -66,8 +67,8 @@ function App() {
           borderColor="red"
         />
 
-        <Label top="40%">バケツ回収</Label>
-        <RollerButtons top="48%" width="50%" height="10%" />
+        <Label top="45%">バケツ回収</Label>
+        <RollerButtons top="53%" width="50%" height="10%" />
 
         <Label top="65%">バケツ回収</Label>
         <BucketButtons top="73%" width="50%" height="10%" />
@@ -75,15 +76,22 @@ function App() {
         <StopButton top="85%" width="10%" height="10%" borderColor="yellow" />
         <RebootButton
           top="85%"
-          left="15%"
+          left="12%"
+          width="10%"
+          height="10%"
+          borderColor="blue"
+        />
+        <FirstActionButton
+          top="85%"
+          left="24%"
           width="10%"
           height="10%"
           borderColor="blue"
         />
         <SendPositionButton
           top="85%"
-          left="35%"
-          width="15%"
+          left="37%"
+          width="13%"
           height="10%"
           borderColor="green"
         />
