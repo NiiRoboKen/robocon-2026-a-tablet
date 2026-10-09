@@ -67,7 +67,7 @@ function App() {
           borderColor="red"
         />
 
-        <Label top="45%">バケツ回収</Label>
+        <Label top="45%">ローラー</Label>
         <RollerButtons top="53%" width="50%" height="10%" />
 
         <Label top="65%">バケツ回収</Label>
