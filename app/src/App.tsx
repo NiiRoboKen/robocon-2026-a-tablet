@@ -33,10 +33,10 @@ function App() {
         <ToggleColorMode left="90%" w="30%" h="10%" />
         <ControllerSwitch left="70%" />
 
-        <BeltButtons top="10%" width="50%" height="20%" />
+        <BeltButtons top="10%" width="60%" height="20%" />
         <BeltLaunchButton
           top="10%"
-          left="55%"
+          left="65%"
           width="10%"
           height="10%"
           borderColor="black"
@@ -44,15 +44,15 @@ function App() {
 
         <CurrentPositionInfo
           top="10%"
-          left="70%"
-          width="30%"
+          left="80%"
+          width="20%"
           borderColor="green"
         />
         <FlagButton top="31%" width="13%" height="10%" />
         <AdjustAcceleration
           top="31%"
           left="14%"
-          width="36%"
+          width="44%"
           height="10%"
           borderColor="lightblue"
         />
@@ -76,7 +76,7 @@ function App() {
         </Label>
         <RollerButtons
           top="53%"
-          width="50%"
+          width="58%"
           height="10%"
           borderColor={"yellowgreen"}
         />
@@ -84,27 +84,27 @@ function App() {
         <Label top="65%" borderColor="lightsalmon">
           バケツ回収
         </Label>
-        <BucketButtons top="73%" width="50%" height="10%" />
+        <BucketButtons top="73%" width="58%" height="10%" />
 
-        <StopButton top="85%" width="10%" height="10%" borderColor="yellow" />
+        <StopButton top="85%" width="12%" height="10%" borderColor="yellow" />
         <RebootButton
           top="85%"
-          left="12%"
-          width="10%"
+          left="15%"
+          width="12%"
           height="10%"
           borderColor="blue"
         />
         <FirstActionButton
           top="85%"
-          left="24%"
-          width="10%"
+          left="30%"
+          width="15%"
           height="10%"
           borderColor="blue"
         />
         <SendPositionButton
           top="85%"
-          left="37%"
-          width="13%"
+          left="48%"
+          width="10%"
           height="10%"
           borderColor="green"
         />
