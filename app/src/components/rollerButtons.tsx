@@ -28,6 +28,7 @@ export function RollerButtons(props: BoxProps) {
         fontSize="2xl"
         onClick={() => sendCommand("roller_stop")}
         disabled={isDisabled}
+        bg={"steelblue"}
       >
         ブレーキ
       </Button>
@@ -37,6 +38,8 @@ export function RollerButtons(props: BoxProps) {
         fontSize="2xl"
         onClick={() => sendCommand("roller_start")}
         disabled={isDisabled}
+        bg="sandybrown"
+        color="black"
       >
         加速開始
       </Button>
@@ -45,9 +48,12 @@ export function RollerButtons(props: BoxProps) {
         flex="1"
         fontSize="2xl"
         onClick={() => sendCommand("roller_launch")}
-        borderWidth="5px"
-        borderColor="orange"
         disabled={isDisabled}
+
+        bgGradient="to-tr"
+        gradientFrom="yellow"
+        gradientTo="red"
+        color="black"
       >
         発射
         <Icon size="2xl">

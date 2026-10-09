@@ -53,26 +53,17 @@ const redConfig: ModeConfig = {
     { x: 1200, y: 300, direction: 0, label: "赤スタート前1" },
     { x: -900, y: 2000, direction: 90, label: "赤スタート前2" },
 
-    // { x: 0, y: 1500, direction: 0, label: "Pos1経由" },
     { x: 900, y: 2721, direction: 90, label: "Pos1" },
-
-    // { x: 900, y: 4266, direction: 90, label: "Pos2経由" },
     { x: 900, y: 3766, direction: 90, label: "Pos2" },
-
-    // { x: 900, y: 4266, direction: 90, label: "Pos3経由" },
     { x: 0, y: 5586, direction: 90, label: "Pos3" },
-
-    // { x: 900, y: 4266, direction: 90, label: "Pos4経由" },
     { x: 900, y: 7406, direction: 90, label: "Pos4" },
-
-    // { x: 900, y: 4266, direction: 90, label: "Pos5経由" },
     { x: 900, y: 8431, direction: 90, label: "Pos5" },
   ],
 
   firstActionPosition: {
     x: 1000,
-    y: 1000,
-    direction: 0,
+    y: -1000,
+    direction: -90,
   },
 };
 
@@ -134,9 +125,9 @@ const blueConfig: ModeConfig = {
   ],
 
   firstActionPosition: {
-    x: 1000,
+    x: -1000,
     y: -1000,
-    direction: 0,
+    direction: 90,
   },
 };
 

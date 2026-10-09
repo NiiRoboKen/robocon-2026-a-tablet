@@ -29,6 +29,7 @@ export function BucketButtons(props: BoxProps) {
                 onClick={() => sendCommand("bucket_low")}
                 bg="skyblue"
                 disabled={isDisabled}
+                color="black"
             >
                 低
             </Button>

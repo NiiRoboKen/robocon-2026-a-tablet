@@ -19,7 +19,7 @@ export function BeltButtons(props: BoxProps) {
       display="flex"
       flexDirection="column"
       borderWidth="5px"
-      gap="3px"
+      gap="10px"
       {...props}
     >
       <Flex flex="1" gap="5px" justifyContent="space-between">
@@ -90,11 +90,27 @@ export function BeltButtons(props: BoxProps) {
           flex="1"
           fontSize="2xl"
           onClick={() => {
+            setTargetBeltObject("table");
+            sendCommand("belt_desk");
+          }}
+          disabled={isDisabled}
+          bg="lightskyblue"
+          color="black"
+        >
+          机
+        </Button>
+        <Button
+          height="100%"
+          flexGrow="1"
+          flex="1"
+          fontSize="2xl"
+          onClick={() => {
             setTargetBeltObject("fix1");
             sendCommand("belt_bucket_low");
           }}
           bg="skyblue"
           disabled={isDisabled}
+          color="black"
         >
           低
         </Button>

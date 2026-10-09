@@ -33,7 +33,7 @@ export function FirstActionButton(props: BoxProps) {
               x: 0,
               y: 0,
             },
-            0,
+            config.firstActionPosition.direction,
           ),
         );
       }
@@ -49,7 +49,7 @@ export function FirstActionButton(props: BoxProps) {
         onClick={handleClick}
         disabled={firstActionUsed}
       >
-        書道
+        初動
       </Button>
     </Box>
   );
