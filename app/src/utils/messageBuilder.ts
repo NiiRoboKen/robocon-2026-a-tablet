@@ -31,3 +31,10 @@ export function buildCommandMessage(c: Commands): WsMessage<"command"> {
 export function buildBeltLaunchMessage(a: number): WsMessage<"belt_launch"> {
   return buildMessage("belt_launch", { acceleration: a });
 }
+
+export function buildElevationUpMessage(e: number): WsMessage<"elevation_up"> {
+  return buildMessage("elevation_up", { elevation: e });
+}
+export function buildElevationDownMessage(e: number): WsMessage<"elevation_down"> {
+  return buildMessage("elevation_down", { elevation: e });
+}

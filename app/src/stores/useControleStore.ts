@@ -10,6 +10,7 @@ interface ControlState {
   targetBeltObject: TargetBeltObject;
   selectedBeltAcceleration: number;
   beltAccelerations: BeltAcceleration;
+  selectedElevation: number;
 
   positionDelta: number;
   directionDelta: number;
@@ -21,6 +22,8 @@ interface ControlState {
   setTargetBeltObject: (target: TargetBeltObject) => void;
   setSelectedBeltAcceleration: (a: number) => void;
   adjustSelectedBeltAcceleration: (delta: number) => void;
+  setSelecredElevation: (e: number) => void;
+  adjustSelectedElevation: (delta: number) => void;
 
   setPositionDelta: (delta: number) => void;
   setDirectionDelta: (delta: number) => void;
@@ -36,6 +39,7 @@ export const useControlStore = create<ControlState>((set) => ({
   targetBeltObject: "fix1",
   selectedBeltAcceleration: defaultBeltAcceleration.fix1,
   beltAccelerations: { ...defaultBeltAcceleration },
+  selectedElevation: 0,
 
   positionDelta: 5,
   directionDelta: 10,
@@ -69,6 +73,10 @@ export const useControlStore = create<ControlState>((set) => ({
         },
       };
     }),
+
+  setSelecredElevation: (e) => set({ selectedElevation: e }),
+  adjustSelectedElevation: (delta) =>
+    set((state) => ({ selectedElevation: state.selectedElevation + delta })),
 
   setPositionDelta: (delta) => set({ positionDelta: delta }),
   setDirectionDelta: (delta) => set({ directionDelta: delta }),

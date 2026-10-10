@@ -3,6 +3,8 @@ export interface MessagePayloadMap {
   pong: EmptyPayload;
   target_position: PositionPayload;
   belt_launch: BeltLaunchPayload;
+  elevation_up: ElevationPayload;
+  elevation_down: ElevationPayload;
   command: CommandPayload;
   error: ErrorPayload;
   // ESP -> tablet
@@ -28,6 +30,10 @@ export interface PositionPayload {
 
 export interface BeltLaunchPayload {
   acceleration: number;
+}
+
+export interface ElevationPayload {
+  elevation: number;
 }
 
 export type Commands =

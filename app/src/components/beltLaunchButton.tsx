@@ -7,22 +7,12 @@ import { MdRocketLaunch } from "react-icons/md";
 
 export function BeltLaunchButton(props: BoxProps) {
   const { robotState } = useRobotStore();
-  // const isDisabled = robotState?.gamepad_used ?? false;
+  const isDisabled = robotState?.gamepad_used ?? false;
   const handleFlagButton = () => {
     const acceleration = useControlStore.getState().selectedBeltAcceleration;
     useWebSocketStore.getState().send(buildBeltLaunchMessage(acceleration));
   };
 
-  function isDisable(): boolean {
-    if (!robotState) {
-      return true;
-    }
-    if (robotState.gamepad_used == false) {
-      return false;
-    } else {
-      return true;
-    }
-  }
   return (
     <Box position="absolute" borderWidth="5px" {...props}>
       <Button
@@ -30,7 +20,7 @@ export function BeltLaunchButton(props: BoxProps) {
         h="100%"
         fontSize="2xl"
         onClick={handleFlagButton}
-        disabled={isDisable()}
+        disabled={isDisabled}
 
         bgGradient="to-tr"
         gradientFrom="yellow"

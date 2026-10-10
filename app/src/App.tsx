@@ -17,6 +17,8 @@ import { StopButton } from "./components/stopButton";
 import { RollerButtons } from "./components/rollerButtons";
 import { RebootButton } from "./components/rebootButton";
 import { FirstActionButton } from "./components/firstActionButton";
+import { AdjustElevation } from "./components/adjustElevation";
+import { ElevationButtons } from "./components/elevationButtons";
 
 function App() {
   useWebSocket();
@@ -26,14 +28,10 @@ function App() {
       <Konva />
 
       <Box flex="1" h="100%" pos="relative" bg="white" m="5px">
-        <Label top="2%" left="2%" borderColor="lightsalmon">
-          ベルト
-        </Label>
-
         <ToggleColorMode left="90%" w="30%" h="10%" />
         <ControllerSwitch left="70%" />
 
-        <BeltButtons top="10%" width="60%" height="20%" />
+        <BeltButtons top="0%" width="60%" height="20%" />
         <BeltLaunchButton
           top="10%"
           left="65%"
@@ -48,11 +46,24 @@ function App() {
           width="20%"
           borderColor="green"
         />
-        <FlagButton top="31%" width="13%" height="10%" />
+        <FlagButton top="21%" width="13%" height="10%" />
         <AdjustAcceleration
-          top="31%"
+          top="21%"
           left="14%"
           width="44%"
+          height="10%"
+          borderColor="lightblue"
+        />
+        <AdjustElevation
+          top="34%"
+          left="22%"
+          width="35%"
+          height="10%"
+          borderColor="lightblue"
+        />
+        <ElevationButtons
+          top="34%"
+          width="20%"
           height="10%"
           borderColor="lightblue"
         />
