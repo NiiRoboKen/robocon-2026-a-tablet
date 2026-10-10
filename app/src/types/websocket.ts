@@ -40,6 +40,7 @@ export type Commands =
   | "gamepad_use"
   | "tablet_use"
   | "reboot"
+  | "stm_reset"
   | "load_chanber"
   | "unload_chanber"
   | "load_mag"

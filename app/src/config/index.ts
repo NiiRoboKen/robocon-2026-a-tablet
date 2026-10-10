@@ -9,7 +9,7 @@ export const defaultBeltAcceleration: BeltAcceleration = {
   fix1: 10,
   fix2: 20,
   fix3: 30,
-  table: 40,
+  table: 0,
 };
 
 const redConfig: ModeConfig = {

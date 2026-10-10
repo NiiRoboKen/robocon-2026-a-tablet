@@ -19,6 +19,7 @@ import { RebootButton } from "./components/rebootButton";
 import { FirstActionButton } from "./components/firstActionButton";
 import { AdjustElevation } from "./components/adjustElevation";
 import { ElevationButtons } from "./components/elevationButtons";
+import { StmReset } from "./components/stmReset";
 
 function App() {
   useWebSocket();
@@ -60,6 +61,7 @@ function App() {
           height="10%"
           borderColor="lightblue"
         />
+        <StmReset top="34%"  left="30%" width="10%" height="10%" />
 
         <AdjustElevation
           top="47%"
