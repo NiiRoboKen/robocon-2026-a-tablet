@@ -5,7 +5,7 @@ import { SendPositionButton } from "./components/sendPositionButton";
 import { Box, Flex } from "@chakra-ui/react";
 import { BeltButtons } from "./components/beltButtons";
 import { FlagButton } from "./components/flagButton";
-import { BucketButtons } from "./components/bucketButtons";
+// import { BucketButtons } from "./components/bucketButtons";
 import { CurrentPositionInfo } from "./components/currentPositionInfo";
 import { ControllerSwitch } from "./components/controllerSwitch";
 import { AdjustAcceleration } from "./components/adjustAcceleration";
@@ -54,16 +54,16 @@ function App() {
           height="10%"
           borderColor="lightblue"
         />
-        <AdjustElevation
-          top="34%"
-          left="22%"
-          width="35%"
-          height="10%"
-          borderColor="lightblue"
-        />
         <ElevationButtons
           top="34%"
           width="20%"
+          height="10%"
+          borderColor="lightblue"
+        />
+
+        <AdjustElevation
+          top="47%"
+          width="55%"
           height="10%"
           borderColor="lightblue"
         />
@@ -82,20 +82,20 @@ function App() {
           borderColor="red"
         />
 
-        <Label top="45%" borderColor={"lightsalmon"}>
+        <Label top="62%" borderColor={"lightsalmon"}>
           ローラー
         </Label>
         <RollerButtons
-          top="53%"
+          top="70%"
           width="58%"
           height="10%"
           borderColor={"yellowgreen"}
         />
 
-        <Label top="65%" borderColor="lightsalmon">
+        {/*<Label top="65%" borderColor="lightsalmon">
           バケツ回収
         </Label>
-        <BucketButtons top="73%" width="58%" height="10%" />
+        <BucketButtons top="73%" width="58%" height="10%" />*/}
 
         <StopButton top="85%" width="12%" height="10%" borderColor="yellow" />
         <RebootButton

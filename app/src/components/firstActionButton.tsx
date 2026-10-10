@@ -24,7 +24,7 @@ export function FirstActionButton(props: BoxProps) {
       const position = useRobotStore.getState().position;
       const dist = distance(position, config.firstActionPosition);
       console.log("first action position checked", position, dist);
-      if (dist <= 100) {
+      if (dist <= 200) {
         clearInterval(intervalID);
         console.log("最初の目標座標到着");
         send(
