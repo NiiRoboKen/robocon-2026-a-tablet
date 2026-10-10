@@ -7,12 +7,11 @@ import { FaWind } from "react-icons/fa6";
 
 const AccelerationMarks = [
   { value: 0, label: "0" },
-  { value: 10000, label: "10k" },
-  { value: 20000, label: "20k" },
-  { value: 30000, label: "30k" },
-  { value: 40000, label: "40k" },
-  { value: 50000, label: "50k" },
-  { value: 60000, label: "60k" },
+  { value: 200, label: "200" },
+  { value: 400, label: "400" },
+  { value: 600, label: "600" },
+  { value: 800, label: "800" },
+  { value: 1000, label: "1000" },
 ];
 
 const ElevationSlider = ({ value }: { value: number }) => {
@@ -21,7 +20,7 @@ const ElevationSlider = ({ value }: { value: number }) => {
       width="full"
       maxW="sm"
       size="lg"
-      max={65535}
+      max={1000}
       value={[value]}
       onValueChange={(e) =>
         useControlStore.getState().setSelecredElevation(e.value[0])
@@ -75,7 +74,7 @@ export function AdjustElevation(props: BoxProps) {
         flexGrow="1"
         flex="1"
         fontSize="6xl"
-        onClick={() => adjustSelectedElevation(-100)}
+        onClick={() => adjustSelectedElevation(-50)}
         disabled={isDisabled}
       >
         -
@@ -95,7 +94,7 @@ export function AdjustElevation(props: BoxProps) {
         flexGrow="1"
         flex="1"
         fontSize="6xl"
-        onClick={() => adjustSelectedElevation(100)}
+        onClick={() => adjustSelectedElevation(50)}
         disabled={isDisabled}
       >
         +

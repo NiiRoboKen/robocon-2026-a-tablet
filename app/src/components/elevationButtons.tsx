@@ -27,20 +27,20 @@ export function ElevationButtons(props: BoxProps) {
         height="100%"
         flex="1"
         fontSize="lg"
-        onClick={() => send(buildElevationUpMessage(selectedElevation))}
+        onClick={() => send(buildElevationDownMessage(selectedElevation))}
         disabled={isDisabled}
       >
-        {"アップ"}
+        ダウン
       </Button>
 
       <Button
         height="100%"
         flex="1"
         fontSize="lg"
-        onClick={() => send(buildElevationDownMessage(selectedElevation))}
+        onClick={() => send(buildElevationUpMessage(selectedElevation))}
         disabled={isDisabled}
       >
-        ダウン
+        アップ
       </Button>
     </Box>
   );
