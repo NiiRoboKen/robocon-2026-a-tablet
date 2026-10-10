@@ -9,6 +9,17 @@ export function RollerButtons(props: BoxProps) {
   const { send } = useWebSocketStore();
   const { robotState } = useRobotStore();
   const isDisabled = robotState?.gamepad_used ?? false;
+  function isDisable(): boolean {
+    if (!robotState) {
+      return true;
+    }
+    if (robotState.gamepad_used == false && robotState.roller_reach) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   function sendCommand(command: Commands) {
     send(buildCommandMessage(command));
   }
@@ -48,7 +59,7 @@ export function RollerButtons(props: BoxProps) {
         flex="1"
         fontSize="2xl"
         onClick={() => sendCommand("roller_launch")}
-        disabled={isDisabled}
+        disabled={isDisable()}
 
         bgGradient="to-tr"
         gradientFrom="yellow"
