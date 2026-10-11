@@ -105,7 +105,7 @@ export function BeltButtons(props: BoxProps) {
           flex="1"
           fontSize="2xl"
           onClick={() => {
-            setTargetBeltObject("fix1");
+            setTargetBeltObject("bucket_low");
             sendCommand("belt_bucket_low");
           }}
           bg="skyblue"
@@ -120,7 +120,7 @@ export function BeltButtons(props: BoxProps) {
           flex="1"
           fontSize="2xl"
           onClick={() => {
-            setTargetBeltObject("fix2");
+            setTargetBeltObject("bucket_middle");
             sendCommand("belt_bucket_middle");
           }}
           bg="blue"
@@ -134,7 +134,7 @@ export function BeltButtons(props: BoxProps) {
           flex="1"
           fontSize="2xl"
           onClick={() => {
-            setTargetBeltObject("fix3");
+            setTargetBeltObject("bucket_high");
             sendCommand("belt_bucket_high");
           }}
           bg="teal"

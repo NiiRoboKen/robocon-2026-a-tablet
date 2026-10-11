@@ -58,6 +58,7 @@ export interface ModeConfig {
   obstacles: ObstacleConfig[];
   targetPositions: TargetPositionConfig[];
   firstActionPosition: PositionPayload;
+  crossKeyMoion: CrosKeyMotion;
 }
 
 export type InitialConfig = {
@@ -66,8 +67,16 @@ export type InitialConfig = {
 };
 
 export type BeltAcceleration = {
-  fix1: number;
-  fix2: number;
-  fix3: number;
+  bucket_low: number;
+  bucket_middle: number;
+  bucket_high: number;
   table: number;
+  flag: number;
 };
+
+export interface CrosKeyMotion {
+  up: Point2D;
+  down: Point2D;
+  left: Point2D;
+  right: Point2D;
+}

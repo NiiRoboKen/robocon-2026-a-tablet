@@ -12,12 +12,16 @@ import {
   PiArrowRightBold,
   PiStopCircleBold,
 } from "react-icons/pi";
+import { getConfig } from "@/config";
+import { useCanvasStore } from "@/stores/useCanvasStore";
 
 export function AdjustPositionDirection(props: BoxProps) {
   const { positionDelta, directionDelta } = useControlStore();
   const { position, robotState } = useRobotStore();
   const { send } = useWebSocketStore();
   const isDisabled = robotState?.gamepad_used ?? false;
+  const { colorMode } = useCanvasStore();
+  const crossKeyConfig = getConfig(colorMode).crossKeyMoion;
 
   const handleClick = (
     xDelta: number,
@@ -68,7 +72,13 @@ export function AdjustPositionDirection(props: BoxProps) {
           flexGrow="1"
           flex="1"
           size="2xl"
-          onClick={() => handleClick(positionDelta, 0, 0)}
+          onClick={() =>
+            handleClick(
+              positionDelta * crossKeyConfig.up.x,
+              positionDelta * crossKeyConfig.up.y,
+              0,
+            )
+          }
           disabled={isDisabled}
         >
           <PiArrowUpBold />
@@ -94,7 +104,13 @@ export function AdjustPositionDirection(props: BoxProps) {
           flexGrow="1"
           flex="1"
           size="2xl"
-          onClick={() => handleClick(0, positionDelta, 0)}
+          onClick={() =>
+            handleClick(
+              positionDelta * crossKeyConfig.left.x,
+              positionDelta * crossKeyConfig.left.y,
+              0,
+            )
+          }
           disabled={isDisabled}
         >
           <PiArrowLeftBold />
@@ -119,7 +135,13 @@ export function AdjustPositionDirection(props: BoxProps) {
           flexGrow="1"
           flex="1"
           size="2xl"
-          onClick={() => handleClick(0, -positionDelta, 0)}
+          onClick={() =>
+            handleClick(
+              positionDelta * crossKeyConfig.right.x,
+              positionDelta * crossKeyConfig.right.y,
+              0,
+            )
+          }
           disabled={isDisabled}
         >
           <PiArrowRightBold />
@@ -131,7 +153,13 @@ export function AdjustPositionDirection(props: BoxProps) {
           width="33%"
           height="100%"
           size="2xl"
-          onClick={() => handleClick(-positionDelta, 0, 0)}
+          onClick={() =>
+            handleClick(
+              positionDelta * crossKeyConfig.down.x,
+              positionDelta * crossKeyConfig.down.y,
+              0,
+            )
+          }
           disabled={isDisabled}
         >
           <PiArrowDownBold />

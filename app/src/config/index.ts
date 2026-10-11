@@ -6,9 +6,10 @@ import type {
 } from "../types/config";
 
 export const defaultBeltAcceleration: BeltAcceleration = {
-  fix1: 10,
-  fix2: 20,
-  fix3: 30,
+  bucket_low: 60000,
+  bucket_middle: 60000,
+  bucket_high: 60000,
+  flag: 0,
   table: 0,
 };
 
@@ -64,6 +65,12 @@ const redConfig: ModeConfig = {
     x: 1000,
     y: -1000,
     direction: -90,
+  },
+  crossKeyMoion: {
+    up: { x: 1, y: 0 },
+    down: { x: -1, y: 0 },
+    left: { x: 0, y: -1 },
+    right: { x: 0, y: 1 },
   },
 };
 
@@ -128,6 +135,13 @@ const blueConfig: ModeConfig = {
     x: -1000,
     y: -1000,
     direction: 90,
+  },
+
+  crossKeyMoion: {
+    up: { x: 1, y: 0 },
+    down: { x: -1, y: 0 },
+    left: { x: 0, y: 1 },
+    right: { x: 0, y: -1 },
   },
 };
 

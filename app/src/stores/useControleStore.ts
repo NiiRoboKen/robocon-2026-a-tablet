@@ -2,7 +2,8 @@ import { defaultBeltAcceleration } from "@/config";
 import type { BeltAcceleration } from "@/types/config";
 import { create } from "zustand";
 
-export type TargetBeltObject = "fix1" | "fix2" | "fix3" | "table";
+export type TargetBeltObject =
+  "bucket_low" | "bucket_middle" | "bucket_high" | "flag" | "table";
 
 interface ControlState {
   isSending: boolean;
@@ -36,8 +37,8 @@ interface ControlState {
 export const useControlStore = create<ControlState>((set) => ({
   isSending: false,
 
-  targetBeltObject: "fix1",
-  selectedBeltAcceleration: defaultBeltAcceleration.fix1,
+  targetBeltObject: "bucket_low",
+  selectedBeltAcceleration: defaultBeltAcceleration.bucket_low,
   beltAccelerations: { ...defaultBeltAcceleration },
   selectedElevation: 0,
 
