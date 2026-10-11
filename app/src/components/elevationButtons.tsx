@@ -1,5 +1,5 @@
 import { useWebSocketStore } from "@/stores/useWebSocketStore";
-import { Button, Box, type BoxProps, Icon } from "@chakra-ui/react";
+import { Button, Box, type BoxProps } from "@chakra-ui/react";
 import {
   buildElevationUpMessage,
   buildElevationDownMessage,

@@ -1,9 +1,7 @@
 import { useControlStore } from "@/stores/useControleStore";
 import { useRobotStore } from "@/stores/useRobotStore";
 import { Button, Box, type BoxProps, Text } from "@chakra-ui/react";
-import { HStack, Slider, Flex, Icon } from "@chakra-ui/react";
-import { IoMdSpeedometer } from "react-icons/io";
-import { FaWind } from "react-icons/fa6";
+import { HStack, Slider, Flex } from "@chakra-ui/react";
 
 const AccelerationMarks = [
   { value: 0, label: "0" },
