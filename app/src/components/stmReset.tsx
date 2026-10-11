@@ -1,4 +1,6 @@
-import { Button, Box, type BoxProps } from "@chakra-ui/react";
+import {
+  Button, Box, type BoxProps
+} from "@chakra-ui/react";
 import { useWebSocketStore } from "@/stores/useWebSocketStore";
 import { useRobotStore } from "@/stores/useRobotStore";
 import { buildCommandMessage } from "@/utils/messageBuilder";

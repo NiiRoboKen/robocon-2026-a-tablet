@@ -59,7 +59,7 @@ export function RollerButtons(props: BoxProps) {
         flex="1"
         fontSize="2xl"
         onClick={() => sendCommand("roller_launch")}
-        disabled={isDisable()}
+        // disabled={isDisable()}
 
         bgGradient="to-tr"
         gradientFrom="yellow"
