@@ -3,13 +3,13 @@ import { useWebSocketStore } from "@/stores/useWebSocketStore";
 import { useRobotStore } from "@/stores/useRobotStore";
 import { buildPositionMessage } from "@/utils/messageBuilder";
 import { distance } from "@/utils/coordinate";
-import { useControlStore } from "@/stores/useControleStore";
+// import { useControlStore } from "@/stores/useControleStore";
 import { getConfig } from "@/config";
 import { useCanvasStore } from "@/stores/useCanvasStore";
 
 export function FirstActionButton(props: BoxProps) {
   const { send } = useWebSocketStore();
-  const { firstActionUsed, setFirstActionUsed } = useControlStore();
+  // const { firstActionUsed, setFirstActionUsed } = useControlStore();
   const { colorMode } = useCanvasStore();
   const config = getConfig(colorMode);
   const handleClick = () => {
@@ -19,7 +19,7 @@ export function FirstActionButton(props: BoxProps) {
         config.firstActionPosition.direction,
       ),
     );
-    setFirstActionUsed();
+    // setFirstActionUsed();
     const intervalID = setInterval(() => {
       const position = useRobotStore.getState().position;
       const dist = distance(position, config.firstActionPosition);
@@ -47,7 +47,7 @@ export function FirstActionButton(props: BoxProps) {
         h="100%"
         fontSize="3xl"
         onClick={handleClick}
-        disabled={firstActionUsed}
+        disabled={true}
       >
         初動
       </Button>

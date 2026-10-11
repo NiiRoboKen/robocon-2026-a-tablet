@@ -16,7 +16,7 @@ import { Label } from "./components/label";
 import { StopButton } from "./components/stopButton";
 import { RollerButtons } from "./components/rollerButtons";
 import { RebootButton } from "./components/rebootButton";
-import { FirstActionButton } from "./components/firstActionButton";
+// import { FirstActionButton } from "./components/firstActionButton";
 import { AdjustElevation } from "./components/adjustElevation";
 import { ElevationButtons } from "./components/elevationButtons";
 import { StmReset } from "./components/stmReset";
@@ -107,13 +107,13 @@ function App() {
           height="10%"
           borderColor="blue"
         />
-        <FirstActionButton
+        {/*<FirstActionButton
           top="85%"
           left="30%"
           width="15%"
           height="10%"
           borderColor="blue"
-        />
+        />*/}
         <SendPositionButton
           top="85%"
           left="48%"
